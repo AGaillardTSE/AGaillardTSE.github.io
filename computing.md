@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 ---
 
 <h5 style="margin:0 0 10px;padding-left:10px;">
