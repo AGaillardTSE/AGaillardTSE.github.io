@@ -10,12 +10,14 @@ char Welcome;
 Welcome to my website. My name is Alexandre GAILLARD and I’m currently a PhD student at Toulouse School of Economics specialized in Macroeconomics, Quantitative Economics and Numerical Methods.
 My current research covers topics related to inequality, taxation and entrepreneurship.
 I’m also a research assistant of Tim Lee (TSE) on problematics related to human capital, inequality and career choice. Finally, I’m teaching assistant in graduate and undergraduate courses of macroeconomics.
+
 * * *
 
 ### Position
 
 *   **Teaching Assistant:** _Macroeconomics_ (Christian Hellwig, Sumudu Kankanamge), _Microeconomics_ (Michel-Benoit Bouissou), Toulouse School of Economics.
 *   **Research Assistant:** [Tim Lee](http://www.syleetim.net), Toulouse School of Economics
+
 * * *
 
 ### Working Papers
@@ -23,7 +25,7 @@ I’m also a research assistant of Tim Lee (TSE) on problematics related to huma
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/?dir=ELMM), 2018, with Sumudu Kankanamge.
 
 
-###### Computational speed - comparison
+#### Computational speed - comparison
 
 | Method        | Speed (in s)         | % Entrepreneurs | K/Y |
 |:-------------|:------------------|:------|:------|
