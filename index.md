@@ -17,7 +17,7 @@ My current research covers topics related to insurance design, entrepreneurship 
 *   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), _Undergraduate Microeconomics and Macroeconomics_ (Michel-Benoit Bouissou, Sumudu Kankanamge), Toulouse School of Economics.
 *   **Research Assistant:** [Tim Lee](http://www.syleetim.net), on problematics related to human capital, inequality and career choice, (2017), Toulouse School of Economics
 
-* * *
+* * * 
 
 ### Working Papers
 
