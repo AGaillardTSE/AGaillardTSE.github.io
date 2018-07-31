@@ -21,7 +21,7 @@ int C++ // (for discrete time)
 * Discretize income process using Tauchen algorithm in C++: code here (by Sumudu Kankanamge
 
 ```matlab
-MatLab /* (for continuous time)
+MatLab % (for continuous time)
 ```
 * Solve Aiyagari in 0.13 seconds with Envelope Condition Method (ECM), many codes available here: HATC project
 * Aiyagari in Continous Time with Jump-Drift Process. Code is available here: aiyagari.m
