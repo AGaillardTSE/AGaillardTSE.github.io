@@ -1,1 +1,3 @@
 Redirect ./CV.pdf http://agaillard.eu/wp-content/uploads/2018/02/CV-English.pdf
+Redirect /CV.pdf http://agaillard.eu/wp-content/uploads/2018/02/CV-English.pdf
+Redirect CV.pdf http://agaillard.eu/wp-content/uploads/2018/02/CV-English.pdf
