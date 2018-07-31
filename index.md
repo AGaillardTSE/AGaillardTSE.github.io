@@ -2,13 +2,28 @@
 layout: default
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+# Welcome!
+
+Welcome to my website. My name is Alexandre GAILLARD and I’m currently a PhD student at Toulouse School of Economics specialized in Macroeconomics, Quantitative Economics and Numerical Methods.
+My current research covers topics related to inequality, taxation and entrepreneurship.
+I’m also a research assistant of Tim Lee (TSE) on problematics related to human capital, inequality and career choice. Finally, I’m teaching assistant in graduate and undergraduate courses of macroeconomics.
+
+### Position
+
+*   **Teaching Assistant:** _Macroeconomics_ (Christian Hellwig, Sumudu Kankanamge), _Microeconomics_ (Michel-Benoit Bouissou), Toulouse School of Economics.
+*   **Research Assistant:** [Tim Lee](http://www.syleetim.net), Toulouse School of Economics
+
+### Working Papers
+
+*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/?dir=ELMM), 2018, with Sumudu Kankanamge.
+
+
+```C
+// C++ is the fastest language ever
+double fast;
+```
 
 [Link to another page](./another-page.html).
-
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
 
 # Header 1
 
