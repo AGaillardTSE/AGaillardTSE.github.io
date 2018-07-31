@@ -7,16 +7,26 @@ layout: default
 Welcome to my website. My name is Alexandre GAILLARD and I’m currently a PhD student at Toulouse School of Economics specialized in Macroeconomics, Quantitative Economics and Numerical Methods.
 My current research covers topics related to inequality, taxation and entrepreneurship.
 I’m also a research assistant of Tim Lee (TSE) on problematics related to human capital, inequality and career choice. Finally, I’m teaching assistant in graduate and undergraduate courses of macroeconomics.
+* * *
 
 ### Position
 
 *   **Teaching Assistant:** _Macroeconomics_ (Christian Hellwig, Sumudu Kankanamge), _Microeconomics_ (Michel-Benoit Bouissou), Toulouse School of Economics.
 *   **Research Assistant:** [Tim Lee](http://www.syleetim.net), Toulouse School of Economics
+* * *
 
 ### Working Papers
 
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/?dir=ELMM), 2018, with Sumudu Kankanamge.
 
+
+###### Computational speed - comparison
+
+| Method        | Speed (in s)         | % Entrepreneurs | K/Y |
+|:-------------|:------------------|:------|:------|
+| EGM           | 0.8s | 8.4  | 2.6 |
+| DC-EGM | 1.2s   | 8.8  | 2.6 |
+| VFI           | 3s      | 8.8   | 2.6 |
 
 ```C
 // C++ is the fastest language ever
@@ -64,14 +74,6 @@ end
 2.  This is an ordered list following a header.
 3.  This is an ordered list following a header.
 
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
 
 ### There's a horizontal rule below this.
 
