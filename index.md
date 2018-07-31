@@ -2,6 +2,10 @@
 layout: default
 ---
 
+* * *
+##### [Home](./index.html)  &nbsp;&nbsp;&nbsp;&nbsp;  [Research](./research.md) &nbsp;&nbsp;&nbsp;&nbsp; [Computing](./computing.md)
+* * *
+
 # Welcome!
 ```c++
 char hello_world;  
