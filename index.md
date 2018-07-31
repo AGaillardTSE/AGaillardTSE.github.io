@@ -1,6 +1,6 @@
 ---
 title: My page
-permalink: mypageurl.html
+permalink: index.md
 ---
 
 This is a Test for my website.
