@@ -4,9 +4,9 @@ layout: default
 
 
 <h5 style="margin:0 0 10px;padding-left:10px;">
-  <a style="color: #000" href="./index.html">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="./research.md">Research</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="./computing.html">Computing</a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a style="color: #000" href="./index.html">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="./research.md">Research</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="./computing.html">Computing</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="./teaching.html">Teaching</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="./CV.pdf">Vitae</a>&nbsp;&nbsp;&nbsp;&nbsp;
 </h5>
-<hr style="margin:0 0 20px;">
+<hr style="margin:0 0 25px;">
 
 # Welcome!
 ```c++
