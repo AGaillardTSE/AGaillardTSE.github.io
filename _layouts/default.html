@@ -14,7 +14,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
+        <h2><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h2>
         
         {% if site.logo %}
           <img src="http://agaillard.eu/wp-content/uploads/2017/01/Sans-titre-1.png" alt="Alexandre Gaillard" width="294px" />
@@ -31,7 +31,10 @@
         <p class="view">GitHub: <a href="{{ site.github.owner_url }}">AGaillardTSE</a></p>
         {% endif %}
 
-        <div><a href="{{ site.github.zip_url }}">Download <strong>ZIP File</strong></a></div>
+        <div><a href="{{ site.github.zip_url }}">Research</a></div>
+        <div><a href="{{ site.github.zip_url }}">Teaching</a></div>
+        <div><a href="{{ site.github.zip_url }}">Computing</a></div>
+        <div><a href="{{ site.github.zip_url }}">Links</a></div>
         
       </header>
       <section>
