@@ -2,9 +2,11 @@
 layout: default
 ---
 
-* * *
-##### [Home](./index.html)  &nbsp;&nbsp;&nbsp;&nbsp;  [Research](./research.md) &nbsp;&nbsp;&nbsp;&nbsp; [Computing](./computing.md)
-* * *
+<hr style="margin:0 0 5px;">
+<h5 style="margin:0 0 5px;">
+  <a href="./index.html">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./research.md">Research</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./computing.html">Computing</a>&nbsp;&nbsp;&nbsp;&nbsp;
+</h5>
+<hr style="margin:0 0 5px;">
 
 # Welcome!
 ```c++
