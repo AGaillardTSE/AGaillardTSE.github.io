@@ -4,19 +4,18 @@ layout: default
 
 # Welcome!
 ```c++
-char Welcome;
+char hello_world;  
 ```
 
-Welcome to my website. My name is Alexandre GAILLARD and I’m currently a PhD student at Toulouse School of Economics specialized in Macroeconomics, Quantitative Economics and Numerical Methods.
-My current research covers topics related to inequality, taxation and entrepreneurship.
-I’m also a research assistant of Tim Lee (TSE) on problematics related to human capital, inequality and career choice. Finally, I’m teaching assistant in graduate and undergraduate courses of macroeconomics.
+_Welcome to my website. My name is Alexandre GAILLARD and I’m currently a PhD student at Toulouse School of Economics specialized in Macroeconomics, Quantitative Economics and Numerical Methods.
+My current research covers topics related to insurance design, entrepreneurship and housing market.
 
 * * *
 
-### Position
+### Position (current / past)
 
-*   **Teaching Assistant:** _Macroeconomics_ (Christian Hellwig, Sumudu Kankanamge), _Microeconomics_ (Michel-Benoit Bouissou), Toulouse School of Economics.
-*   **Research Assistant:** [Tim Lee](http://www.syleetim.net), Toulouse School of Economics
+*   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), _Undergraduate Microeconomics and Macroeconomics (Michel-Benoit Bouissou, Sumudu Kankanamge), Toulouse School of Economics.
+*   **Research Assistant:** [Tim Lee](http://www.syleetim.net), on problematics related to human capital, inequality and career choice, (2017), Toulouse School of Economics
 
 * * *
 
