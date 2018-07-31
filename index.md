@@ -2,11 +2,11 @@
 layout: default
 ---
 
-<hr style="margin:0 0 5px;">
-<h5 style="margin:0 0 5px;">
+<hr style="margin:0 0 10px;">
+<h5 style="margin:0 0 10px;padding-left:10px;">
   <a href="./index.html">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./research.md">Research</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./computing.html">Computing</a>&nbsp;&nbsp;&nbsp;&nbsp;
 </h5>
-<hr style="margin:0 0 5px;">
+<hr style="margin:0 0 20px;">
 
 # Welcome!
 ```c++
