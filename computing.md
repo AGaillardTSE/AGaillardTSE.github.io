@@ -10,9 +10,9 @@ Below I report some of my codes and replications of recent and former models in 
 ```c++
 int C++ // (for discrete time)
 ```
-* Solve standard housing macroeconomic models (Sommer & Sullivan AER (2018)) with DC-EGM algorithm (Iskhakov et al. (2017)). Useful note <a href="http://agaillard.eu/projects/HOUSING_notes/numerical_solution_Sommer_Sullivan_AER.pdf" target="_blank">here</a>, code available <a href="https://github.com/AGaillardTSE/housing" target="_blank">here</a>.
-* Solve the Aiyagari model in 0.04 – 0.14 seconds with Endogenous Grid Method (EGM) (Caroll (2006)). Useful note (by Josep Pijoan-Mas) is available <a href="https://www.cemfi.es/~pijoan/Teaching_files/Notes%20on%20endogenous%20grid%20method.pdf" target="_blank">here</a>. Download my code (iterate on marginal utilities or value functions with code [here](https://github.com/AGaillardTSE/aiyagari)).
-* Solve the stochastic growth model as in Barillas & Villaverde (2007) using EGM, code [here](https://github.com/AGaillardTSE/stochastic-growth-model).
+* Solve standard housing macroeconomic models ([Sommer & Sullivan AER (2018)](https://www.aeaweb.org/articles?id=10.1257/aer.20141751)) with DC-EGM algorithm ([Iskhakov et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE643)). Useful note <a href="http://agaillard.eu/projects/HOUSING_notes/numerical_solution_Sommer_Sullivan_AER.pdf" target="_blank">here</a>, code available <a href="https://github.com/AGaillardTSE/housing" target="_blank">here</a>.
+* Solve the Aiyagari model in 0.04 – 0.14 seconds with Endogenous Grid Method (EGM) ([Caroll (2006)](http://pages.stern.nyu.edu/~dbackus/Computation/Carroll%20endog%20grid%20EL%2006.pdf)). Useful note (by Josep Pijoan-Mas) is available <a href="https://www.cemfi.es/~pijoan/Teaching_files/Notes%20on%20endogenous%20grid%20method.pdf" target="_blank">here</a>. Download my code (iterate on marginal utilities or value functions with code [here](https://github.com/AGaillardTSE/aiyagari)).
+* Solve the stochastic growth model as in [Barillas & Villaverde (2007)](https://econpapers.repec.org/article/eeedyncon/v_3a31_3ay_3a2007_3ai_3a8_3ap_3a2698-2712.htm) using EGM, code [here](https://github.com/AGaillardTSE/stochastic-growth-model).
 * Discretize income process using Tauchen algorithm in C++: code [here].
 
 ```matlab
