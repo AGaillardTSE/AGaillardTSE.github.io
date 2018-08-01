@@ -8,8 +8,8 @@ layout: default
 ```c++
 const char *h = "hello world";
 /* Welcome to my website. I’m currently a PhD student at TSE.
-My current research covers topics related to insurance design, entrepreneurship 
-and housing market. */
+My research interests are Occupational choice, Housing and Macro. 
+I am also interested in computational techniques. */
 ```
 
 * * *
