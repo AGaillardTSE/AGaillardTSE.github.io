@@ -4,5 +4,6 @@ description: PhD Student, Toulouse School of Economics
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
+permalink: pretty
 plugins:
   - jekyll-redirect-from
