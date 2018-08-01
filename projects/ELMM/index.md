@@ -3,6 +3,7 @@ layout: page
 redirect_from: 
   - /download/EUI/
   - /download/eui/
+  - /GK_entrepreneurship.pdf
 ---
 
 # ELMM files
