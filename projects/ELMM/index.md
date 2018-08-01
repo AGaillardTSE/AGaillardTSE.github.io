@@ -1,5 +1,6 @@
 ---
 layout: page
+redirect_from: "?dir=ELMM"
 ---
 
 # Index files
