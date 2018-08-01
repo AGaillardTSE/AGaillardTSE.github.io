@@ -6,7 +6,7 @@ layout: page
 
 | Files       |  Last update |
 |:-------------|:------------------|
-| [ELMM](./ELMM/)           | 01/08/2018 |
-| [Housing](./HOUSING_notes/) | 01/08/2018 |
+| [GK_ELMM_online_appendix.pdf](./GK_ELMM_online_appendix.pdf)           | 01/08/2018 |
+| [GK_ELMM_paper.pdf](./GK_ELMM_paper.pdf) | 01/08/2018 |
 
 
