@@ -4,6 +4,10 @@ layout: indexing
 
 # This is a test for index
 
+<!--multiple is set to allow multiple files to be selected-->
+
+<input id="myfiles" multiple type="file">
+
 <script>
 
 var pullfiles=function(){ 
