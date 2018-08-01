@@ -1,6 +1,8 @@
 ---
 layout: page
-redirect_from: "?dir=ELMM"
+redirect_from: 
+  - /download/EUI/
+  - /download/eui/
 ---
 
 # ELMM files
