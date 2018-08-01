@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: indexing
 ---
 
 # This is a test for index
