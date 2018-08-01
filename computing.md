@@ -24,6 +24,7 @@ MatLab % (for continuous time)
 
  
 ### Computational speed - comparison between EGM, DC-EGM and VFI
+Comparison of performance and accuracy of EGM, DC-EGM and VFI methods on occupational choice and entrepreneurship models à la Cagetti & De Nardi (2006). The presence of discrete choice (occupational choice) makes EGM inaccurate. DC-EGM encompasses generated kinks very well, while being substantially faster than standard VFI.
 
 | Method        | Speed (in s)         | % Entrepreneurs | K/Y |
 |:-------------|:------------------|:------|:------|
