@@ -7,9 +7,9 @@ layout: default
 
 ```c++
 const char *h = "hello world";
-/* Welcome to my website! I’m currently a PhD student at TSE.
-My research interests are Occupational choice, Housing and Macro. 
-I am also interested in computational techniques. */
+/* Welcome to my website! I’m currently a PhD student at TSE. My research 
+interests are Occupational choices, Housing and Macro. I am also interested in
+structural macroeconomics and associated computational techniques. */
 ```
 
 * * *
