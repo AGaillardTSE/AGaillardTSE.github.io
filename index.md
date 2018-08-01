@@ -7,8 +7,9 @@ layout: default
 
 ```c++
 const char *h = "hello world";
-/* Welcome to my website. My name is Alexandre Gaillard and I’m currently a PhD student at Toulouse School of Economics specialized in Macroeconomics, Quantitative Economics and Numerical Methods.
-My current research covers topics related to insurance design, entrepreneurship and housing market. */
+/* Welcome to my website. I’m currently a PhD student at TSE.
+My current research covers topics related to insurance design, entrepreneurship 
+and housing market. */
 ```
 
 * * *
