@@ -1,0 +1,452 @@
+===================Program Starting: Sat Jan 21 11:21:41 2017
+
+------ Estimated Model parameters------
+             betapar		   0.879000000000000
+              Etapar		   0.034000000000000	   0.027000000000000	   0.024000000000000
+               Kappa		   2.350000000000000	   2.400000000000000	   2.450000000000000
+                PROD		   0.250000000000000	   1.000000000000000	   1.750000000000000
+              GTRANS		   0.510000000000000	   0.550000000000000	   0.700000000000000
+             phiparW		   1.500000000000000
+             phiparE		   2.100000000000000
+             costpar		   0.000000000000000
+               nupar		   0.840000000000000
+                fpar		   0.770000000000000
+               mupar		   0.100000000000000
+               xipar		   1.000000000000000
+
+------ Fixed Model parameters------
+             maxgrid		                 250
+             Gridmin		   0.000000000000000
+             Gridmax		5000.000000000000000
+             corptax		   0.000000000000000
+            alphapar		   0.360000000000000
+            deltapar		   0.060000000000000
+             rhostar		   0.540000000000000
+            sigmapar		   1.390000000000000
+              TFPpar		   1.000000000000000
+              pLTpar		   1.000000000000000
+          EffortMaxU		 100.000000000000000
+          EffortMaxE		 100.000000000000000
+
+------ Convergence criterions------
+        epsilonValue		   0.000001000000000
+        epsilonendoK		   0.000001000000000
+           maxiterVF		   0.000001000000000
+        maxiterendoK		   0.000001000000000
+         epsilonDist		   0.000000010000000
+        epsilonprice		   0.000010000000000
+       epsilonparams		   0.000001000000000
+          relaxendoK		   0.300000000000000
+              relaxK		   0.050000000000000
+            relaxTax		   0.200000000000000
+----------------------------
+R:    0.070000000000000,	 W:    1.135029096946556,	 K:    4.380284646201778	, L:    0.891900000000000, 	 TAX:    0.141700000000000
+
+-------EQUILIBRIUM PRICES AND AGGREGATE--------
+r    0.070000000000000 
+w    1.135029096946556 
+u    0.208998335835992 
+-------MOMENTS GENERATED & STATISTICS--------
+Ratio KY [3.04]    5.788734792596306
+Ratio mworthVE/mworthWW [8]    2.206154938950058
+Fraction E [7.55]    0.339610505598831
+(UL:    0.198161391344720, US:    0.010836944491272) Unemploy. rate [4- 6]    0.208998335835992
+Fraction of nonE>E (rlv to whole pop) [0.39]    0.091412141442386
+Fraction of U>E (rlv to new entrant) [20]    0.346534729156984
+Worker exit rate (rlv to workers) [3-6.5]    0.156342460232456
+Nshare (US)    0.000250410795933, 	 Nshare(UL):    0.000127875243240, 	 Nshare [0.1]:    0.000378286039173
+(U>E/pop>E) [0.2]    0.346534729156984
+Wealth Gini [0.84]    0.505830275599888
+Earning Gini [0.36]    0.671968831713894
+Top 1 [41.8]    0.064366665244614
+Zero wealth fraction [7- 13]    0.004546176748074
+Fraction U>nonU (rlv to unemployed) [40- 65]    0.238949657440682
+
+-------TRANSITION Worker to entrepreneur / ABILITY--------
+very low	 middle 	 very high
+   0.135433845823015	   0.127871721735178	   0.138145776777234	
+-------TRANSITION Entrepreneur to Worker / ABILITY--------
+very low 	 middle 	 very high
+   0.141263087569754	   0.159863801784701	   0.174418665015244	
+--------- TRANSITION MATRIX BTW CLASSES ------
+  	  U     	 W     	 E 
+U 	 0.7611 	 0.0874 	 0.1516 
+W 	 0.0240 	 0.8437 	 0.1323 
+E 	 0.1188 	 0.1591 	 0.7221 
+---------------
+--------- WEALTH DISTRIBUTION STATISTICS ------
+Top 0.1 [22]    0.010848998308345
+Top 1 [41.8]    0.064366665244614
+Top 5 [?]    0.225403217182815
+Top 10 [77.2]    0.352802330309689
+Top 20 [?]    0.529065942383213
+Bot 20 [?]    0.018951923995599
+Bot 40 [?]    0.092854374218355
+Bot 60 [?]    0.231317377987729
+Bot 80 [?]    0.470934057616787
+mworthVE   45.966555588775201
+mworthWW   20.835597163747426
+mworthUS   18.703279956488494
+mworthUL   78.906584741589228
+---------------
+--------- PRODUCTION & CAPITAL -----
+CapitalVE   29.331457605865570
+ProductionVE    7.509207984482806
+Totalcapital   54.784784972860180
+Totallabor    0.461450615868129
+Corproduction    1.954826374619117
+Corcapital   25.453327366994607
+Totalproduction    9.464034359101923
+CapitalVE/Totalcapital    0.535394227072281
+---------------
+--------- TAXATION -----
+Corporate revenu    0.000000000000000
+Expenditure    0.007400123582648
+Revenue Basis    0.523759875814235
+Optimal tax    0.014128847825817
+-------MASS--------
+WW    0.451391158565207 
+U    0.208998335835992 
+VE    0.339610505598831 
+R:    0.046125099081253,	 W:    1.272264603357167,	 K:    5.433936782241419	, L:    0.805810123173626, 	 TAX:    0.116185769565163
+
+-------EQUILIBRIUM PRICES AND AGGREGATE--------
+r    0.046125099081253 
+w    1.272264603357167 
+u    0.061929809576606 
+-------MOMENTS GENERATED & STATISTICS--------
+Ratio KY [3.04]    3.655048764094686
+Ratio mworthVE/mworthWW [8]   22.821969731905714
+Fraction E [7.55]    0.105410385149588
+(UL:    0.039427878388310, US:    0.022501931188296) Unemploy. rate [4- 6]    0.061929809576606
+Fraction of nonE>E (rlv to whole pop) [0.39]    0.028518245450144
+Fraction of U>E (rlv to new entrant) [20]    0.228929690977524
+Worker exit rate (rlv to workers) [3-6.5]    0.053432990566521
+Nshare (US)    0.005250705591385, 	 Nshare(UL):    0.002199763196230, 	 Nshare [0.1]:    0.007450468787615
+(U>E/pop>E) [0.2]    0.228929690977524
+Wealth Gini [0.84]    0.817522431300848
+Earning Gini [0.36]    0.399468429792152
+Top 1 [41.8]    0.188261010965905
+Zero wealth fraction [7- 13]    0.056573763963156
+Fraction U>nonU (rlv to unemployed) [40- 65]    0.492322617228962
+
+-------TRANSITION Worker to entrepreneur / ABILITY--------
+very low	 middle 	 very high
+   0.029348735592399	   0.023798719585426	   0.028758807249025	
+-------TRANSITION Entrepreneur to Worker / ABILITY--------
+very low 	 middle 	 very high
+   0.185069105733605	   0.210650884148353	   0.203866894152670	
+--------- TRANSITION MATRIX BTW CLASSES ------
+  	  U     	 W     	 E 
+U 	 0.5077 	 0.3869 	 0.1054 
+W 	 0.0270 	 0.9466 	 0.0264 
+E 	 0.0769 	 0.2022 	 0.7209 
+---------------
+--------- WEALTH DISTRIBUTION STATISTICS ------
+Top 0.1 [22]    0.035492403223831
+Top 1 [41.8]    0.188261010965905
+Top 5 [?]    0.515288389875194
+Top 10 [77.2]    0.724700696396740
+Top 20 [?]    0.893895926831555
+Bot 20 [?]    0.002791499297755
+Bot 40 [?]    0.016021384593090
+Bot 60 [?]    0.042586597230778
+Bot 80 [?]    0.106104073168444
+mworthVE   29.412342736923282
+mworthWW    1.288773190151245
+mworthUS    1.157539526564566
+mworthUL   63.829023239521511
+---------------
+--------- PRODUCTION & CAPITAL -----
+CapitalVE    7.003970572327270
+ProductionVE    1.832630336809485
+Totalcapital   12.859321702854684
+Totallabor    0.836676212504189
+Corproduction    1.685604995418645
+Corcapital    5.855351130527414
+Totalproduction    3.518235332228130
+CapitalVE/Totalcapital    0.544660965342553
+---------------
+--------- TAXATION -----
+Corporate revenu    0.000000000000000
+Expenditure    0.014907510154325
+Revenue Basis    1.064473529640019
+Optimal tax    0.014004585120465
+-------MASS--------
+WW    0.832659805273826 
+U    0.061929809576606 
+VE    0.105410385149588 
+R:    0.046380893033330,	 W:    1.270542912203770,	 K:    5.455007499655719	, L:    0.811983341039738, 	 TAX:    0.095749532676224
+
+-------EQUILIBRIUM PRICES AND AGGREGATE--------
+r    0.046380893033330 
+w    1.270542912203770 
+u    0.056558916472836 
+-------MOMENTS GENERATED & STATISTICS--------
+Ratio KY [3.04]    3.457236368094549
+Ratio mworthVE/mworthWW [8]   22.551684967971756
+Fraction E [7.55]    0.088170768406801
+(UL:    0.033332105762462, US:    0.023226810710374) Unemploy. rate [4- 6]    0.056558916472836
+Fraction of nonE>E (rlv to whole pop) [0.39]    0.023981172170579
+Fraction of U>E (rlv to new entrant) [20]    0.222901575957114
+Worker exit rate (rlv to workers) [3-6.5]    0.048946562356651
+Nshare (US)    0.006456240508897, 	 Nshare(UL):    0.002740742330788, 	 Nshare [0.1]:    0.009196982839685
+(U>E/pop>E) [0.2]    0.222901575957114
+Wealth Gini [0.84]    0.824702197403749
+Earning Gini [0.36]    0.383276472680844
+Top 1 [41.8]    0.218665779520736
+Zero wealth fraction [7- 13]    0.059669627676094
+Fraction U>nonU (rlv to unemployed) [40- 65]    0.526161871973529
+
+-------TRANSITION Worker to entrepreneur / ABILITY--------
+very low	 middle 	 very high
+   0.024966044834344	   0.019286236083189	   0.023691454804084	
+-------TRANSITION Entrepreneur to Worker / ABILITY--------
+very low 	 middle 	 very high
+   0.187819773807825	   0.215828884960181	   0.205706110334419	
+--------- TRANSITION MATRIX BTW CLASSES ------
+  	  U     	 W     	 E 
+U 	 0.4738 	 0.4317 	 0.0945 
+W 	 0.0272 	 0.9511 	 0.0218 
+E 	 0.0745 	 0.2057 	 0.7198 
+---------------
+--------- WEALTH DISTRIBUTION STATISTICS ------
+Top 0.1 [22]    0.038371867909661
+Top 1 [41.8]    0.218665779520736
+Top 5 [?]    0.563060219005630
+Top 10 [77.2]    0.759180766928611
+Top 20 [?]    0.898836405589242
+Bot 20 [?]    0.003385982664912
+Bot 40 [?]    0.019565803005274
+Bot 60 [?]    0.045791339480024
+Bot 80 [?]    0.101163594410758
+mworthVE   28.678239352535986
+mworthWW    1.271667256493927
+mworthUS    1.150798193073837
+mworthUL   60.977426450978840
+---------------
+--------- PRODUCTION & CAPITAL -----
+CapitalVE    5.767444099001186
+ProductionVE    1.511008213161959
+Totalcapital   10.860777290481472
+Totallabor    0.859099411253532
+Corproduction    1.630453964753107
+Corcapital    5.093333191480287
+Totalproduction    3.141462177915066
+CapitalVE/Totalcapital    0.531034192557825
+---------------
+--------- TAXATION -----
+Corporate revenu    0.000000000000000
+Expenditure    0.015328044038373
+Revenue Basis    1.091522667846607
+Optimal tax    0.014042808720238
+-------MASS--------
+WW    0.855270315120379 
+U    0.056558916472836 
+VE    0.088170768406801 
+R:    0.047397370704855,	 W:    1.263764649741525,	 K:    5.436923784246947	, L:    0.821406555082497, 	 TAX:    0.079408187885026
+
+-------EQUILIBRIUM PRICES AND AGGREGATE--------
+r    0.047397370704855 
+w    1.263764649741525 
+u    0.056125605567052 
+-------MOMENTS GENERATED & STATISTICS--------
+Ratio KY [3.04]    3.450143884495297
+Ratio mworthVE/mworthWW [8]   22.008404404887592
+Fraction E [7.55]    0.086290403931310
+(UL:    0.032824949101768, US:    0.023300656465285) Unemploy. rate [4- 6]    0.056125605567052
+Fraction of nonE>E (rlv to whole pop) [0.39]    0.023491177549642
+Fraction of U>E (rlv to new entrant) [20]    0.221706414730486
+Worker exit rate (rlv to workers) [3-6.5]    0.048489348825499
+Nshare (US)    0.006622084343038, 	 Nshare(UL):    0.002867915196547, 	 Nshare [0.1]:    0.009489999539586
+(U>E/pop>E) [0.2]    0.221706414730486
+Wealth Gini [0.84]    0.823398801684674
+Earning Gini [0.36]    0.381615820297848
+Top 1 [41.8]    0.217685051130755
+Zero wealth fraction [7- 13]    0.059169868961702
+Fraction U>nonU (rlv to unemployed) [40- 65]    0.528764368438241
+
+-------TRANSITION Worker to entrepreneur / ABILITY--------
+very low	 middle 	 very high
+   0.024501459299825	   0.018884690292060	   0.023078319848157	
+-------TRANSITION Entrepreneur to Worker / ABILITY--------
+very low 	 middle 	 very high
+   0.187886475280432	   0.216588741549046	   0.206243118137262	
+--------- TRANSITION MATRIX BTW CLASSES ------
+  	  U     	 W     	 E 
+U 	 0.4712 	 0.4360 	 0.0928 
+W 	 0.0272 	 0.9515 	 0.0213 
+E 	 0.0748 	 0.2062 	 0.7190 
+---------------
+--------- WEALTH DISTRIBUTION STATISTICS ------
+Top 0.1 [22]    0.038104878587769
+Top 1 [41.8]    0.217685051130755
+Top 5 [?]    0.560580383680511
+Top 10 [77.2]    0.762435822335524
+Top 20 [?]    0.896355285014783
+Bot 20 [?]    0.003335720797683
+Bot 40 [?]    0.019335920361518
+Bot 60 [?]    0.045946914977825
+Bot 80 [?]    0.103644714985217
+mworthVE   28.704031237048095
+mworthWW    1.304230452557185
+mworthUS    1.180447711806437
+mworthUL   60.748794300358924
+---------------
+--------- PRODUCTION & CAPITAL -----
+CapitalVE    5.648541098477645
+ProductionVE    1.479795899873731
+Totalcapital   10.739840428997248
+Totallabor    0.861448898908527
+Corproduction    1.633071501761700
+Corcapital    5.091299330519602
+Totalproduction    3.112867401635431
+CapitalVE/Totalcapital    0.525942739635754
+---------------
+--------- TAXATION -----
+Corporate revenu    0.000000000000000
+Expenditure    0.015293415211749
+Revenue Basis    1.088668665999359
+Optimal tax    0.014047814261018
+-------MASS--------
+WW    0.857583990501654 
+U    0.056125605567052 
+VE    0.086290403931310 
+R:    0.048286745831099,	 W:    1.257915657415868,	 K:    5.419642561560579	, L:    0.829415023847703, 	 TAX:    0.066336113160225
+
+-------EQUILIBRIUM PRICES AND AGGREGATE--------
+r    0.048286745831099 
+w    1.257915657415868 
+u    0.055900726268174 
+-------MOMENTS GENERATED & STATISTICS--------
+Ratio KY [3.04]    3.449880288255422
+Ratio mworthVE/mworthWW [8]   21.609614231393977
+Fraction E [7.55]    0.085098233337433
+(UL:    0.032555467008847, US:    0.023345259259327) Unemploy. rate [4- 6]    0.055900726268174
+Fraction of nonE>E (rlv to whole pop) [0.39]    0.023189906747551
+Fraction of U>E (rlv to new entrant) [20]    0.220961235990469
+Worker exit rate (rlv to workers) [3-6.5]    0.048208434684109
+Nshare (US)    0.006747013399252, 	 Nshare(UL):    0.002954742450966, 	 Nshare [0.1]:    0.009701755850218
+(U>E/pop>E) [0.2]    0.220961235990469
+Wealth Gini [0.84]    0.822125947934120
+Earning Gini [0.36]    0.380566891440484
+Top 1 [41.8]    0.216869179216716
+Zero wealth fraction [7- 13]    0.058649225761958
+Fraction U>nonU (rlv to unemployed) [40- 65]    0.529987289518173
+
+-------TRANSITION Worker to entrepreneur / ABILITY--------
+very low	 middle 	 very high
+   0.024349816072499	   0.018511454219279	   0.022829010733450	
+-------TRANSITION Entrepreneur to Worker / ABILITY--------
+very low 	 middle 	 very high
+   0.188093047705526	   0.217271515897755	   0.206465185004219	
+--------- TRANSITION MATRIX BTW CLASSES ------
+  	  U     	 W     	 E 
+U 	 0.4700 	 0.4383 	 0.0917 
+W 	 0.0272 	 0.9518 	 0.0210 
+E 	 0.0748 	 0.2066 	 0.7186 
+---------------
+--------- WEALTH DISTRIBUTION STATISTICS ------
+Top 0.1 [22]    0.041787757355152
+Top 1 [41.8]    0.216869179216716
+Top 5 [?]    0.558924062345302
+Top 10 [77.2]    0.760229567653521
+Top 20 [?]    0.893869856281039
+Bot 20 [?]    0.003301606744937
+Bot 40 [?]    0.018892301074812
+Bot 60 [?]    0.049517658393137
+Bot 80 [?]    0.106130143718961
+mworthVE   28.804345263358414
+mworthWW    1.332941206396553
+mworthUS    1.207197706244164
+mworthUL   60.615589447870398
+---------------
+--------- PRODUCTION & CAPITAL -----
+CapitalVE    5.580491138868370
+ProductionVE    1.461809701655036
+Totalcapital   10.690393092083497
+Totallabor    0.862886038600558
+Corproduction    1.636962487187942
+Corcapital    5.109901953215126
+Totalproduction    3.098772188842978
+CapitalVE/Totalcapital    0.522009910281116
+---------------
+--------- TAXATION -----
+Corporate revenu    0.000000000000000
+Expenditure    0.015251621359846
+Revenue Basis    1.085437858521195
+Optimal tax    0.014051123461480
+-------MASS--------
+WW    0.859001040394411 
+U    0.055900726268174 
+VE    0.085098233337433 
+R:    0.049044813432012,	 W:    1.252989150249759,	 K:    5.404155531143306	, L:    0.836109226798274, 	 TAX:    0.055879115220476
+
+-------EQUILIBRIUM PRICES AND AGGREGATE--------
+r    0.049044813432012 
+w    1.252989150249759 
+u    0.056079555687125 
+-------MOMENTS GENERATED & STATISTICS--------
+Ratio KY [3.04]    3.465818058958927
+Ratio mworthVE/mworthWW [8]   21.235901393215631
+Fraction E [7.55]    0.085366102449531
+(UL:    0.032749891104182, US:    0.023329664582943) Unemploy. rate [4- 6]    0.056079555687125
+Fraction of nonE>E (rlv to whole pop) [0.39]    0.023274117672424
+Fraction of U>E (rlv to new entrant) [20]    0.220490536649483
+Worker exit rate (rlv to workers) [3-6.5]    0.048304524871102
+Nshare (US)    0.006726775359090, 	 Nshare(UL):    0.002978384030456, 	 Nshare [0.1]:    0.009705159389546
+(U>E/pop>E) [0.2]    0.220490536649483
+Wealth Gini [0.84]    0.820577522311643
+Earning Gini [0.36]    0.380864443173340
+Top 1 [41.8]    0.216744278373484
+Zero wealth fraction [7- 13]    0.057921331516209
+Fraction U>nonU (rlv to unemployed) [40- 65]    0.528345046067903
+
+-------TRANSITION Worker to entrepreneur / ABILITY--------
+very low	 middle 	 very high
+   0.024548485681721	   0.018626779858405	   0.022802908634199	
+-------TRANSITION Entrepreneur to Worker / ABILITY--------
+very low 	 middle 	 very high
+   0.188258118634947	   0.217412330006661	   0.206655498982873	
+--------- TRANSITION MATRIX BTW CLASSES ------
+  	  U     	 W     	 E 
+U 	 0.4717 	 0.4368 	 0.0915 
+W 	 0.0272 	 0.9517 	 0.0211 
+E 	 0.0748 	 0.2068 	 0.7184 
+---------------
+--------- WEALTH DISTRIBUTION STATISTICS ------
+Top 0.1 [22]    0.041707598003927
+Top 1 [41.8]    0.216744278373484
+Top 5 [?]    0.558678157912655
+Top 10 [77.2]    0.759874812611517
+Top 20 [?]    0.892119257981940
+Bot 20 [?]    0.003226534909110
+Bot 40 [?]    0.020904069160121
+Bot 60 [?]    0.048587293209413
+Bot 80 [?]    0.107880742018060
+mworthVE   28.891144970785533
+mworthWW    1.360485925971363
+mworthUS    1.234806581842621
+mworthUL   60.808446664118669
+---------------
+--------- PRODUCTION & CAPITAL -----
+CapitalVE    5.607829848029107
+ProductionVE    1.468761452338425
+Totalcapital   10.791865380418809
+Totallabor    0.862530622067159
+Corproduction    1.645038867480009
+Corcapital    5.184035532389703
+Totalproduction    3.113800319818434
+CapitalVE/Totalcapital    0.519634896317756
+---------------
+--------- TAXATION -----
+Corporate revenu    0.000000000000000
+Expenditure    0.015185040124647
+Revenue Basis    1.080741511208326
+Optimal tax    0.014050575431001
+-------MASS--------
+WW    0.858554341863367 
+U    0.056079555687125 
+VE    0.085366102449531 
+R:    0.049628326577200,	 W:    1.249233333827456,	 K:    5.393149531205626	, L:    0.841393505852051, 	 TAX:    0.047513407262581
+

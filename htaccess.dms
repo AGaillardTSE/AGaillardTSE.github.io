@@ -1,0 +1,16 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+Redirect /download/EUI/ /projects/?dir=ELMM
+Redirect /download/eui/ /projects/?dir=ELMM
+Redirect /download/note_housing/ /projects/?dir=HOUSING_notes
+Redirect /GK_entrepreneurship.pdf /projects/ELMM/GK_ELMM_paper.pdf
+# END WordPress

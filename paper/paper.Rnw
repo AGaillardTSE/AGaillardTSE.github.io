@@ -1,0 +1,3232 @@
+
+\documentclass{article}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx, verbatim}
+\usepackage{float,amssymb, amsthm, mathrsfs}
+\usepackage[fleqn]{amsmath}
+\usepackage{blkarray}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{url}
+\usepackage{float}
+\usepackage{textcase}
+\usepackage{eurosym}
+\usepackage{empheq}
+ \usepackage{tabu}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage{dsfont}
+\usepackage{bbm}
+\usepackage{url}
+\usepackage[small]{titlesec}
+\usepackage{bookmark}
+\usepackage{setspace}
+\usepackage{footmisc}
+\usepackage{longtable}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+\counterwithin*{equation}{section}
+\newtheorem{test}{Test}[section]
+\newtheorem{proposition}{Proposition}
+
+\newcommand{\esp}[1]{\mathbb{E}[ #1 ]}
+\newcommand{\var}[1]{\mathbb{V}[ #1 ]}
+\newcommand{\cov}[1]{\mathbb{C}[ #1 ]}
+\newcommand{\un}[1]{\mathds{1}[ #1 \geq0]}
+\newcommand{\unn}[1]{\mathds{1}[ #1 <0]}
+\newcommand{\uns}[1]{\mathds{1}[ #1 ]}
+\newcommand\Ind{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\setbox0\hbox{$#1#2$}\copy0\kern-\wd0\mkern4mu\box0}} 
+\newcommand{\plim}[1]{\text{plim}_{ #1 \rightarrow \infty}}
+\newcommand{\plims}{\text{plim}}
+\newcommand{\partder}[2]{\frac{\partial #1}{\partial #2}}
+\newtheorem{assumption}{Assumption}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{mydef}{Definition}
+\newtheorem{shiny}{ShinyApp}
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\oddsidemargin}{0in} 
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-9cm}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+\linespread{1.5}
+
+
+\usepackage[a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+
+\usepackage[bibstyle=numeric,citestyle=authoryear,backend=bibtex,sorting=nyt]{biblatex}
+\usepackage{hyperref}
+
+\bibliography{references}
+
+\begin{document}
+
+
+\title{\vspace{-1cm}Labor Market Frictions and Entrepreneurship}
+\author{Alexandre Gaillard\footnote{Toulouse School of Economics} \quad \quad  Sumudu Kankanamge\footnote{Toulouse School of Economics}}
+\maketitle
+
+
+
+\vspace{3cm}
+\begin{abstract}
+\noindent
+We theoretically examine how downside risk insurance affects entrepreneurship decision. We develop a Bewley - Huggett - Aiyagari model with labor market friction incorporating entrepreneurship. In this context, entrepreneurs face the risk of losing part of their wealth, of being exclude from the financial market and falling in unemployment. We calibrate the model to match the observed transitions between and within occupations as well as the firm size distribution. We use the model to quantify the impact of relaxing entrepreneur's risk of bankrupt on the aggregate outcomes, prices and the pool of entrepreneurs.  \\ \vspace{0.3cm} 
+\end{abstract}
+
+\textbf{JEL Codes:} E24, E61, J21, J24  
+
+\textbf{Keywords:} Entrepreneurship, Downside Risk, Frictions, Heterogeneous Agents, Bankruptcy.
+
+<<setup1, include=FALSE, echo=FALSE>>=
+opts_chunk$set(fig.path='figures/plots-', fig.align='center', fig.show='hold', eval=TRUE, echo=TRUE)
+options(replace.assign=TRUE,width=80)
+options(xtable.comment = FALSE)
+options(stargazer.header = FALSE)
+Sys.setenv(TEXINPUTS=getwd(),
+           BIBINPUTS=getwd(),
+           BSTINPUTS=getwd())
+library(xtable)
+library(stargazer)
+@
+<<setup, include=FALSE, cache=TRUE, echo=FALSE>>=
+
+
+
+# For after, define the maxprod, maxgrid, maxtype..
+maxprod = 3
+maxgrid = 250
+maxtype = 2
+
+
+wd = "/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/data/"
+load(file=paste0(wd, "CEPR_data_couples_org9415.RData"))
+
+b <- final_data
+
+rm(final_data)
+b = b[order(b$year_id),]
+b = b[order(b$id_year),]
+b = b[order(b$unique_id),]
+
+
+table(b$selfemp)
+table(b$selfemp, b$lfstat)
+table(b$selfinc, b$lfstat)
+b$selftot[b$selfemp == " 0" | b$selfinc == " 0"] <- "0"
+b$selftot[b$selfemp == " 1" | b$selfinc == " 1"] <- "1"
+tabglobal = table(b$selftot, b$lfstat)
+shareself = tabglobal[2,1]/(tabglobal[1,1] + tabglobal[1,4] + tabglobal[2,1])
+shareself
+
+b$educ2[b$educ92 == "Less than 1st grade"] <- "1"
+b$educ2[b$educ92 == "1st-4th grade"] <- "2"
+b$educ2[b$educ92 == "5th-6th grade"] <- "3"
+b$educ2[b$educ92 == "7th-8th grade"] <- "4"
+b$educ2[b$educ92 == "9th grade"] <- "5"
+b$educ2[b$educ92 == "10th grade"] <- "6"
+b$educ2[b$educ92 == "11th grade"] <- "7"
+b$educ2[b$educ92 == "12th grade-no diploma"] <- "8"
+b$educ2[b$educ92 == "HS graduate, GED"] <- "9"
+b$educ2[b$educ92 == "Some college but no degree"] <- "10"
+b$educ2[b$educ92 == "Associate degree-occupational/vocational"] <- "11"
+b$educ2[b$educ92 == "Associate degree-academic program"] <- "12"
+b$educ2[b$educ92 == "Bachelor's degree"] <- "13"
+b$educ2[b$educ92 == "Master's degree"] <- "14"
+b$educ2[b$educ92 == "Professional school"] <- "15"
+b$educ2[b$educ92 == "Doctorate"] <- "16"
+
+b$finc[b$faminc %in% c("<5000", "5000-7499", "7500-9999")]  <- "1"
+b$finc[b$faminc %in% c("10000-12499","12500-14999")] <- "2"
+b$finc[b$faminc %in% c("15000-19999", "20000-24999")] <- "3"
+b$finc[b$faminc %in% c("25000-29999","30000-34999")] <- "4"
+b$finc[b$faminc %in% c("35000-39999", "40000-49999")] <- "5"
+b$finc[b$faminc %in% c("50000-59999","60000-74999")] <- "6"
+b$finc[b$faminc %in% c("75000+ / 75000-99,999","100000-149999", "150000+")] <- "7"
+
+b$finc1 <- ifelse(b$faminc %in% c("<5000", "5000-7499", "7500-9999"),1,0)
+b$finc2 <- ifelse(b$faminc %in% c("10000-12499","12500-14999"),1,0)
+b$finc3 <- ifelse(b$faminc %in% c("15000-19999", "20000-24999"),1,0)
+b$finc4 <- ifelse(b$faminc %in% c("25000-29999","30000-34999"),1,0)
+b$finc5 <- ifelse(b$faminc %in% c("35000-39999", "40000-49999"),1,0)
+b$finc6 <- ifelse(b$faminc %in% c("50000-59999","60000-74999"),1,0)
+b$finc7 <- ifelse(b$faminc %in% c("75000+ / 75000-99,999","100000-149999", "150000+"),1,0)
+
+b$wagelvl<-cut(as.numeric(b$wage4), c(0,10,12.5,16,20,25,35, 1000), right=FALSE)
+
+# result = table(b$wagelvl)/(length(truedata))
+
+# result = result/sum(result)
+m=c()
+subset1 <- b$wage4[b$wagelvl %in% c("[35,1e+03)")]
+m[7]=mean(as.numeric(subset1))
+subset1 <- b$wage4[b$wagelvl %in% c("[25,35)")]
+m[6]=mean(as.numeric(subset1))
+subset1 <- b$wage4[b$wagelvl %in% c("[20,25)")]
+m[5]=mean(as.numeric(subset1))
+subset1 <- b$wage4[b$wagelvl %in% c("[16,20)")]
+m[4]=mean(as.numeric(subset1))
+subset1 <- b$wage4[b$wagelvl %in% c("[12.5,16)")]
+m[3]=mean(as.numeric(subset1))
+subset1 <- b$wage4[b$wagelvl %in% c("[10,12.5)")]
+m[2]=mean(as.numeric(subset1))
+subset1 <- b$wage4[b$wagelvl %in% c("[0,10)")]
+m[1]=mean(as.numeric(subset1))
+
+
+
+b$educ22[b$educ2 %in% c(1,2,3,4)] <- "1"
+b$educ22[b$educ2 %in% c(5,6,7,8)] <- "2"
+b$educ22[b$educ2 %in% c(9,10)] <- "3"
+b$educ22[b$educ2 %in% c(11,12)] <- "4"
+b$educ22[b$educ2 %in% c(13)] <- "5"
+b$educ22[b$educ2 %in% c(14,15,16)] <- "6"
+
+
+b$educ222[b$educ2 %in% c(1,2,3,4,5,6,7,8)] <- "1"
+b$educ222[b$educ2 %in% c(9)] <- "2"
+b$educ222[b$educ2 %in% c(10)] <- "3"
+b$educ222[b$educ2 %in% c(11,12)] <- "4"
+b$educ222[b$educ2 %in% c(13)] <- "5"
+b$educ222[b$educ2 %in% c(14,15,16)] <- "6"
+
+
+Entrep <- b[which(b$selftot == 1),]
+Entrep1 <- Entrep[which(Entrep$educ222 == 1),]
+Entrep2 <- Entrep[which(Entrep$educ222 == 2),]
+Entrep3 <- Entrep[which(Entrep$educ222 == 3),]
+Entrep4 <- Entrep[which(Entrep$educ222 == 4),]
+Entrep5 <- Entrep[which(Entrep$educ222 == 5),]
+Entrep6 <- Entrep[which(Entrep$educ222 == 6),]
+
+educ1 <- b[which(b$educ222 == 1),]
+educ2 <- b[which(b$educ222 == 2),]
+educ3 <- b[which(b$educ222 == 3),]
+educ4 <- b[which(b$educ222 == 4),]
+educ5 <- b[which(b$educ222 == 5),]
+educ6 <- b[which(b$educ222 == 6),]
+
+(nrow(Entrep1)+nrow(Entrep2))/(nrow(educ1)+nrow(educ2))
+nrow(Entrep3)/nrow(educ3)
+nrow(Entrep4)/nrow(educ4)
+nrow(Entrep5)/nrow(educ5)
+nrow(Entrep6)/nrow(educ6)
+
+b$educd1 <- ifelse(b$educ2 %in% c(1,2,3,4,5,6,7,8),1,0)
+b$educd2 <- ifelse(b$educ2 %in% c(9),1,0)
+b$educd3 <- ifelse(b$educ2 %in% c(10),1,0)
+b$educd4 <- ifelse(b$educ2 %in% c(11,12),1,0)
+b$educd5 <- ifelse(b$educ2 %in% c(13),1,0)
+b$educd6 <- ifelse(b$educ2 %in% c(14,15,16),1,0)
+
+b$aggu1 <- ifelse(b$year  == "1994",1,0)
+b$aggu2 <- ifelse(b$year  == "1995",1,0)
+b$aggu3 <- ifelse(b$year  == "1996",1,0)
+b$aggu4 <- ifelse(b$year  == "1997",1,0)
+b$aggu5 <- ifelse(b$year  == "1998",1,0)
+  b$aggu6 <- ifelse(b$year  == "1999",1,0)
+  b$aggu7 <- ifelse(b$year  == "2000",1,0)
+  b$aggu8 <- ifelse(b$year  == "2001",1,0)
+  b$aggu9 <- ifelse(b$year  == "2002",1,0)
+  b$aggu10 <- ifelse(b$year  == "2003",1,0)
+  b$aggu11 <- ifelse(b$year  == "2004",1,0)
+  b$aggu12 <- ifelse(b$year  == "2005",1,0)
+  b$aggu13 <- ifelse(b$year  == "2006",1,0)
+  b$aggu14 <- ifelse(b$year  == "2007",1,0)
+  b$aggu15 <- ifelse(b$year  == "2008",1,0)
+  b$aggu16 <- ifelse(b$year  == "2009",1,0)
+  b$aggu17 <- ifelse(b$year  == "2010",1,0)
+  b$aggu18 <- ifelse(b$year  == "2011",1,0)
+  b$aggu19 <- ifelse(b$year  == "2012",1,0)
+  b$aggu20 <- ifelse(b$year  == "2013",1,0)
+  b$aggu21 <- ifelse(b$year  == "2014",1,0)
+  
+# 2) Selfemployment
+
+# Consider that if selfemp == 1, change lfstat into selfemp
+b$lfsta_emp = ifelse(b$selftot == "1", "Self Employed", b$lfstat)
+# b$lfsta_emp = ifelse(b$schenr == " 0", "In education", b$lfsta_emp)
+# table(b$lfsta_emp)
+# table(b$lfsta_emp, b$lfstat)
+
+ # b$lfsta_emp = ifelse(b$selftot, "Self Employed", b$lfsta_emp) # broader definition of self employed
+
+b$educ2222[b$educ2 %in% c(1,2,3,4,5,6,7,8)] <- 1
+b$educ2222[b$educ2 %in% c(9)] <- 2
+b$educ2222[b$educ2 %in% c(10)] <- 3
+b$educ2222[b$educ2 %in% c(11,12)] <- 4
+b$educ2222[b$educ2 %in% c(13)] <- 5
+b$educ2222[b$educ2 %in% c(14,15,16)] <- 6
+
+b$age <- as.numeric(b$age)
+x = seq(22, 60, by=1)
+b$worker <- ifelse(b$lfstat == "Employed", 1, 0)
+workers <- b[which(b$worker == 1),]
+workers$wage <- as.numeric(workers$wage1)
+workers$wage <- ifelse(workers$wage == 0, NA, workers$wage)
+
+avgwage1 = c()
+avgwage2 = c()
+avgwage3 = c()
+avgwage4 = c()
+avgwage5 = c()
+avgwage6 = c()
+varwage = c()
+for(i in 1:38) {
+  avgwage1[i] = mean(log(workers$wage[workers$educ2222 == 1 & workers$age == (i+21)]), na.rm = TRUE)
+  avgwage2[i] = mean(log(workers$wage[workers$educ2222 == 2 & workers$age == (i+21)]), na.rm = TRUE)
+  avgwage3[i] = mean(log(workers$wage[workers$educ2222 == 3 & workers$age == (i+21)]), na.rm = TRUE)
+  avgwage4[i] = mean(log(workers$wage[workers$educ2222 == 4 & workers$age == (i+21)]), na.rm = TRUE)
+  avgwage5[i] = mean(log(workers$wage[workers$educ2222 == 5 & workers$age == (i+21)]), na.rm = TRUE)
+  avgwage6[i] = mean(log(workers$wage[workers$educ2222 == 6 & workers$age == (i+21)]), na.rm = TRUE)
+  avgwage =c(avgwage1[i], avgwage2[i], avgwage3[i], avgwage4[i], avgwage5[i], avgwage6[i])
+  varwage[i] = var(avgwage)
+}
+
+var1 = var(avgwage1)
+var2 = var(avgwage2)
+var3 = var(avgwage3)
+var4 = var(avgwage4)
+var5 = var(avgwage5)
+var6 = var(avgwage6)
+varwithin = c(var1,var2,var3,var4,var5,var6)
+
+@
+
+
+
+% First, this increases the incentive of low-ability worker to switch to entrepreneur and second the implied lower unemployment rate contributes to a better matching between firms and unemployed people which reduce even more the unemployment rate. 
+
+
+\clearpage 
+
+\section{Introduction}
+
+[TO BE DONE]
+
+
+Our paper is organized as follows. We document in section 2 the stylized facts that lead our model specification. Section 3 describes the models used as well as the equilibrium conditions. We purpose an extension of our benchmark model in section 4 to account for spillover effect in a model \'a la \textcite{mortensen}. We calibrate our benchmark model in section 5 and section 6 presents results. Section 7 runs policy experiments and section 8 concludes.
+
+\clearpage
+
+\section{Model}
+\subsection{Contribution}
+Our model contribution to the existing literature is twofold. First, We build a \textcite{bewley} - \textcite{huggett} - \textcite{aiyagari94} model with heterogenous agents in the spirit of \textcite{main} with labor market frictions incorporating three different types of occupations: workers, entrepreneurs and unemployed people. \textcite{donovan} has also unemployed worker and entrepreneurs but he does not explicitly model the searching behavior of agents. Moreover, his model is build in order to identify the sources of capital misallocation. In our model instead, an entrepreneur can search on-the-business to find a job and a worker can search on-the-job to start a business. Unemployed people can do both at the same time. \textcite{milan} use a \textcite{mortensen} framework including entrepreneurs to account for the observed transitions between occupations but their model does not incorporate wealth perspective. However, it appears crucial since small entrepreneurs are often financially constrained (\textcite{quadrini00}).
+
+% Finally, we introduce a downside risk insurance in two different policy experiments. First, we insure unemployed worker starting their business against the risk of bankruptcy, by providing an UI in the case where they bankrupt and by offering an income complement if the return to entrepreneurship is below the UI that they could get by remaining unemployed worker. This policy is similar to the one implemented in France in 2002 and empirically studied by \textcite{hombert}. Second, we insure all entrepreneurs against bankruptcy risk by offering them an UI in case of failure.
+
+
+% The way we model returns to entrepreneurship and its correlation with labor income is inspired from \textcite{poschke}. In his model, the observed U-shaped curve between entrepreneurship and educational attainment is obtained because returns to entrepreneurship are generated using convex function of the individual productivity while labor income displays a linear relationship. In this framework, low-qualified individuals and high-productive people find it more valuable to start a business than being a worker. However, his model is restrictive in the sense that it only study the productivity level as factor for the decision to switch between occupations. This is unlikely to be the case, as mentioned by \textcite{quadrini00} since the amount of collateral seems to matter, above all for small business. 
+
+\subsection{Demography, timing, endowments}
+There is a mass one of individuals in the economy. All of them live forever. There is neithier entry nor exit in the model, so that the demography of the model is static. 
+
+Each period, an individual is in one of this three occupations ($o$): unemployment ($o_u$), entrepreneurship ($o_e$) or worker ($ o_w $) with $ o \in \mathcal{O} \equiv \{ o_u, o_e, o_w \} $. Depending on the opportunities offer to him, the individual makes his occupational choice as described later. Each individual is endowed with an innate ability level $ \theta \in \Theta $, a wealth level $ a \in \mathcal{A} $ and, except for the entrepreneur, a business idea $ \xi \in \Xi \equiv \{ 0, 1 \} $. An agent being in a worker situation also face an idiosyncratic shock over his productivity level $ y \in \mathcal{Y} $. An entrepreneur is either in a good or in a bad state $ j \in \{ bad, good \} $. Innate ability is determined early in life, before the individual enter the model. 
+
+In order to reduce the size of the following value functions, we do not incorporate the innate ability since it does not evolve over time (for instance, $ EV(a',y',\xi) $ means $ EV(a',y',\theta,\xi) $). 
+
+\subsection{Preferences and technologies}
+The preferences over consumption are described by a CRRA utility, which is the usual assumption in most of the quantitative macroeconomics literature. We also introduce disutility of efforts to search for a job ($s_w$) and to search for getting started the business idea ($s_e$) such that
+\begin{align*}
+u(c,s_w, s_e) = \frac{c^{1-\sigma}}{1 - \sigma} - s_w^{\psi_w} - s_e^{\psi_e} 
+\end{align*}
+Where $c$ specifies the consumption of the household and $\psi_w$ and $ \psi_e$ are the elasticity of the respective searching efforts.
+
+As in \textcite{main}, we adopt a two sectors economy: a corporate sector only populated by workers and an entrepreneurial sector only populated by entrepreneurs. The corporate sector displays a standard Cobb-Douglas technology with total factor productivity $A$, capital level $K$ and labor employed $L$. 
+\begin{align*}
+Y(K,L) = AK^\alpha L^{1- \alpha}
+\end{align*}
+The entrepreneur's technology has decreasing return to scale with parameter $ 0 < \nu < 1 $. The returns to entrepreneurship depend on the innate ability\footnote{As we will see later, the worker's labor income also depends on his innate ability. Thus, there exists a correlation between the return to entrepreneurship and the worker's labor income.} $ \theta $ through a function $ g: \theta \mapsto \mathcal{R} $ and the entrepreneurial state $ j $ through $ a_j $, such that
+\begin{align*}
+f(k, \theta, j) = a_j g(\theta) k^\nu
+\end{align*}
+When getting an idea ($ \xi = 1 $), a worker or an unemployed individual can choose how many effort to allocate in order to get the opportunity to open the business idea\footnote{This effort describe the agency costs, the time needed to fill administrative forms, to respect product norms or to run the business until achieving its maturity.}. The probability of getting the opportunity of opening his business arrives at a poisson rate, function of the searching effort $ s_e $. In the same way, an entrepreneur or an unemployed individual can choose how many effort to allocate in order to find a job opportunity. The probability of getting a job opportunity arrives at a poisson rate function of the searching intensity $ s_w$. We have
+\begin{align*}
+\pi_e(s_e) &= 1 - e^{\kappa_e s_e} \\
+\pi_w(s_w) &= 1 - e^{\kappa_w s_w}
+\end{align*}
+Under our specification, we get seven types of different individuals in our economy: entrepreneurs, workers endowed with a business idea and those without idea as well as short-run and long-run unemployed individuals without and with a business idea.
+
+
+% \subsection{Demographic}
+% In order to assess the unemployment dynamic, we assume that the labor force is static, but we explicitly model the entry and exit from the labor force. This implies that each period a given fraction of young people with educational innate ability $ \theta $ enters the labor force as unemployed worker and that another fraction exits the labor force and becomes old retired worker. 
+% 
+% % \footnote{A additional extension that we consider is to include labor entry from new young people recently getting their diploma and labor exit from retired worker. However, due to their low fraction in the population, our main results are not affected.} 
+% 
+% Regarding the data, this additional feature seems to be important since a non-negligible fraction of unemployed people chooses to be entrepreneur when just educated due to a lack of job opportunities as explained in \textcite{samaniego}. 
+
+% \color{red}In the current code, I do not include any demographic perspective. But it should be added after. This is a very important thing when we think about self-employment out of necessity as many young people choose to be entrepreneur out of better perspective.
+% \color{black}
+
+\subsection{Worker}
+A worker without idea receives a wage $ wy\theta $ depending on his innate ability level $ \theta $ and his idiosyncratic productivity level $ y $. He has a probability $ \eta(\theta) $ to be laid off which depends on his innate ability and a probability $ \xi $ of receiving a business idea next period. A worker has to pay a tax $ \tau_w $ on his labor income. A worker without idea can not set up any business. Finally, the probability of switching from a productivity level $y$ to another productivity level $ y' $ is given by a first-order markov chain $ \pi(y'|y) $. We have
+\begin{align*}
+V^w(a,y,0) = \max_{c,a'} \Big\{ u(c, 0, 0) + \beta \Bigl[ & \xi \big( (1-\eta(\theta)) EV^w(a',y', 1) + \eta(\theta)  V^{u_{s}}(a', 1) \big) \\
+&+ (1 - \xi) \big( \eta(\theta)  V^{u_{s}}(a', 0) + (1 - \eta(\theta)) EV^w(a',y', 0) \big) \Bigr]  \Big\} 
+\end{align*}
+\vspace{-1.3cm}
+\begin{align}
+\text{Subject to:}  \quad &c = (1 - \tau_w) wy\theta + (1+r) a  - a' \\
+\quad &a' \geq 0  \quad \quad \quad c > 0
+\end{align}
+When getting a business idea, a worker can choose how many effort $s_e$ to allocate in order to run his business. He gets the opportunity with probability $ \pi_e(s_e) $ as described before. If the worker succeed, he chooses between remaining worker or starting his business. If his job is destroyed at the same time of receiving this opportunity (with probability $ \eta(\theta) \pi_e(s_e) $) he chooses between starting the business or falling in a short-run unemployment situation. A worker loses his business idea with probability $ \zeta $.
+
+When a worker chooses to start a business, he has to pay a fixed cost $c$. Moreover, he does not know the state of his future activity which can be either in a bad or in a good state. We assume that the probability of each state is given by the invariant distribution $\hat{\Pi}_j$. We have
+\begin{align*}
+V^w(a,y,1) = \max_{c,a',s_e} \Big\{ &u(c, 0, s_e) \\
+&+ \beta \Big[ (1 - \zeta) \Big( (1-\eta(\theta)) \Bigl[ \pi_e(s_e) EV^w_{w,e}(a',y',1) + (1 - \pi_e(s_e)) EV^w(a',y',1) \Big] \\
+&+ \eta(\theta) \Big[ (1 - \pi_e(s_e)) V^{u_s}(a',1) + \pi_e(s_e) V^w_{u_s,e}(a',1) \Big] \Big) \\
+&+ \zeta \Big( \eta(\theta)  V^{u_{s}}(a',0) + (1 - \eta(\theta)) EV^w(a',y',0) \Big) \Bigr]  \Big\}
+\end{align*}
+\vspace{-1.3cm}
+\begin{align}
+ \text{Subject to:}  \quad &(1), \quad (2) \\ \nonumber
+ \quad &s_e \geq 0 \\
+\quad V^w_{w,e}(a,y,1) &= \max \{ V^w(a,y, 1), E_jV^e(a-c_e,j) \} \\
+ V^w_{u_s,e}(a,1) &= \max \{ V^{u_s}(a, 1), E_jV^{e}(a-c_e,j) \} 
+\end{align}
+Finally, the optimal searching effort $s_e$ to start his business idea is given by the solution of 
+\begin{align}
+\psi_e (s_e^*)^{\psi_e} = \beta \kappa_e e^{-\kappa_e s_e} \Big( (1-\eta(\theta)) EV^w_{w,e}(a',y',1)  + \eta(\theta) V^w_{u_s,e}(a',1)\Big) 
+\end{align}
+
+\subsection{Unemployed worker}
+An unemployed worker can be either short-run or long-run unemployed. As the worker, an unemployed individual is endowed with an innate ability $ \theta $ and has a business idea or not. We assume that a short-run unemployed worker fall in long-run unemployment with probability $p_l$. A short-run unemployed worker ($ \epsilon = s $) receive an unemployment insurance (UI) proportional to his innate ability level $ w\theta $ with replacement rate $ z $ whereas the long-run unemployed worker ($ \epsilon = l $) gets a fixed amount $ m $ such that $ m \leq wz\theta_0 $, that is, $m$ is lower than the lowest UI given to a short-run unemployed worker in the economy\footnote{This is mainly to ensure that an individual can always consume and that long-run unemployment is more costly than short-run unemployment.}. It both situation, he can search for a job with effort intensity $ s_w $ and he has a probability to find equal to $ \pi_w(s_w) $. When finding a job, we assume that the future worker's productivity shock level $ y $ is drawn from the invariant probability distribution $ \hat{\Pi}_y $.
+% We also assume that the government can monitor a given amount of searching effort that is a condition for getting the UI for a short-run unemployed individual. This is a realistic assumption since the UI is often conditional on a degree of individual's actions to search for a job (registering to Job Connection, records all job search efforts, fill a weekly claim for benefits...). 
+% In this sense, to continue getting unemployment benefits, a short-run unemployed worker has to maintain a minimum job search effort of $\underline{s_w}$, calibrated to match the data. In this framework, a short-run unemployment can prefere to be "long-run" unemployed without UI than searching for a new job. We have:
+\begin{align*}
+V^{u_\epsilon}(a,0) = \max_{c,a',s_w} \Big\{ &u(c, s_w, 0) +  \beta \Big[ \xi \Big( (1-\pi_w(s_w)) V^{u_\epsilon}_{u'_\epsilon}(a',1)  + \pi_w(s_w)  E_{y'}V^{w}(a',y',1) \big) \\
+&+ (1 - \xi) \big( (1 - \pi_w(s_w)) V^{u_\epsilon}_{u'_\epsilon}(a',0) + \pi_w(s_w) E_{y'}V^{w}(a',y',0) \Big) \Big] \Big\}  
+\end{align*}
+\vspace{-1.3cm}
+\begin{align}
+\text{Subject to:}  \quad (\epsilon = s) \quad c &= (1 - \tau_w) w\theta z + (1+r) a  - a'  \\
+\quad (\epsilon = l) \quad c &= m + (1+r) a  - a' \\
+ \quad a' &\geq 0 \\
+% \quad (\epsilon = s)  \quad s_w &\geq \underline{s_w} \\
+ % \quad (\epsilon = l) \quad s_w &\geq 0 \\
+\quad s_w &\geq 0 \\
+ % \quad (\epsilon = s) \quad V^{u_s}_{u'_\epsilon}(a,\theta,\xi) &= p_l V^{u_l}(a,\theta,\xi) + (1 - p_l) \max \{V^{u_s}(a,\theta,\xi), V^{u_l}(a,\theta,\xi) \} \\
+ \quad (\epsilon = s) \quad V^{u_s}_{u'_\epsilon}(a,\xi) &= p_l V^{u_l}(a,\xi) + (1 - p_l)  V^{u_l}(a,\xi)  \\
+\quad (\epsilon = l) \quad V^{u_l}_{u'_\epsilon}(a,\xi) &= V^{u_l}(a,\xi) 
+\end{align}
+An unemployed worker with a business idea chooses how many effort $s_e$ he wants to allocate in order to get the opportunity to open his business which arrived at a probability equals to $ \pi_e(s_e) $, as defined above. When receiving this opportunity, an unemployed individual can choose either to remain in unemployment or to start a business by paying a cost $c$. An unemployed worker does not know the future business state (good or bad), that he can create, which is drawn according to the invariant probability distribution $ \hat{\Pi}_j $ and therefore makes his decision according to the expected future value of being an entrepreneur. He also has a probability $ \zeta $ to lose his idea. We have
+\begin{align*}
+V^{u_\epsilon}(a, 1) = \max_{c,a',s_w,s_e} \Big\{ &u(c, s_w, s_e) +  \beta \Big[ (1 - \zeta) \Big( \\
+& \pi_w(s_w) \big[ (1- \pi_e(s_e)) E_{y'}V^{w}(a',y', 1) + \pi_e(s_e) V^{u_\epsilon}_{w,e}(a',1) \big] \\
+&+ (1-\pi_w(s_w)) \big[ \pi_e(s_e)  V^{u_\epsilon}_{e,u'_\epsilon}(a',1)  + (1 - \pi_e(s_e)) V^{u_\epsilon}_{u'_\epsilon}(a', 1) \big] \Big) \\ 
+&+ \zeta \Big(  (1 - \pi_w(s_w)) V^{u_{\epsilon}}_{u'_\epsilon}(a',0) + \pi_w(s_w) E_{y'}V^w(a',y',0) \Big) \Big] \Big\}  
+\end{align*}
+\vspace{-1.3cm}
+\begin{align}
+\text{Subject to:}  \quad &(7), \quad (8), \quad (9), \quad (10), \quad (11), \quad (12)\\ \nonumber
+\quad s_e &\geq 0 \\
+\quad (\epsilon = s) \quad V^{u_s}_{e,u'_\epsilon}(a, 1) &= (1 - p_l) \max \{ E_jV^e(a-c_e, j), V^{u_s}(a,1) \} \\
+& \quad \quad \quad + p_l V^{u_l}(a,1) \max \{ E_jV^e(a-c_e,j), V^{u_l}(a,1) \}   \\
+\quad (\epsilon = l) \quad V^{u_l}_{e,u'_\epsilon}(a, 1) &= \max \{ E_jV^e(a-c_e,j), V^{u_l}(a,1) \} \\
+\quad V^{u_\epsilon}_{w,e}(a,1) &= \max \{ E_yV^w(a,y, 1), E_jV^e(a-c_e, j) \} 
+\end{align}
+% \textit{\textbf{Proof.} An unemployed people receiving only a job offer should always choose to switch to worker (should be done).}
+
+% As computed in appendix \ref{appendixU}, an unemployed people can choose how many effort to put in searching a job and searching to open his business idea at the same time. The both probabilities are then jointly determined such that
+Note that an unemployed worker can search at the same time for starting his business and for finding a job. The optimal solution of the searching effort intensity to start his business for a given effort $s_w$ to find a job is given by the solution of the following equation, as computed in appendix \ref{appendixU}. 
+\begin{align}
+&1 - \frac{\psi_e (s_e^*)^{\psi_e}}{\beta \kappa_e (1 - \zeta) \mathcal{P}(s_w)} = \pi_e(s_e^*) \\
+&\mathcal{P}(s_w) = \pi(s_w) (V_{w,e}(a',1) - E_{y'}V_w(a',y',1)) + (1 - \pi(s_w)) (V^{u_\epsilon}_{e,u_{\epsilon'}}(a',1) - V^{u_\epsilon}_{u_\epsilon'}(a',1)) \nonumber
+\end{align}
+
+
+\subsection{Entrepreneur}
+An entrepreneur rises revenue from his business. His benefits are equal to $ f(k,j,\theta) $ as defined before and his cost is the interest paid over the amount that he borrowed equal to $k-a$. As in \textcite{Buera2011}, the entrepreneur is borrowing constrained by an external creditor such that the lender will accept to lend to him only a given amount such that he agrees on repaying his debt\footnote{We also tried to implement a \textcite{main} borrowing constraint type, such that the entrepreneur can borrow only if $ V^e > V^{u_l} $. Supposing that the entrepreneur already refuse all job offer before deciding whether or not he wants to leave the contract with the creditor. However, this did not change the fundamental results of the calibration.}. In this sense, we assume that the fraction of benefits that the entrepreneur can kept if he runs away from the contract with the creditor is equal to $ f $\footnote{In our specification, the higher is $f$ the higher is the tightness of the borrowing constraint.}.
+
+An entrepreneur with state $j$ has future stochastic returns given by $ j' $ through $ a_{j'} $. The probability to switch from $j$ to $j'$ is given by a first-order markov chain $ \pi(j'|j) $.
+
+He can search a job on-the-business and find with probability $ \pi_w(s_w) $\footnote{We allow the parameter $\kappa_w $ to be different between an unemployed worker and an entrepreneur. This capture the fact that entrepreneurs could have more or less job opportunities than unemployed people.}. In such case, he decides whether to remain entrepreneur or to switch to a worker situation. When he bankrupts with an exogenous probability $ \mu $, he is assumed to fall in a long-run unemployment and can not get UI. We assume that the entrepreneur keep his business idea when he voluntary exits entrepreneurship. When the entrepreneur choose to be worker, his productivity level is assumed to be drawn from the invariant distribution $ \hat{\Pi}_y $.
+% He also has to repay a fraction $ (1 - f_2) $ for the loss of capital to the creditor. 
+Finally, he has to pay a corporate tax $ \tau_c $. Of course, an entrepreneur does not repay the starting cost each period. We then have:
+\begin{align*}
+V^e(a, j) = \max_{c,a',s_w,k} \Big\{ &u(c, s_w, 0) + \beta \Big[ (1 - \mu) \Big( \pi_w(s_w) EV^e_{w,e}(a') + (1 - \pi_w(s_w)) EV^e_{u_l,e}(a',j') \Big) \\
+&+ \mu \Big( (1 - \pi_w(s_w)) V^{u_l}(a', 1) + \pi_w(s_w) E_yV^w(a',y',0) \Big)  \Big]  \Big\} 
+\end{align*}
+\vspace{-1.3cm}
+\begin{align}
+\text{Subject to:}  \quad &c = (1 - \tau_c) (a_j g(\theta)k^\nu - (1+r)(k - a) + (1-\delta)k)  - a'  \\ \nonumber
+ \quad &a' \geq 0 \quad \quad k \geq 0 \quad  \quad s_w \geq 0 \\
+   \quad (IC) \quad &f \big[ a_j g(\theta)k^\nu  + (1 - \delta )k \big]  - (1+r)(k - a)   \geq  0 \\
+    % \quad (IC: 2) \quad &V^e(a, \theta, j) \geq V^{u_l}(fk, \theta, 1) \\
+\quad V^e_{w,e}(a,j) &= \max \{ E_yV^w(a,y,1), V^e(a,j) \} \\
+\quad V^e_{u_l,e}(a,j) &= \max \{ V^{u_l}(a), V^e(a,j) \} 
+\end{align}
+Where the optimal level of capital in the \textcite{Buera2011} borrowing constraint type is defined as
+\begin{align}
+k = \left\{\begin{matrix}
+\text{solve (IC)} \quad \text{if} \quad k \leq k^* 
+\\ 
+k = k^*  \quad \text{if} \quad k > k^*
+\end{matrix}\right.
+\quad \quad \quad \quad k^* = \Big( \frac{\nu g(y)}{r + \delta} \Big)^{\frac{1}{1-\nu}}
+\end{align}
+The optimal searching effort $s_w$ to find a job for an entrepreneur is given by
+\begin{align}
+\psi_w (s_w^*)^{\psi_w} = \beta \kappa_w e^{-\kappa_w s_w} \Big( (1-\mu) EV^e_{w,e}(a',j') + E_yV^w(a',y',0) \Big) 
+\end{align}
+
+\subsection{Government}
+We assume that the only spending of the government is through the unemployment insurance offer to any short-run unemployed worker, such that 
+\begin{align}
+G = \sum_{\theta \in \Theta} \sum_{\xi \in \Xi} \int_{\underline{a}}^{\overline{a}} w\theta z \Gamma(u_s,\theta,\xi, da)
+\end{align}
+Where $ \Gamma(u_s,\theta,\xi, da) $ is the measure over short-run unemployed workers. For the following, let us denote $ \Gamma(s) $ the measure over individuals with occupation $s$.
+
+Government rises two taxes. A corporate tax ($\tau_c$) paid by all entrepreneurs and a proportional labor income tax ($\tau_w$) payd by workers which is used to balance the government budget. 
+
+Government revenues are then given by
+\begin{align}
+T &= \sum_{\theta \in \Theta}  \sum_{y \in \mathcal{Y}}  \sum_{\xi \in \Xi} \int_{\underline{a}}^{\overline{a}} wy\tau_w \Gamma(\{w,u_s \},y, \theta,\xi, da) \\
+&+  \sum_{\theta \in \Theta}  \sum_{j \in \mathcal{J}} \int_{\underline{a}}^{\overline{a}} \tau_c \Big( a_j g(\theta) k^\nu - (1 + r)(k - a) + (1 - \delta) k \Big) \Gamma(e,j, \theta,\xi, da)  \nonumber 
+% &+  \sum_{\theta \in \Theta} \sum_{y \in \mathcal{Y}} \sum_{j \in \mathcal{J}} \int_{\underline{a}}^{\overline{a}} \tau_s  \Gamma(\{e, w, u_s, u_l \} ,j, y, \theta,\xi, da)  \nonumber
+\end{align}
+Finally, we assume that government can issue debt in order to finance his budget. We then have the flow of government debt given by:
+\begin{align}
+B_{t+1} = (1 + r_t)B_t + T_t + G_t
+\end{align}
+\subsection{Stationary Recursive Equilibrium}
+Defining the state vector $ \textbf{x} = (s, y, \theta, j, a) $ with $ a \in A$, $y \in \bar{Y}$, $ j \in \mathcal{J} $, $ \xi \in \Xi$, $\theta \in \Theta$, $s \in S $, where $ s $ is the status of the household: entrepreneur, worker, short-run or long-run unemployed worker ($ S \mathrel{\widehat{=}} \{e, w, u_s, u_l \} $); a stationary recursive equilibrium in this economy consists of a set of value functions $ V_w(a,\theta, y, \xi), V_e(a,\theta, j), V_{u_s}(a,\theta, \xi), V_{u_l}(a,\theta, \xi) $, decision rules with asset holding $ a'(\textbf{x}) $, consumption $ c(\textbf{x}) $, job search effort $ s_w(\textbf{x}) $, business search effort $ s_e(\textbf{x}) $, investment level $ k(\textbf{x}) $,  occupational choices $ s $, prices ($r,w \in \mathbb{R}$), tax parameter ($ \tau_w \in \mathbb{R} $) and a stationary measure over individuals $ \Gamma(\textbf{x}) $ such that
+\begin{itemize}
+\item the allocation choices $ c(\textbf{x}) $, $ a'(\textbf{x}) $, $ k(\textbf{x}) $, $ s_w(\textbf{x})$ and $ s_e(\textbf{x}) $ maximize the household problem given the prices $ r $, $w $ and the fixed tax parameter $ \tau_w $. 
+\item $ \Gamma(\textbf{x}) $ is the stationary probability measure induced by $ a'(\textbf{x}) $ and the first-order Markov chains $ \Pi_y $, $ \Pi_j $ and $ \Pi_\xi $.
+%  \begin{align*} 
+% \Gamma(A'\times \{y'\}\times \{\theta'\} \times \{s'\}) = \sum_{y \in Y} \sum_{\theta \in \Theta} \int_{\underline{a}}^{\overline{a}} \pi(y',\theta'|y,\theta) \mathbbm{1}_{\{a'(x) \in A'\}} \Gamma(s, y,\theta,da)
+%  \end{align*}
+\item the asset and labor markets clear. So that capital used in the non-entrepreneurial sector is equal to the difference between total asset level in the economy minus total investment in the entrepreneurial sector and government debt.
+\begin{align}
+K_c &=  \sum_{s \in S} \sum_{y \in Y} \sum_{\xi \in \Xi}  \sum_{\theta \in \Theta} \sum_{j \in \mathcal{J}} \int_{\underline{a}}^{\overline{a}} a(\textbf{x}) \Gamma(s, da) - \sum_{s \in e} \sum_{\theta \in \Theta} \sum_{j \in \mathcal{J}} \int_{\underline{k}}^{\overline{k}} k(\textbf{x}) \Gamma(e, dk) - B
+\end{align}
+For the labor market, total labor supply ($ L $) is given by
+\begin{align}
+L &=  \sum_{s \in S}\sum_{y \in \bar{Y}} \sum_{\xi \in \Xi}  \sum_{\theta \in \Theta} \int_{\underline{a}}^{\overline{a}} y \Gamma(w, da)
+\end{align}
+% And total labor employed in the non-entrepreuneurial sector ($ L_c $) is equal to the difference between total labor supply in the economy minus total labor hired by the entrepreneurial sector ($ L_e $) such that
+% \begin{align}
+% L_e &=  \sum_{y \in \bar{Y}} \sum_{\theta \in \Theta}\int_{\underline{a}}^{\overline{a}} n(y,\theta) \Gamma(\{ye, oe\}, y,\theta,da) \\
+% L_c &= L - L_e
+% \end{align}
+% Entrepreneurs use their own labor.
+ \item the wage and the interest rate are equal to the marginal products of each factor of production. No arbitrage condition implies that the rate of return in the non-entrepreneurial sector must equate the risk-free rate that equates savings and investment in the entrepreneurial sector.
+\item the government budget constraint is balanced, so that at the steady state the government has to finance interest on debt plus government spendings.
+   \begin{align}
+T = G + rB
+  \end{align}
+\item The distribution $ \Gamma $ is time-invariant. The law of motion for the distribution of agents over the state space $ \textbf{x} $ satisfies 
+\begin{align}
+\Gamma = R_\Gamma(\Gamma)
+\end{align}
+Where $ R_\Gamma $ is a one-period transition operator on the distribution $ \Gamma $ such that $ \Gamma_{t+1} = R_\Gamma(\Gamma_t) $.
+\end{itemize}
+In addition, we define the measure of the total gross domestic product ($ \Upsilon $) in this economy as the sum of the outputs in the entrepreneurial and the non-entrepreneurial sectors.
+ \begin{align} 
+\Upsilon = A K_c^\alpha L_c^{1-\alpha} + \sum_{\theta \in \Theta} \sum_{j \in \mathcal{J}} \int_{\underline{k}}^{\overline{k}} a_j g(\theta) k(\textbf{x})^\nu \Gamma(e, dk) 
+ \end{align}
+The algorithm used to solve the model is described in the appendix \ref{algorithm}.
+
+% \section{Extension to entrepreneurial employment}
+% In a second part of the analysis, we allows the entrepreneur to hire workers to better assess the spillover effects of our policy experiments. As we are in a labor friction market, the probability of matching is a function of the current unemployment level as well as the total vacancies. As mentionned in \textcite{kitao08}, entrepreneurial sector hire around half of the total employment in the US and also account for half of the total output.
+% 
+% We thus extend our benchmark model to a \textcite{mortensen} - \textcite{aiyagari94} framework in the spirit of \textcite{krusell2009} without aggregate fluctuations but with entrepreneurs. To our knowledge, we are the first to explicitly model an incomplete markets model with frictions accounting for entrepreneurs. As we will show later, incorporating this source of spillover has non-negligeable additional effects on the impacts of our policies. In this new framework, when an unemployed individual switch to entrepreneurship, he indirectly change the matching probabilities between other unemployed people, entrepreneurs and corporate sector. Second, he himself contributes to hire worker and then reduce unemployment.
+% 
+% \subsubsection{Matching technology}
+% The first change relative to our benchmark model is through the probabilies of finding a new job. Suppose that vacant jobs and unemployed workers randomly match according to an aggregate matching function $ M(S,v) $ where $S$ stands for the total searching effort to find a job and $v$ is the number of vacancies. As shown by \textcite{gomme}, this specification brings \textcite{mortensen} type model closer to the data. Suppose also, for simplicity, that there is only one job market, so that even if there is different ability types, all workers are hired for the same task. Define
+% \begin{align}
+% M(S,v) = \chi S^m v^{1-m} \quad \quad \quad S = \int s_w d\Phi(e,u_l,u_s)
+% \end{align}
+% Denote $q = S/v $, then the probability of finding a job for an individual searching with an amount $s_w$ is now assumed to follow $ \pi_w = \chi \frac{s_w}{q^{-m}} $. 
+% 
+% To model the probability that an entrepreneur fills a job, a robust but costly way should be to use the stock of labor hired as an additional input for our entrepreneur's value function\footnote{In this framework, job creation of an entrepreneur should depend on the stock of labor already employed in the firm and evolves according to $n' = \tilde{q}V + n$, where $V$ stands for the number of vacancies issued, $ \tilde{q} $ the probability of filling the vacancy and $ n $ the initial labor level in the firm.}. However, due to computational time of adding this large grid, we simplify the problem. 
+% 
+% Define $ \tilde{q} =  \chi q^{1-m} $ the probability that a given job is filled. We define the number of vacancy supplied to match the average actual behavior of a firm with size $n$. According to \textcite{davis}, the number of vacancies issued relative to the number of employees is decreasing with the firm size. In line with this fact, we assume that the relative number of vacancies supplied by a given entrepreneur is equal to $ f(n^{opti}) = \frac{n^{opti} - n}{n} $ where $ n^{opti} $ is the optimal number of worker that an entrepreneur would want to hire for a given capital level in absence of labor frictions. The difference ($n^{opti} - n$) stands for the number of vacancies issued by a given entrepreneur, so that $n$ is the number of workers at the beginning of the period hired in the business. The function $ f(n^{opti}) $ is calibrated to match the fact observed in the data, which is decreasing with respect to $ n^{opti} $. 
+% 
+% We then have the total number of employees during the period ($n^e$) equal to the previous number of worker ($n$) plus the amount of new workers that the entrepreneur successfully find in the labor market $ \tilde{q}(n^{opti} - n)$, such that
+% \begin{align}
+% n^e = n + \tilde{q}(n^{opti} - n) \quad \quad \text{with:} \quad n = \frac{n^{opti}}{(1 + f(n^{opti}))}
+% \end{align}
+% 
+% In the corporate sector, we assume that the total number of vacancies issued is equal to $ (N_c^{opti} - N_c) $ at the steady-state and that the total employment during the period is then equal to 
+% \begin{align}
+% N_c + \tilde{q}(N_c^{opti} - N_c) 
+% \end{align}
+% That is, the total number of workers plus vacancies which are filled during the period.
+% 
+% This gives us the equilibrium condition for our vacancy level such that:
+% \begin{align}
+% v = (N_c^{opti} - N_c) + \int (n^{opti} - n) d\Phi(e)
+% \end{align}
+% 
+% \subsection{Wage bargaining}
+% 
+% [SHOULD BE DONE]
+
+
+\clearpage
+
+\section{Calibration}
+
+In this section, we describe the calibration strategy that we use. We apply a mix of external calibration combining existing parameter estimates and normalizations and internal parameter minimizing the distance between equilibrium moments and their data counterparts.  
+
+\subsection{Fixed parameters}
+Some fixed parameters are set to the observed data (e.g. labor share in the corporate sector, corporate tax rate), normalized to restrict the number of estimated parameters in the model (e.g. the probability to get an idea and to lose an idea, the total factor productivity and the domestic production benefit) or taken from their estimates in the literature (e.g. the depreciation rate, the replacement rate the intertemporal elasticity). 
+
+As a model is a year, we set the probability of falling in a long-run unemployment situation $ p_l $ to one, which corresponds approximately to the US unemployment benefit policy before 2014. 
+
+
+\paragraph{Labor productivity process} 
+
+In our model, an individual's labor productivity depends on two components: a deterministic innate ability level $\theta$ and an idiosyncratic shock $y$. The natural logarithm of wages of a worker is given by
+\begin{align}
+log(w_t) + log(\theta) + log(y)
+\end{align} 
+We consider three innate ability types $ \{\theta_1, \theta_2, \theta_3 \} $ with population mass equal to the mass of people without diploma ($<$HS) $ p_1 = 0.275 $, with HS degree only $ p_2 = 0.45 $ and with at least college level (complete or not) $ p_3 = 0.275 $. The ability values are chosen so that $E(log(\theta)) = 0$ meaning that $ \theta_1 = e^{-\sigma_\theta} $, $ \theta_2 = 1.0 $ and $ \theta_3 = e^{\sigma_\theta} $ with  $ Var(log(\theta)) = \sigma_\theta $. 
+
+We specify the stochastic process for the idiosyncratic part of log-wages as a discretized version, with five states, of a simple AR(1) process with persistence $ \rho $ and unconditional variance $ \sigma^2_y $. This leaves us three parameters ($\sigma_\theta^2, \rho, \sigma_y^2$) that we calibration according to the CPS data. We use three data moments which measure the cross-sectional labor income dispersion: (i). the average earning dispersion accross education level for a given age (of about 0.0718), (ii). the average earning dispersion along the life for given education level\footnote{We will use PSID data in future calibration since CPS data is not the best dataset that should be use to estimate the dispersion of the earning process along the life. Indeed, CPS does not follow individuals over time whereas PSID does.} (around 0.0165), (iii). the almost linear earning process along the life (with a persistency of 0.96 as it is common in the literature). Figure \ref{earningprofil} in appendix displays the average earning profil at different educational attainment and different age.
+
+\paragraph{Layoff rate}
+
+We calibrate the layoff process $ \eta(\theta) $ according to the CPS transition between worker to unemployed worker. The relationship is roughly linear and we run a simple linear regression to estimate the probability to be laid off, such that
+\begin{align}
+\eta(\theta) = \alpha_\eta + \beta_\eta \theta 
+\end{align}
+
+Table \ref{tablefixedparamter} summarizes the set of fixed parameters used.
+
+
+{\renewcommand{\arraystretch}{1}
+\begin{longtable}{llll} 
+\caption{Fixed Parameters: benchmark model} 
+\label{tablefixedparamter}
+\\
+\hline \hline
+Parameter & & Value & Source   \\ \hline
+Corportation tax rate & $\tau_c$  & 0.134 & OECD\\
+Return to scale (corp.) & $\alpha$  & 0.36 & \textcite{pwmanual} \\
+Inter. Elasticity  & $\sigma $&   1.39 & \textcite{risk}  \\
+Depreciation rate & $ \delta $ & 0.06 &  \textcite{main}\\
+Replacement rate & $ z $ &  0.4 &  \textcite{shimer05}\\
+% Bankruptcy rate & $ \theta $ & 0.10 & OECD\\
+UI duration  & $p_l$ & 1.0 &  own calculation\\
+% Constant for the lay off rate & $ a_\eta $ & 0.032151 \\
+% Slope for the lay off rate  & $b_\eta $ & -0.003756 \\
+TFP & $A$ & 1.0 & Normalization  \\ 
+Entrepreneurship cost of entry & $ c_e $ & 0.0 & Normalization \\
+Domestic production & $m$  & 0.05 & Normalization\\
+Getting an entrepreneurial idea  & $ \xi $ & 1.0 & Normalization\\
+Losing an entrepreneurial idea  & $ \zeta $ & 0.0 & Normalization\\ 
+Layoff rate: intercept & $ \alpha_\eta $ & 0.05 &  own calculation\\
+Layoff rate: slope  & $\beta_\eta $ & -0.015 &  own calculation\\ \hline
+\end{longtable}
+
+\subsection{Estimated parameters}
+\paragraph{Entrepreneur' states} We divide the business state into two values whose one is normalized to one (e.g. $ a_{good} = 1.0 $). This leaves us only $ a_{bad} $ to estimate. We also assume that the probability to switch from $a_j$ to $a_{j'} $, given by $ \pi(j|j') $, is symmetric. 
+
+\paragraph{Job finding rate.} We allow to differentiate between the probability of findind a job when the is entrepreneur or unemployed worker. This allows us to capture the fact that individuals in entrepreneurial situation are more likely to find a job than unemployed workers. The job finding rate for an entrepreneur is then given by $ \kappa_w^e$. For the unemployed workers, we use a parametric form which depends on the educational attainment to compute the rate $ \kappa_w $. In this sense, we use a linear relationship (which fits approximately the transition from unemployed worker to a worker situation} so that
+\begin{align}
+\kappa_w(\theta) = \alpha_w + \beta_w \theta
+\end{align}
+
+Our calibration strategy leaves us 15 parameters to pin down 16 moments relative to the transitions between and within occupation, wealth and income distribution, unemployment rate, fraction of entrepreneurs, capital-output ratio. Results of the internal calibration are given in table \ref{calibration3}.
+
+{\renewcommand{\arraystretch}{1}
+\begin{longtable}{lll} 
+\caption{Estimated Parameters} 
+\label{calibration3}
+\\
+\hline \hline
+Parameter & & Value   \\ \hline
+ Discount rate & $ \beta $  & 0.869   \\ 
+Job search effort elasticity & $ \psi_w $ & 1.854\\
+Business search effort elasticity & $ \psi_e $ & 2.064\\
+Business idea matching par. & $ \kappa_e $ & 0.56\\
+Job matching par. (when E) & $ \kappa_w^e $ & 6.49\\
+Job matching par. (when U) & $ \alpha_w $ & 1.2 \\
+Job matching par. (when U) & $ \beta_w $ & 0.2 \\
+Bankruptcy rate & $\mu$ & 0.025 \\ \hline
+Borrowing constraint par. & $ f $     &  0.847  \\ 
+Entrepreneur's return to scale & $ \nu $ & 0.86 \\
+Entrepreneurial ability & $g(\theta)$ & [0.481, 0.527, 0.715] \\
+Entrepreneurial state & $[a_{bad} \quad a_{good}]$ & [0.415 1.0] \\
+Probability to switch & $ \pi_{a_j, a_{j'}} $& 0.185 \\ \hline
+% Job matching (when SE) & $ \kappa_u $ & 7.488 \\ \hline
+\end{longtable}
+
+\subsection{Calibration targets and generated moments}
+Table \ref{obvmoments} display some of the targets of our calibration. 
+
+{\renewcommand{\arraystretch}{1}
+\begin{longtable}{llll}
+\caption{Observed and generated moments}
+\label{obvmoments}
+\\
+\hline \hline
+Moment     & Model & Value (U.S.)  & Source     \\ \hline
+K/Y Ratio*  & 3.12  & 3.04   &  \textcite{pwmanual}   \\
+Entrepreneurs*  & 10.9\% & 10.9\% & Own calculation \\  
+Ratio of med. worth E/W & 8.73 & 8 & \textcite{main} \\ \hline
+\multicolumn{4}{l}{Labor Market}                    \\ \hline
+Unemployment rate*   & 5.32\% & 4 - 6 \% & \textcite{worldbank} \\
+Worker exit rate* & 5.83\% & 3 - 6.5\% & \textcite{shimer} and \textcite{chicago} \\
+Unemployment exit rate* & 56\% & 40 - 65 \% & Ibid. \\
+Entrepreneur exit rate* & 24.5\% & 24 - 25 \% & Own calculation\\
+Necessity share* & 12.4\% & 20\%  & \textcite{kauffman} \\ \hline
+\multicolumn{4}{l}{Wealth and Income distributions}    \\ \hline
+ 1\%wealth* & 22 & 30 & \textcite{main}. \\
+ 5\% wealth & 52 & 54 & Ibid. \\ 
+ 10\% wealth & 68 & 67 & Ibid. \\ 
+ Wealth Gini*   &  0.76 & 0.8  &  Ibid.       \\
+ Income Gini* &  0.39 & 0.36   &  \textcite{ginireport} \\ \hline
+\multicolumn{4}{l}{\footnotesize (*) Targeted.}  \\
+\end{longtable}
+Using the CPS data from 1994 to 2014, we compute an average fraction of entrepreneurs in the US economy of 10.9\% which is in the range of the existing literature. For instance, \textcite{quadrini00} finds 12\% and \textcite{Gentry04} report a fraction of entrepreneurs (households who reported owning active business assets without restriction) of 11.5\% using various definition using SCF in 1989. 
+
+For the exit rate of entrepreneurs, we estimate it using the CPS data as well. We find a value between 22\% to 25\% depending on the time period considered. This is close to the finding of \textcite{main} and \textcite{rissman}. 
+
+Transitions by productivity level within transition from worker to entrepreneur (W - E) and from entrepreneur to worker (E - W) occupations are also targeted (we show the resulting transitions in the next section). As described later, low-educated and high-educated individuals are less likely to come back to a worker situation when they are in business. We thus target transition probabilities by educational attainment in (E - W) match respectively 0.22, 0.24 and 0.22 depending if the individual has an education level lower than high-school, a high-school degree or has attended to college. We do the same for the transition (W - E) and we match respectively 0.03, 0.022 and 0.03 according to the same educational attainment groups. Using this, we indirectly infer the entrepreneurial abilities using these transitions.
+
+Results show that our overidentified simulated method of moments provide results close to the observed data. The flow of individuals between occupation is either in the considered range or a little bit outside. We also match the mass of people in each occupation as well as the wealth and the income distributions. The top 1\% is a bit far from the observed value but the number of entrepreneurs in this bracket is relatively small and does not change our fundamental results. We obtain an interest rate of 5.5\% and a tax rate parameter $ \tau_w $ equal to 1.1\%.
+
+\clearpage
+\section{Results: benchmark economy}
+In this section we compare our model outcomes to the data. We use three sources of data, First, we compute the transition rates between and within occupations as well as the share of entrepreneurs by educational attainment using the Current Population Survey (CPS) from 1994 to 2014. We average all the transitions over the time periods considered so that our steady state values are comparable to the true data. Second, we use the Survey of Consumer Finance (SCF) and the Survey of Business Owners (SBO) to compare our model distributions (firm size, wealth and income) to the actual one.
+
+\subsection{Entrepreneurship and educational attainment}
+As seen before, the model generates a fraction of entrepreneurs (10.5\%) close to the value of the data (10.9\%). By looking at the rate of entrepreneurship by educational attainment (table \ref{eduent}), our benchmark model is able to reproduce the observed U-shaped curve between education level (or innate ability in our context) and the fraction of entrepreneurs within the group. For instance, 9.69\% of the individuals with a high-school education level or less are entrepreneurs. As mentionned in \textcite{poschke}, this fact is observable in most of developped countries and seems to be consistent regardless of the entrepreneur definition used. 
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Entrepreneurship rates by education category}
+\label{eduent}
+\vspace{0.3cm}
+\begin{tabular}{@{}l|ll|lllll@{}}
+\hline \hline
+ &  & & \multicolumn{5}{l}{Educational attainment}  \\ 
+ & data source & E & $<$HS & HS & $<$C & C & $>$C \\ \hline 
+\small Own calculations & \small U.S., 1994 - 2014 CPS  & - & & 6.73 & 6.4 & 8.71 & 9.78  \\
+\small Hamilton (2000) & \small U.S., 1984 SIPP & - & & 12.6  & 11.1 & 12.6 & 15  \\ 
+\small Hipple (2004) (unincorporated) & \small U.S., 2003 CPS & - & 9.1 & 8.7  & 8.2 & 7.5 & 9.1 \\ 
+\small Hipple (2004) (incorporated) & \small U.S., 2003 CPS & - & 2.1 & 3.1 & 3.9 & 5.5 & 6.6 \\ 
+\small Lin, Picot and Compton (2000) & \small Canada, 1994  & 18.4 & 13.5  & 11.4 & 10.1 & 11.1 & 13.2 \\ 
+\small Schjerning and Le Maire (2007) & \small Denmark, 1980-96 & 10.9 & - & 10.9 & 7.4 & 3.6 & 12.9 \\
+\small Borjas and Bronars (1989) & \small U.S., 1980 Census & - & & 4.8  & 4.2 & 4.6 & 6.5 \\ \hline
+\small Benchmark & - & 10.71 & - & 11.02  & 10.04 & 11.75 & - \\
+\hline
+\multicolumn{8}{l}{{\renewcommand{\arraystretch}{1}\begin{tabular}[c]{@{}l@{}}\small Source: \textcite{poschke} and own calculations. The definition of an entrepreneur is someone who is \\ \small self-employed in the sense of \textcite{main}. That is, someone who does not hold \\ \small always his business but actively manage it. Self-employed can also have employees, so that the term \\ \small entrepreneur seems more adapted.  \end{tabular} }} 
+\end{tabular}
+\end{table}
+
+From an empirical side, this U-shaped relationship seems also to be pretty robust. For instance, using 19 OECD countries, Blanchflower (2000) find that even if we control for many demographics covariates (age, education, gender, household size, specific country unemployment rate,  the number of children as well as their age and their educational attainement) this relationship persists in discrete choice models. Schjerning and Le Maire (2007), using Danish data with fine education level and a number of controls, also find the statistially significance of this U-shaped curve. 
+
+\subsection{Transition between and within occupations}
+\subsubsection{Transition between occupations.} 
+Using again the CPS data, averaged from 1994 to 2014, we compute the year-to-year transition probability between our three occupations (worker (W), entrepreneur (E) and unemployed worker (U)) in table \ref{transprob} and we report our model results. Regarding our calibration strategy, our model does a pretty good job in reproducing the transitions between occupations. 
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Year to year transition matrix between occupations}
+\label{transprob}
+\vspace{0.3cm}
+\begin{tabular}{@{}l|lll@{}}
+\hline \hline
+ & W  & E & U \\  \hline
+W & 0.941 (0.9417) & 0.027 (0.0263) & 0.032 (0.0320) \\
+E & 0.758 (0.7559) & 0.226 (0.2107) & 0.016 (0.0335) \\
+U & 0.562 (0.5039) & 0.060 (0.0584) & 0.377 (0.4376) \\ \hline 
+\multicolumn{4}{l}{{\renewcommand{\arraystretch}{1}\begin{tabular}[c]{@{}l@{}}\small Source: CPS data and own calculations. \\ \small Benchmark model results are in parenthesis. \end{tabular} }} 
+\end{tabular}
+\end{table}
+
+As compared to the existing literature, our model does a better job than \textcite{rissman} who was not able to reproduce well the E - W transition. Our model fits well this transition since a fraction of existing entrepreneurs, who falled in a bad state, search a job on-the-business in order to get an higher labor income than their current return to entrepreneurship. 
+
+<<data22,  echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE>>=
+
+lfsta_emp = b$lfsta_emp
+table(lfsta_emp)
+lfsta_emp1 = lfsta_emp[2:length(lfsta_emp)]
+lfsta_emp = lfsta_emp[1:(length(lfsta_emp) - 1)]
+
+corresp_id = b$unique_id[1:(nrow(b) - 1)]
+corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+
+lfsta_emp = lfsta_emp[seq(1, length(lfsta_emp), by=2)]
+lfsta_emp1 = lfsta_emp1[seq(1, length(lfsta_emp1), by=2)] # do not select the relations from 1 guy to another, this way only have transitions of the same guy 
+# Remark: if selected more years (like 3), then do: by = 3, etc.
+lfsta_emp = cbind(lfsta_emp, lfsta_emp1)
+trans = as.data.frame.matrix(table(lfsta_emp[,1], lfsta_emp[,2]))
+
+# a) Raw transition matrix
+trans
+
+nbNA = sum(trans[2,])/(sum(trans))
+nbscale = 1 - trans[3,2]/sum(trans[3,])
+Xscale = 1/(1 - nbNA)
+
+# b) Transition matrix with NA
+TRANS1 = trans 
+rowsums = rowSums(TRANS1)
+for(i in 1:length(rowsums)) TRANS1[i, ] = TRANS1[i, ]/rowsums[i]
+TRANS1
+
+# c) Transition matrix without NILF
+TRANS2 = trans[-2, -2]
+rowsums = rowSums(TRANS2)
+for(i in 1:length(rowsums)) TRANS2[i, ] = TRANS2[i, ]/rowsums[i]
+TRANS2
+
+
+# 2) Focus on the ones transitioning from SE to WW:
+corresp_id = b$unique_id[1:(nrow(b) - 1)]
+corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Self Employed" & lfsta_emp[,2] == "Employed")]
+b$SEtoWW = ifelse(b$unique_id %in% selected_id, 1, 0)
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Self Employed")]
+EE = b[which(b$unique_id %in% selected_id2 & b$year_id == 1),]
+# model10 <- lm(SEtoWW ~ as.numeric(female) + as.numeric(age) + as.numeric(married) +  as.numeric(finc) + I(as.numeric(finc)^2) + I(as.numeric(finc)^3)  + aggu2 + aggu3 + aggu4 + aggu5 + aggu6 + aggu7 + aggu8 + aggu9 + aggu10 + aggu11 + aggu12 + aggu13 + aggu14 + aggu15 + aggu16 + aggu17 + aggu18 + aggu19 + aggu20 + aggu21, data=EE,weights=as.numeric(fnlwgt))
+# summary(model10)
+# fitted = model10$coefficients[5]*as.numeric(EE$finc) + model10$coefficients[6]*I(as.numeric(EE$finc)^2) + model10$coefficients[7]*I(as.numeric(EE$finc)^3)
+# plot(as.numeric(EE$finc), fitted, type="p")
+# model10educ <- lm(SEtoWW ~ as.numeric(female) + as.numeric(age) + as.numeric(married) +  as.numeric(educ222) + I(as.numeric(educ222)^2) + I(as.numeric(educ222)^3) + aggu2 + aggu3 + aggu4 + aggu5 + aggu6 + aggu7 + aggu8 + aggu9 + aggu10 + aggu11 + aggu12 + aggu13 + aggu14 + aggu15 + aggu16 + aggu17 + aggu18 + aggu19 + aggu20 + aggu21, data=EE,weights=as.numeric(fnlwgt))
+# summary(model10educ)
+# modelEWWlm <- lm(SEtoWW ~  as.numeric(female) + as.numeric(age) + as.numeric(married) + as.numeric(finc) + I(as.numeric(finc)^2) + I(as.numeric(finc)^3),data=EE, weights=as.numeric(fnlwgt))
+# summary(modelEWWlm)
+# modelEWWlm2 <- lm(SEtoWW ~  as.numeric(female) + as.numeric(age) + educd2 + educd3 + educd4 + educd5 + educd6 + aggu2 + aggu3 + aggu4 + aggu5 + aggu6 + aggu7 + aggu8 + aggu9 + aggu10 + aggu11 + aggu12 + aggu13 + aggu14 + aggu15 + aggu16 + aggu17 + aggu18 + aggu19 + aggu20 + aggu21,data=EE, weights=as.numeric(fnlwgt))
+# summary(modelEWWlm2)
+# modelEWWlm2 <- lm(SEtoWW ~  as.numeric(female) + as.numeric(age) + finc2 + finc3 + finc4 + finc5 + finc6,data=EE, weights=as.numeric(fnlwgt))
+# summary(modelEWWlm2)
+# summary(lm(SEtoWW ~ as.numeric(finc) + I(as.numeric(finc)^2) + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22) + I(as.numeric(educ22)^2),data=b,weights=as.numeric(fnlwgt)))
+# summary(glm(SEtoWW ~ as.numeric(finc) + I(as.numeric(finc)^2) + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22) + I(as.numeric(educ22)^2), family=binomial(link="probit"),data=b,weights=as.numeric(fnlwgt)))
+D = b[which(b$unique_id %in% selected_id),]
+head(D)
+D2 = D[which(D$year_id == 2 & !is.na(D$educ222)),]
+tab1 = table(D2$educ222)
+
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Self Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+SEtoEMP = b[which(b$unique_id %in% selected_id2 & !is.na(b$educ222)),]
+tab2 = table(SEtoEMP$educ222)
+
+SEtoWWeduc = (tab1/tab2)*Xscale
+
+D = b[which(b$unique_id %in% selected_id),]
+head(D)
+D2 = D[which(D$year_id == 2),]
+tab1 = table(D2$finc)
+
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Self Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+SEtoEMP = b[which(b$unique_id %in% selected_id2),]
+tab2 = table(SEtoEMP$finc)
+
+SEtoWWfinc = (tab1/tab2)*Xscale
+
+
+# 
+# D = b[which(b$unique_id %in% selected_id),]
+# head(D)
+# D2 = D[which(D$year_id == 2),]
+# tab1 = table(D2$educ22)
+# 
+# selected_id2 = corresp_id[which(lfsta_emp[,1] == "Self Employed" & b$year_id == 1)]
+# #UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+# SEtoEMP = b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(SEtoEMP$educ22)
+# 
+# SEtoWWeduc22 = tab1/tab2
+
+
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Unemployed" & lfsta_emp[,2] == "Self Employed")]
+b$UtoSE = ifelse(b$unique_id %in% selected_id, 1, 0)
+# summary(lm(UtoSE ~ as.numeric(finc)  + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22) + as.numeric(unemdur),data=b,weights=as.numeric(fnlwgt)))
+# summary(glm(UtoSE ~ as.numeric(finc) + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22) + as.numeric(unemdur), family=binomial(link="probit"),data=b,weights=as.numeric(fnlwgt)))
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 2),]
+tab1 = table(D1$educ222)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Unemployed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+UNEMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(UNEMP$educ222)
+
+UtoSEeduc = tab1/tab2
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$finc)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Unemployed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+UNEMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(UNEMP$finc)
+
+UtoSEfinc = tab1/tab2
+
+
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Unemployed" & lfsta_emp[,2] == "Employed")]
+b$UtoWW = ifelse(b$unique_id %in% selected_id, 1, 0)
+# summary(lm(UtoWW ~ as.numeric(finc)  + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22) + as.numeric(unemdur),data=b,weights=as.numeric(fnlwgt)))
+# summary(glm(UtoWW ~ as.numeric(finc) + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22) + as.numeric(unemdur), family=binomial(link="probit"),data=b,weights=as.numeric(fnlwgt)))
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$educ222)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Unemployed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+UNEMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(UNEMP$educ222)
+
+UtoWWeduc = tab1/tab2
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$finc)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Unemployed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+UNEMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(UNEMP$finc)
+
+UtoWWfinc = tab1/tab2
+
+
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Employed" & lfsta_emp[,2] == "Unemployed")]
+b$WWtoU = ifelse(b$unique_id %in% selected_id, 1, 0)
+# summary(lm(WWtoU ~ as.numeric(wage1) + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22), data=b,weights=as.numeric(fnlwgt)))
+# summary(glm(WWtoU ~ as.numeric(finc) + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22), family=binomial(link="probit"),data=b,weights=as.numeric(fnlwgt)))
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$educ222)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$educ222)
+
+EtoUeduc = tab1/tab2
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$finc)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$finc)
+
+EtoUfinc = tab1/tab2
+
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$wagelvl)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$wagelvl)
+
+EtoUwagelvl = tab1/tab2
+
+
+# 4) Worker to Self Employed by education
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Employed" & lfsta_emp[,2] == "Self Employed")]
+b$WWtoSE = ifelse(b$unique_id %in% selected_id, 1, 0)
+# summary(lm(WWtoSE ~ as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22) + I(as.numeric(educ22)^2), data=b,weights=as.numeric(fnlwgt)))
+# summary(lm(WWtoSE ~ as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(wage1) + I(as.numeric(wage1)^2), data=b,weights=as.numeric(fnlwgt)))
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$educ22)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$educ22)
+
+EtoSEeduc = tab1/tab2
+
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$finc)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$finc)
+
+EtoSEfinc = tab1/tab2
+
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$wagelvl)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$wagelvl)
+
+EtoSEwagelvl = tab1/tab2
+
+
+
+# 4) Worker to Self Employed by education
+selected_id = corresp_id[which(lfsta_emp[,1] == "Self Employed" & lfsta_emp[,2] == "Unemployed")]
+b$SEtoU = ifelse(b$unique_id %in% selected_id, 1, 0)
+# summary(lm(SEtoU ~ as.numeric(finc) + as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22), data=b,weights=as.numeric(fnlwgt)))
+# summary(lm(SEtoU ~ as.numeric(married) + as.numeric(female) + as.numeric(age) + as.numeric(educ22), data=b,weights=as.numeric(fnlwgt)))
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$educ222)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Self Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$educ222)
+
+SEtoUeduc = tab1/tab2
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1),]
+tab1 = table(D1$finc)
+
+selected_id1 = corresp_id[which(lfsta_emp[,1] == "Self Employed" & b$year_id == 1)]
+#UNEMP = b[which(b$lfsta_emp == "Unemployed" & b$year_id == 1),]
+EMP = b[which(b$unique_id %in% selected_id1),]
+tab2 = table(EMP$finc)
+
+SEtoUfinc = tab1/tab2
+
+@
+% # <<MyLaLTeXT1, echo = FALSE, results = 'asis'>>=
+% # library(xtable)
+% # xtable(TRANS2 , digits=3, caption = "Estimated year to year transition matrix",  table.placement = "h!", caption.placement = "top", label="transprob")
+% # @
+
+\subsubsection{Transition within occupations by productivity level.}
+The model also reproduces the transition by productivity level for a given transition between occupations. To our knowledge, we are the first reporting the transition probability within occupations and therefore the first to create a model able to match them. A common issue in the literature with entrepreneurship is the absence of clear proxy in order to identify the link between the entrepreneurial ability and the individual's characteristics. In our calibration strategy, we indirectly estimate how the entrepreneurial ability is mapped from educational attainment using the transition W - E and E - W by productivity level. Figure \ref{firm} reports the transition probabilities between occupations for each productivity level. From the data, we use three different proxies: educational attainment (or year of schooling), wage level (which is only available when the individual is previously a worker) and the family income. 
+
+\paragraph{W - E transition.} From the data, a U-shaped curve is found to be quite robust regardless on the proxy used within the transition W - E. A feature that our model is able to replicate for two reasons. First, high-qualified workers tend to be on average richer than the other categories. Therefore, they can accumulate more wealth (and thus more collateralized) than middle or low-educated individuals and are in average less financially constrained by the external creditor. They can run larger firm with higher returns to entrepreneurship. At the opposite, low-educated individuals can borrow less as entrepreneur but their labor income is also lower than other categories. Though, the wealth threshold at which they switch to entrepreneurship is below the one of the two other education categories in the model. Hence, low-educated and high-educated people are more likely to switch to entrepreneurship than the category at the middle, but as shown in figure \ref{sizef}, low-educated workers tend to open relatively small business as compared to high-educated workers\footnote{Previous models are unlikely able to generate this feature since either they introduce only one of these dimensions as in \textcite{milan} who introduces only abilities.}.
+\begin{figure}[H]
+ \caption{Firm size} \label{sizef} \vspace{-1cm}
+ \centering
+<<optimalpatJh, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4>>=
+maxgrid=750
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+sizeK = read.table("distfirmsize.out", sep="", header=TRUE)
+sizeK11 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 0),]
+sizeK12 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 1),]
+sizeK13 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 2),]
+sizeK21 <- sizeK[which(sizeK$TYPE == 0 & sizeK$PROD == 0),]
+sizeK22 <- sizeK[which(sizeK$TYPE == 0  & sizeK$PROD == 1),]
+sizeK23 <- sizeK[which(sizeK$TYPE == 0 & sizeK$PROD == 2),]
+
+sizeK1 <- sizeK11 + sizeK21
+sizeK2 <- sizeK12 + sizeK22
+sizeK3 <- sizeK13 + sizeK23
+
+sizeKK <- sizeK11 + sizeK12 + sizeK13 + sizeK21 + sizeK22 + sizeK23
+
+sizeK = read.table("distfirmsize2.out", sep="", header=TRUE)
+sizeK211 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 0),]
+sizeK212 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 1),]
+sizeK213 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 2),]
+sizeK221 <- sizeK[which(sizeK$TYPE == 0 & sizeK$PROD == 0),]
+sizeK222 <- sizeK[which(sizeK$TYPE == 0  & sizeK$PROD == 1),]
+sizeK223 <- sizeK[which(sizeK$TYPE == 0 & sizeK$PROD == 2),]
+
+sizeKK2 <- sizeK211 + sizeK212 + sizeK213 + sizeK221 + sizeK222 + sizeK223
+
+
+plot(sizeK1$endoK[1:maxgrid], sizeK1$VE[1:maxgrid], type="l", ylim=c(0,0.0004), xlim=c(0,500), ylab="percentage (%)", xlab="Capital invested (in $1,000)")
+par(new=TRUE)
+plot(sizeK3$endoK[1:maxgrid], sizeK3$VE[1:maxgrid], type="l", ylim=c(0,0.0004), xlim=c(0,500), lty=5, ylab="percentage (%)", xlab="Capital invested (in $1,000)")
+legend("topright", c("<HS", "College"), lty=c(1,5))
+@
+\end{figure}
+% 
+% \begin{figure}[H]
+%  \caption{Distribution of firms} \label{necessityEtoW} \vspace{-1cm}
+%  \centering
+% <<VEtoWW, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4, cache=TRUE>>=
+% setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+% 
+% maxgrid = 750
+% valueWW = read.table("valuefn.out", sep="\t", header=TRUE)
+% valueVE= read.table("valuefnVE.out", sep="\t", header=TRUE)
+% 
+% valueVEgood = valueVE[which(valueVE$PROD == 0),]
+% valueVEbad = valueVE[valueVE$PROD == 1,]
+% nrow(valueVEbad)
+% nrow(valueVEgood)
+% 
+% valueVEexp = 0.17*valueVEbad$ValueVE +(1 - 0.17)*valueVEgood$ValueVE
+% length(valueVEexp)
+% 
+% ASSET <- valueVE$ASSET[1:maxgrid]
+% 
+% plot(ASSET, valueWW$valueWW1[1:maxgrid], type="l", ylim=c(-20,-10), xlim=c(0,50), xlab="asset (in $1000)", ylab="Transition W - E", main="")
+% par(new=TRUE)
+% plot(ASSET, valueWW$valueWW1[(maxgrid+1):(maxgrid*2)], type="l", ylim=c(-26,-8), xlim=c(0,50), xlab="", ylab="", col="red")
+% par(new=TRUE)
+% plot(ASSET, valueWW$valueWW1[(maxgrid*2+1):(maxgrid*3)], type="l", ylim=c(-26,-8), xlim=c(0,50), xlab="", ylab="", col="blue")
+% par(new=TRUE)
+% plot(ASSET, valueVEexp[(1):(maxgrid)], type="l", ylim=c(-20,-10), xlim=c(0,50), xlab="", ylab="", lty=5, col="black")
+% par(new=TRUE)
+% plot(ASSET,valueVEexp[(maxgrid+1):(maxgrid*2)], type="l", ylim=c(-26,-8), xlim=c(0,50), xlab="", ylab="", lty=5, col="blue")
+% par(new=TRUE)
+% plot(ASSET, valueVEexp[(maxgrid*2+1):(maxgrid*3)], type="l", ylim=c(-26,-8), xlim=c(0,50), xlab="", ylab="", lty=5, col="red")
+% rect(0,0,70,0.0013,col=adjustcolor("grey", alpha=0.4), border = "transparent")
+% legend("bottomright", c("College", "High School", "< HS"), col=c("blue", "red","black"), lty=c(1,1,1))
+% 
+% @
+% \end{figure}
+
+
+The U-shaped curve observed in the worker to entrepreneur transition is also found by \textcite{campbell} using the Panel Study of Entrepreneur Dynamics (PSED) using year of schooling as proxy for productivity level. In appendix \ref{econometricanalysis}, we estimate this relationship using discrete choice model controlling for age, education, gender, marital status, unemployment situation and time fixed effect. Our statistical results are significant.
+
+\paragraph{E - W transition.} The inverted U-shaped curve within the E - W transition is also matched by the model. This is the case since low-educated and high-educated entrepreneurs find more profitable to stay at business than switching to a worker situation, at least when the business state is favorable. This point is obviously related to the previous one. However, since middle-educated workers would want to switch more often to entrepreneurship due to higher return at work, we should expect that only those with large returns to entrepreneurship would want to start their business. However, most of the middle-educated entrepreneurs who search for a job are those who enter entrepreneurship out-of-necessity when they were unemployed worker due to a lack of job opportunity. Figure \ref{necessityEtoW} shows the distribution of entrepreneurs switching to a worker situation by educational attainment. Entrepreneurs located a the left hand side (in the grey polygon) are necessity entrepreneurs in the sense that choose to become entrepreneur during an unemployment situation while their return at work was greater\footnote{Formally, they choose to be entrepreneur such that $ V^w > V^e > V^u $.} (e.g. they did not find a job opportunity).
+
+
+\begin{figure}[H]
+ \caption{Transition E - W relative to the mass of each education category in entrepreneurship.} \label{necessityEtoW} \vspace{-1cm}
+ \centering
+<<VEtoWW, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4, cache=TRUE>>=
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+transVEtoWW = read.table("disttransitionVEtoWW.out", sep="\t", header=TRUE)
+distVE= read.table("distVE.out", sep="\t", header=TRUE)
+distasset= read.table("distasset.out", sep="\t", header=TRUE)
+maxgrid = 300 
+abilVE1 = sum(distVE$VE[1:maxgrid*2])
+abilVE3 = sum(distVE$VE[(maxgrid*4+1):(maxgrid*6)])
+abilVE2 = sum(distVE$VE[(maxgrid*2+1):(maxgrid*4)])
+
+trans1 <- transVEtoWW[which(transVEtoWW$PROD == 0 & transVEtoWW$TYPE == 1),]
+trans2 <- transVEtoWW[which(transVEtoWW$PROD == 1 & transVEtoWW$TYPE == 1),]
+trans3 <- transVEtoWW[which(transVEtoWW$PROD == 2 & transVEtoWW$TYPE == 1),]
+trans10 <- transVEtoWW[which(transVEtoWW$PROD == 0 & transVEtoWW$TYPE == 0),]
+trans20 <- transVEtoWW[which(transVEtoWW$PROD == 1 & transVEtoWW$TYPE == 0),]
+trans30 <- transVEtoWW[which(transVEtoWW$PROD == 2 & transVEtoWW$TYPE == 0),]
+
+ASSET <- distasset$ASSET[1:maxgrid]
+par(mfrow=c(1,1))
+plot(ASSET, (trans1$VEtoWW)/abilVE1, type="l", ylim=c(0,0.00075), xlim=c(0,20), xlab="asset (in $1000)", ylab="mass of people", main="")
+par(new=TRUE)
+plot(ASSET, (trans2$VEtoWW)/abilVE2, type="l", ylim=c(0,0.00075), xlim=c(0,20), xlab="", ylab="", col="red")
+par(new=TRUE)
+plot(ASSET, (trans3$VEtoWW)/abilVE3, type="l", ylim=c(0,0.00075), xlim=c(0,20), xlab="", ylab="", col="blue")
+rect(0,0,3.5,0.0013,col=adjustcolor("grey", alpha=0.4), border = "transparent")
+legend("topright", c("College", "High School", "< HS"), col=c("blue", "red","black"), lty=c(1,1,1))
+
+@
+\end{figure}
+
+\paragraph{Other within transitions.} The U - W and the W - E transitions are targetted with our calibration specification in the fixed part and are therefore quite close to the true data. The key thing, which is largely known, is that layoff probability is decreasing in education and whereas the probability of finding a job is increasing with education. Transition U - E is a bit overstated for low-educated unemployed worker in the model as compared to the data. This is because some entrepreneurship cost of entry exist in reality and affect more low-collateralized individuals. We add this cost later in a sensitive analysis, to better fit this transition.
+
+\begin{figure}[H]
+ \caption{Transition probability by productivity level}
+\centering
+ \label{firm}
+ \centering
+<<C2D2, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=9, cache=TRUE>>=
+
+fracEtoW = c(0.002454160288361,	   0.003429923947575,	   0.003963703946223,	   0.004072664247018, 0.00211250180815)
+fracE = c(0.011338390798845,	   0.015563438967765,	   0.017315842096545,	   0.016867938609277,	   0.010487689861394)	
+fracWtoE = c(0.001723394585433,	   0.002590429037301,	   0.003500297164246,	   0.004025771314074,	   0.004609154142540)
+fracW = c(0.124965617359970,	   0.157569199824146,	   0.164170576232099,	   0.156264700182633,	   0.125816318297421)
+
+CD2006WtoE = fracWtoE/fracW   
+CD2006EtoW = fracEtoW/fracE
+   
+labelseduc = c("<HS","HS","<C","C(B)","C(M)",">C")
+names(EtoSEeduc) <- labelseduc
+names(EtoUeduc) <- labelseduc
+names(UtoWWeduc) <- labelseduc
+names(UtoSEeduc) <- labelseduc
+names(SEtoWWeduc) <- labelseduc
+names(SEtoUeduc) <- labelseduc
+names(EtoSEwagelvl) <- seq(1,7,by=1)
+names(EtoUwagelvl) <- seq(1,7,by=1)
+
+par(mfrow=c(3,2))
+
+fit <- glm(EtoSEfinc~ seq(1,7,by=1) + I(seq(1,7,by=1)^2))
+co <- coef(fit)
+plot(EtoSEeduc, type="o", col="grey", lty=5, ylim=c(0.01, 0.037), main="W to E", ylab="% of each W group")
+par(new=TRUE)
+plot(seq(1,5, by=1),CD2006WtoE, ylim=c(0.01, 0.037), type="l", lty=5, col="blue", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(EtoSEfinc, type="o", ylim=c(0.01, 0.037), lty=1, col="grey", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(EtoSEwagelvl, type="o", ylim=c(0.01, 0.037), lty=1, col="black", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(seq(1,3,by=1),c(0.028140524826023,0.022450252393488,0.032061050319534), type="l", ylim=c(0.01, 0.037), lty=5, col="red", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+legend("bottomright", cex=0.8, bty="n", c("Cagetti & De Nardi (2006)", "Data (Yr. Schooling)", "Data (Family Income)", "Data (Wage)", "Benchmark"), lty=c(5,5,1,1,5), col=c("blue","grey","grey","black", "red"))
+at3<- seq(from = 1, to = 7, by = 1)
+axis(1,line=2.2,at=at3,labels=c("<10", "10-15", "15-25", "25-35", "35-50", "50-75", ">75"),tick=TRUE)
+mtext("HH Inc",1,line=2.2,at=0.7, cex=0.7)
+mtext("Schooling",1,line=0.5,at=0.7, cex=0.7)
+
+
+plot(EtoUeduc, type="o", ylim=c(0.015, 0.07), lty=5, col="grey", main="W to U", ylab="% of each W group")
+par(new=TRUE)
+plot(EtoUfinc, type="o", ylim=c(0.015, 0.07), lty=1, col="grey", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(EtoUwagelvl, type="o", ylim=c(0.015, 0.07), lty=1, col="black", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(seq(1,3,by=1),c(0.044488062252848,0.030774931705572,0.022383545748427), type="l", ylim=c(0.015, 0.07), lty=5, col="red", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+legend("topright", cex=0.8, bty="n", c( "Data (Yr. Schooling)", "Data (Family Income)", "Data (Wage)", "Benchmark"), lty=c(5,1,1,5), col=c("grey","grey", "black", "red"))
+at3<- seq(from = 1, to = 7, by = 1)
+axis(1,line=2.2,at=at3,labels=c("<10", "10-15", "15-25", "25-35", "35-50", "50-75", ">75"),tick=TRUE)
+mtext("HH Inc",1,line=2.2,at=0.7, cex=0.7)
+mtext("Schooling",1,line=0.5,at=0.7, cex=0.7)
+
+plot(UtoWWeduc, type="o", ylim=c(0.3, 0.59), lty=5, col="grey", main="U to W", ylab="% of each U group")
+par(new=TRUE)
+plot(UtoWWfinc, type="o", ylim=c(0.3, 0.59), lty=1, col="black", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(seq(1,3,by=1),c(0.452357921763387,0.511924269389164,0.580531944024531), type="l", ylim=c(0.3, 0.59), lty=5, col="red", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+legend("bottomright", cex=0.8, bty="n", c("Data (Yr. Schooling)", "Data (Family Income)", "Benchmark"), lty=c(5,1,5), col=c("grey","black", "red"))
+at3<- seq(from = 1, to = 7, by = 1)
+axis(1,line=2.2,at=at3,labels=c("<10", "10-15", "15-25", "25-35", "35-50", "50-75", ">75"),tick=TRUE)
+mtext("HH Inc",1,line=2.2,at=0.7, cex=0.7)
+mtext("Schooling",1,line=0.5,at=0.7, cex=0.7)
+
+plot(UtoSEeduc, type="o", ylim=c(0.025, 0.084), lty=5, col="grey", main="U to E", ylab="% of each U group")
+par(new=TRUE)
+plot(UtoSEfinc, type="o", ylim=c(0.025, 0.084), lty=1, col="black", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(seq(1,3,by=1),c(0.060214682283731,0.056422874294269,0.060715848638020), type="l", ylim=c(0.025, 0.084), lty=5, col="red", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+legend("topleft", cex=0.8, bty="n", c("Data (Yr. Schooling)", "Data (Family Income)", "Benchmark"), lty=c(5,1,5), col=c("grey","black", "red"))
+at3<- seq(from = 1, to = 7, by = 1)
+axis(1,line=2.2,at=at3,labels=c("<10", "10-15", "15-25", "25-35", "35-50", "50-75", ">75"),tick=TRUE)
+mtext("HH Inc",1,line=2.2,at=0.7, cex=0.7)
+mtext("Schooling",1,line=0.5,at=0.7001, cex=0.7)
+
+
+correctorfactor = 0.01
+plot(SEtoWWeduc+correctorfactor, col="grey", type="o", ylim=c(0.175, 0.245), main="E to W", ylab="% of each E group")
+par(new=TRUE)
+plot(seq(1,5, by=1),CD2006EtoW, ylim=c(0.175, 0.245), type="l", lty=5, col="blue", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(SEtoWWfinc+correctorfactor, type="o", ylim=c(0.175, 0.245), lty=1, col="black", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(seq(1,3,by=1),c(0.196405864659176,0.223573166968524,0.205136205517101), type="l", ylim=c(0.175, 0.245), lty=5, col="red", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+legend("bottomright", cex=0.8, bty="n", c("Cagetti & De Nardi (2006)", "Data (Yr. Schooling)", "Data (Family Income)", "Benchmark"), lty=c(5,5,1,5), col=c("blue","grey","black","red"))
+at3<- seq(from = 1, to = 7, by = 1)
+axis(1,line=2.2,at=at3,labels=c("<10", "10-15", "15-25", "25-35", "35-50", "50-75", ">75"),tick=TRUE)
+mtext("HH Inc",1,line=2.2,at=0.7, cex=0.7)
+mtext("Schooling",1,line=0.5,at=0.7, cex=0.7)
+
+
+plot(SEtoUeduc, type="o", ylim=c(0.005, 0.05), lty=5, col="grey", main="E to U", ylab="% of each E group")
+par(new=TRUE)
+plot(SEtoUfinc, type="o", ylim=c(0.005, 0.05), lty=1, col="black", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+par(new=TRUE)
+plot(seq(1,3,by=1),c(0.046935508698668,0.036419331547680,0.015881287745933), type="l", ylim=c(0.005, 0.05), lty=5, col="red", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+legend("topright", cex=0.8, bty="n", c("Data (Yr. Schooling)", "Data (Family Income)", "Benchmark"), lty=c(5,1,5), col=c("grey","black","red"))
+at3<- seq(from = 1, to = 7, by = 1)
+axis(1,line=2.2,at=at3,labels=c("<10", "10-15", "15-25", "25-35", "35-50", "50-75", ">75"),tick=TRUE)
+mtext("HH Inc",1,line=2.2,at=0.7, cex=0.7)
+mtext("Schooling",1,line=0.5,at=0.7, cex=0.7)
+
+
+@
+\raggedright
+\small Source: transitions are computed using averaged transition between occupation over twenty years from 1994 to 2014. Similar patterns can be found for quaterly and monthly data. We report the transitions generated by a \textcite{main} model which does not account for correlation between returns to entrepreneurship and labor income.
+\end{figure}
+
+% Finally, let us point out the fact that entrepreneurs, taking the definition of self-employed, account in average for 10.9\% of the total population between 1994 to 2014. Also, most firms are small and remain small as time goes by. Finally, as mentioned by \textcite{poschke} and \textcite{main}, entrepreneurial returns is more volatile [need data here] and display an higher cross-sectional variance than wages.
+% \begin{itemize}
+% \item \textit{\textbf{Fact 3.} Most firms are small. Entrepreneurs account for 9\% to 11\% of the population and own one third of the overall wealth.}
+% \item \textit{\textbf{Fact 4.} Returns to entrepreneurship are volatile and have a much higher cross-sectional variance than wages.} 
+% \end{itemize}
+% 
+% In fact, all this facts are related and our model is able to explain most of these features. The key driving forces to get the U-shaped and the inverted U-shaped curves is related to the correlation between labor income and entrepreneurial returns, the presence of some out-of-necessity entrepreneurs in the middle-qualified category and stochastic returns to entrepreneurship. 
+
+
+\subsection{Wealth, income and firm size distributions}
+It is well known now that the upper tail of the wealth distribution can be well replicated using entrepreneur as in \textcite{quadrini00} and \textcite{main}. The model generates a considerable degree of inequality that matches the data pretty well. Table \ref{entnumbelr} displays statistics concerning wealth inequalities and entrepreneurship.
+
+% {\renewcommand{\arraystretch}{1.5}
+% \begin{table}[H]
+% \centering
+% \caption{Wealth distribution: data and benchmark model}
+% \label{distriinequality}
+% \vspace{0.3cm}
+% \begin{tabular}{@{}llllll@{}}
+% \hline \hline
+%  & Wealth & \multicolumn{4}{l}{Percentage wealth in the top}  \\  
+%  & Gini & 1\% & 5\% & 10\% & 20\%  \\ \hline
+% US data & 0.8  & 30 & 54 & 67 & 81  \\
+% Benchmark model & 0.78 & 22 & 52 & 69 & 84  \\ \hline 
+% \multicolumn{6}{l}{{\renewcommand{\arraystretch}{1}\begin{tabular}[c]{@{}l@{}}\small Source: US data are from \textcite{main}. \end{tabular} }} 
+% \end{tabular}
+% \end{table}
+
+<<incwealthdistri, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4>>=
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+distasset = read.table("distasset.out", sep="\t", header=TRUE)
+
+
+distasset$cumulall = c()
+distasset$cumulall[1] = distasset$all[1]
+for(i in 2:nrow(distasset)) {
+  distasset$cumulall[i] = distasset$cumulall[i-1] + distasset$all[i]
+}
+
+#table top percentile
+
+top01 <- distasset[which(distasset$cumulall > 0.99),]
+top01ent = sum(top01$VE)/sum(top01$all)
+
+top05 <- distasset[which(distasset$cumulall > 0.95),]
+top05ent =  sum(top05$VE)/sum(top05$all)
+
+top10 <- distasset[which(distasset$cumulall > 0.9),]
+top10ent  = sum(top10$VE)/sum(top10$all)
+
+top20 <- distasset[which(distasset$cumulall > 0.8),]
+top20ent = sum(top20$VE)/sum(top20$all)
+
+
+# distri of worker / ent by eduction level
+
+distout= read.table("dist.out", sep="\t", header=TRUE)
+distWork1 <- distout$WW0[which(distout$PROD == 0)] + distout$WW1[which(distout$PROD == 0)] + distout$US0[which(distout$PROD == 0)] + distout$US1[which(distout$PROD == 0)] + distout$UL0[which(distout$PROD == 0)] + distout$UL1[which(distout$PROD == 0)]
+distWork2 <- distout$WW0[which(distout$PROD == 1)] + distout$WW1[which(distout$PROD == 1)] + distout$US0[which(distout$PROD == 1)] + distout$US1[which(distout$PROD == 1)] + distout$UL0[which(distout$PROD == 1)] + distout$UL1[which(distout$PROD == 1)]
+distWork3 <- distout$WW0[which(distout$PROD == 2)] + distout$WW1[which(distout$PROD == 2)] + distout$US0[which(distout$PROD == 2)] + distout$US1[which(distout$PROD == 2)] + distout$UL0[which(distout$PROD == 2)] + distout$UL1[which(distout$PROD == 2)]
+
+distVEout = read.table("distVE.out", sep="\t", header=TRUE)
+distVE21 <- distVEout$VE[which(distVEout$PROD == 0 & distVEout$TYPE == 0)]
+distVE22 <- distVEout$VE[which(distVEout$PROD == 1 & distVEout$TYPE == 0)]
+distVE23 <- distVEout$VE[which(distVEout$PROD == 2 & distVEout$TYPE == 0)]
+distVE11 <- distVEout$VE[which(distVEout$PROD == 0 & distVEout$TYPE == 1)]
+distVE12 <- distVEout$VE[which(distVEout$PROD == 1 & distVEout$TYPE == 1)]
+distVE13 <- distVEout$VE[which(distVEout$PROD == 2 & distVEout$TYPE == 1)]
+
+distVE1 = distVE21 + distVE11
+distVE2 = distVE12 + distVE22
+distVE3 = distVE13 + distVE23
+
+
+totVE1 = sum(distVE1)/(sum(distWork1) + sum(distVE1))
+totVE2 = sum(distVE2)/(sum(distWork2) + sum(distVE2))
+totVE3 = sum(distVE3)/(sum(distWork3) + sum(distVE3))
+
+totVE1pop = sum(distVE1)/(sum(distWork1) + sum(distVE1) +  sum(distWork2) + sum(distVE2) + sum(distWork3) + sum(distVE3))
+totVE2pop = sum(distVE2)/(sum(distWork1) + sum(distVE1) +  sum(distWork2) + sum(distVE2) + sum(distWork3) + sum(distVE3))
+totVE3pop = sum(distVE3)/(sum(distWork1) + sum(distVE1) +  sum(distWork2) + sum(distVE2) + sum(distWork3) + sum(distVE3))
+
+totVE11 = sum(distVE1)/(sum(distVE2) + sum(distVE1) + sum(distVE3))
+totVE22 = sum(distVE2)/(sum(distVE2) + sum(distVE1) + sum(distVE3))
+totVE33 = sum(distVE3)/(sum(distVE2) + sum(distVE1) + sum(distVE3))
+
+total1 = sum(distVE1)
+total2 = sum(distVE2)
+total3 = sum(distVE3)
+
+avgasset1 = 0
+avgasset2 = 0 
+avgasset3 = 0
+avgtotasset = 0.0
+for(i in 1:length(distVE1)) {
+  avgasset1 = avgasset1 + distVE1[i]*distasset$ASSET[i]
+  avgasset2 = avgasset2 + distVE2[i]*distasset$ASSET[i]
+  avgasset3 = avgasset3 + distVE3[i]*distasset$ASSET[i]
+  avgtotasset = avgtotasset + (distVE1[i] + distVE2[i] + distVE3[i])*distasset$ASSET[i]
+}
+
+AVGA1 = avgasset1/sum(distVE1)
+AVGA2 = avgasset2/sum(distVE2)
+AVGA3 = avgasset3/sum(distVE3)
+avgtotasset = avgtotasset/(sum(distVE1)+sum(distVE2)+sum(distVE3))
+
+sizeK = read.table("distfirmsize2.out", sep="", header=TRUE)
+sizeK11 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 0),]
+sizeK12 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 1),]
+sizeK13 <- sizeK[which(sizeK$TYPE == 1 & sizeK$PROD == 2),]
+sizeK21 <- sizeK[which(sizeK$TYPE == 0 & sizeK$PROD == 0),]
+sizeK22 <- sizeK[which(sizeK$TYPE == 0 & sizeK$PROD == 1),]
+sizeK23 <- sizeK[which(sizeK$TYPE == 0 & sizeK$PROD == 2),]
+
+sizeK1 <- sizeK11 + sizeK21
+sizeK2 <- sizeK12 + sizeK22
+sizeK3 <- sizeK13 + sizeK23
+
+avgfirm1 = 0
+avgfirm2 = 0 
+avgfirm3 = 0
+avgtotfirm = 0 
+for(i in 1:nrow(sizeK1)) {
+  avgfirm1 = avgfirm1 + sizeK1$VE[i]*sizeK1$endoK[i]
+  avgfirm2 = avgfirm2 + sizeK2$VE[i]*sizeK2$endoK[i]
+  avgfirm3 = avgfirm3 + sizeK3$VE[i]*sizeK3$endoK[i]
+  avgtotfirm = avgtotfirm + sizeK1$VE[i]*sizeK1$endoK[i] + sizeK2$VE[i]*sizeK2$endoK[i] + sizeK3$VE[i]*sizeK3$endoK[i]
+}
+
+AVGKVE1 = avgfirm1/sum(sizeK1$VE)
+AVGKVE2 = avgfirm2/sum(sizeK2$VE)
+AVGKVE3 = avgfirm3/sum(sizeK3$VE)
+avgtotfirm = avgtotfirm/(sum(sizeK1$VE) + sum(sizeK2$VE) +sum(sizeK3$VE))
+
+# LEVERAGE RATIO
+distasset$ASSET
+sizeK1$ASS = distasset$ASSET
+sizeK2$ASS = distasset$ASSET
+sizeK3$ASS = distasset$ASSET
+
+avglvl1 = 0
+avglvl2 = 0 
+avglvl3 = 0
+avgtotlvl = 0
+for(i in 2:nrow(sizeK1)) {
+  avglvl1 = avglvl1 + sizeK1$VE[i]*(sizeK1$endoK[i] - sizeK1$ASS[i])/sizeK1$endoK[i]
+  avglvl2 = avglvl2 + sizeK2$VE[i]*(sizeK2$endoK[i] - sizeK2$ASS[i])/sizeK2$endoK[i]
+  avglvl3 = avglvl3 + sizeK3$VE[i]*(sizeK3$endoK[i] - sizeK3$ASS[i])/sizeK3$endoK[i]
+  avgtotlvl = avgtotlvl + sizeK1$VE[i]*(sizeK1$endoK[i] - sizeK1$ASS[i])/sizeK1$endoK[i] + sizeK3$VE[i]*(sizeK3$endoK[i] - sizeK3$ASS[i])/sizeK3$endoK[i] + sizeK2$VE[i]*(sizeK2$endoK[i] - sizeK2$ASS[i])/sizeK2$endoK[i]
+}
+lvl1 = avglvl1/sum(sizeK1$VE)
+lvl2 = avglvl2/sum(sizeK2$VE)
+lvl3 = avglvl3/sum(sizeK3$VE)
+avgtotlvl = avgtotlvl/(sum(sizeK1$VE) + sum(sizeK2$VE) +sum(sizeK3$VE)) 
+
+
+@
+
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Entrepreneurship and wealth distribution}
+\label{entnumbelr}
+\vspace{0.3cm}
+\begin{tabular}{@{}lllll@{}}
+\hline \hline
+top & \multicolumn{2}{l}{US data} & \multicolumn{2}{l}{Benchmark model} \\
+& \% of wealth held & \% of entrep. & \% of wealth held & \% of entrep. \\ \hline
+1\% & 30 & 62 & 22 & \Sexpr{round(top01ent*100, 0)}  \\ 
+5\% & 54 & 47 & 52 & \Sexpr{round(top05ent*100, 0)}  \\ 
+10\% & 67 & 38 & 69 & \Sexpr{round(top10ent*100, 0)}  \\ 
+20\% & 81 & 26 & 84 & \Sexpr{round(top20ent*100, 0)}  \\ 
+100\% & 100 & 10.9 & 100 & 10.7  \\ \hline
+\multicolumn{5}{l}{{\renewcommand{\arraystretch}{1}\begin{tabular}[c]{@{}l@{}}\small Source: US data are from \textcite{main}. \end{tabular} }} 
+\end{tabular}
+\end{table}
+
+The income distribution is also matched to the true data. Table \ref{distriinc} reveals that the upper tail is quite well reproduced in the model. In fact, this is due to two things: first the presence of entrepreneurs generate substantial high income. The two dimensions of income heterogeneity $ \theta $ and $ y $ contribute to generate volatility in income and therefore help in generate a correct income distribution.
+
+[NEED TO COMPUTE INCOME DISTRIBUTION]
+
+Finally, let us point out the firm size distribution in the model. There are substantial differences between education category as well as considering the amount of capital invested in the firms. Table \ref{firmsize} describes the entrepreneurial activites by ability level. As said before, we fit the U-shaped that is found in the data when we look at the rate of entrepreneurship by education level. Three features contribute to the model's capability to generate such nondegenerate distribution of the firms' size. First, entrepreneurs are borrowing constraint depending on their amount of collaterals (e.g. their wealth level). Second, the decreasing returns to scale technology in the entrepreneurial sector, which endogenously determined the optimal firms' size. Lastly, the education level of the entrepreneur which contributes to generate cross-sectional differences between entrepreneur with the same level of collaterals. 
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Benchmark model: entrepreneurial activities by education level}
+\label{firmsize}
+\vspace{0.3cm}
+\begin{tabular}{@{}llllllll@{}}
+\hline \hline
+$\theta$ & $\theta$ & \%  & \% & \% & avg. invest. & avg. assets & avg. lev. ratio  \\
+grid & value & in pop. & in educ. grp & in entrep. & in \$1,000 & in \$1,000 & \% \\ \hline
+$ \theta_1 $  & 0.481 & \Sexpr{round(totVE1pop*100,2)} & \Sexpr{round(totVE1*100,2)} & \Sexpr{round(totVE11*100, 2)} & \Sexpr{round(AVGKVE1*10, 0 )} & \Sexpr{round(AVGA1*10, 0 )} & \Sexpr{round(lvl1*100, 1 )} \\ 
+$ \theta_2 $  & 0.527 &\Sexpr{round(totVE2pop*100,2)} & \Sexpr{round(totVE2*100,2)} & \Sexpr{round(totVE22*100, 2)} & \Sexpr{round(AVGKVE2*10, 0 )} & \Sexpr{round(AVGA2*10, 0 )} & \Sexpr{round(lvl2*100, 1 )} \\
+$ \theta_3 $  & 0.715 & \Sexpr{round(totVE3pop*100,2)}& \Sexpr{round(totVE3*100,2)} & \Sexpr{round(totVE33*100, 2)} & \Sexpr{round(AVGKVE3*10, 0 )} & \Sexpr{round(AVGA3*10, 0 )} & \Sexpr{round(lvl3*100, 1)} \\
+total & - & 10.7 & - & 100 & - & - & - \\
+average & - & - & - & - & \Sexpr{round(avgtotfirm, 0 )} & \Sexpr{round(avgtotasset, 0 )} & \Sexpr{round(avgtotlvl*100, 1)} \\ \hline
+\multicolumn{8}{l}{{\renewcommand{\arraystretch}{1}\begin{tabular}[c]{@{}l@{}}\small Source: US data are from \textcite{main}. \end{tabular} }} 
+\end{tabular}
+\end{table}
+
+
+
+
+\section{Policy Experiments}
+In this section, we conduct two sets of policy experiments to study the incidence of downside risk insurance in our model economy. In the first one, we study the effect of introducing an unemployment insurance (UI) to unemployed workers who start a business. In the case where their returns to entrepreneurship is lower than what they could get by staying unemployed, the government offers them a complement to equalize the returns to entrepreneur to the UI benefits until they lose their right. From an empirical side, this policy was introduced in France in 2002 and its effect is studied in \textcite{hombert}. We compare the general equilibrium effects in our model to their results. The two reforms are revenue neutral, in the sense that the government expenditures is fixed to be the same as in the benchmark model (that is, 0 except for the UI).
+
+For each experiment, we conduct two sets of analysis. Firstly, we compute and focus on the steady state implied by the reform. Secondly, we compute the transition dynamics. We assume that period 0 is characterized by the steady state of our benchmark economy. In period 1, the reform is implemented while being not anticipated by any agent in the economy. Then, the economy converges to the new steady state. Throughout the transition, we allow for two government budget balance policies. First, the reform is financed using the proportional labor income tax $ \tau_w $ and then we use government debt. The computation method of the transition path is described in \ref{SSalgo}.
+
+In order to compare the welfare effect of different reforms, we compute the consumption equivalent variation (CEV) and a pure utilitarian comparison. The former measures the constant increment in percentage of consumption in every state that has to be given to each agent so that he is indifferent between remaining in the benchmark economy and moving to another economy that makes a transition to a new steady state implied by the reform. The latter measures the difference in utility that affects the individuals in the economy.
+
+\subsection{Self-Employment Assistance (SEA) program}
+We implement a large Self-Employment Assistance (SEA) program in the spirit of the policy introduced in France in 2002. In order to do it, we compute a new value function for an entrepreneur entering in the downside risk insurance program. When he bankrupts, this entrepreneur falls in a short-run unemployed worker situation. When he does not bankrupt, the government provides him a complement if his current returns to entrepreneurship is lower that what he could get as an unemployed worker (i.e. his UI benefits). Such insurance is temporar and the entrepreneur has a probability $ p_l $ to fall in a normal entrepreneurial regime. We thus have
+\begin{align*}
+V^{e_{UI}}(a, j) = \max_{c,a',s_w,k} \Big\{ &u(c, s_w, 0) + \beta \Big[ (1 - \mu) \Big( \pi_w(s_w) EV^e_{w,e'}(a',j') + (1 - \pi_w(s_w)) EV^e_{u,e'}(a',j') \Big) \\
+&+ \mu \Big( (1 - \pi_w(s_w)) V^{u_s}(a', 1) + \pi_w(s_w) E_yV^w(a',y',0) \Big)  \Big]  \Big\} 
+\end{align*}
+\vspace{-1.3cm}
+\begin{align*}
+\text{Subject to:}  \quad &(22) \\ \nonumber
+\quad &c = \max \{ (1 - \tau_c) (a_j g(\theta)k^\nu - (1+r)(k - a) + (1-\delta)k), w\theta z\} - a'  \\
+ \quad &a' \geq 0 \quad \quad k \geq 0 \quad  \quad s_w \geq 0 \\
+   \quad (IC) \quad &f \big[ a_j g(\theta)k^\nu  + (1 - \delta )k \big]  - (1+r)(k - a)   \geq  0 \\
+    % \quad (IC: 2) \quad &V^e(a, \theta, j) \geq V^{u_l}(fk, \theta, 1) \\
+\quad V^e_{w,e'}(a,j) &= p_l \max \{ E_yV^w(a,y,1), V^e(a,j) \} + (1 - p_l) \max \{ E_yV^w(a,y,1), V^{e_{UI}}(a,j) \} \\
+\quad V^e_{u, e'}(a,j) &= p_l \max \{ V^{e}(a,j), V^{u_l}(a) \} + (1 - p_l) \max \{ V^{e_{UI}}(a,j), V^{u_s}(a) \} 
+\end{align*}
+And the optimal searching effort $s_w$ to find a job for such entrepreneur is given by
+\begin{align*}
+\psi_w (s_w^*)^{\psi_w} = \beta \kappa_w e^{-\kappa_w s_w} \Big( (1-\mu) EV^e_{w,e'}(a',j') + E_yV^w(a',y',0) \Big) 
+\end{align*}
+
+\paragraph{Steady states.} Results from the steady states are summarized in table \ref{policy1}. We do not distinguish between debt or tax adjustment since the results are very close. In the two cases, a self-employment assistance program (SEA) that insure only unemployed workers in their entrepreneurial activity has relatively small effects on macroeconomic variables. Production and capital in both sectors are a little bit higher than before the reform but this is neglectable. In fact, this is because the reform impacts only a small fraction of the population (unemployed workers who wants to start a business). From an utilitarian welfare perspective, the change is also quite small in average.
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Large scale Self-Employment Assistance (SEA) program}
+\label{policy1}
+\vspace{0.3cm}
+\begin{tabular}{@{}l|l|ll@{}}
+\hline \hline
+ & Benchmark & With SEA & Variation   \\ \hline
+Fraction of entrep. (\%) & 10.897 & 10.912 & 0.138\%  \\ 
+Unemployment rate (\%) & 5.316 & 5.315 & $<$ 0.05\%  \\ 
+Fraction of workers (\%) & 83.787 & 83.773 & $<$ 0.05\%  \\
+Avg Welfare (tot.) & -18.025 & -18.034 & $<$ 0.05\% \\ 
+Avg Welfare (Work.) & -18.699 & -18.698 & $<$ 0.05\% \\ 
+Avg Welfare (Ent.) & -12.38 & -12.385 & $<$ 0.05\% \\
+Avg Welfare (Unemploy.) & -21.390 & -21.395 & $<$ 0.05\% \\ 
+Total Production & 2.645 & 2.647 & 0.08\% \\
+Entrep. Production & 1.101 & 1.102 & 0.09\% \\
+Corp. Capital & 4.536 & 4.538 & $<$ 0.05\%  \\
+Entrep. Capital & 3.714 & 3.717 & 0.08\%  \\ \hline
+\end{tabular}
+\end{table}
+
+As displayed in figure \ref{unempl}, this policy encourages unemployed worker to search for a business idea and therefore affect the incentive to search for a job. Now, unemployed workers decrease their search intensity for a job and increase their search for an idea. The result is an increase by 0.138\% of the total fraction of entrepreneurs in the economy but almost no change in the unemployment rate level. This is because by reducing their searching intensity for a job, an unemployed worker is less likely to find a job. Thus, all reduction in unemployment due to the policy is almost offset by the increased disencentive to search for a job.
+
+
+\begin{figure}[H]
+ \caption{Search effort intensity for a business (left), for a job (right): short-run unemployed worker} \label{unempl} \vspace{-1cm}
+ \centering
+<<search, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4, cache=TRUE>>=
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/search1")
+search2D = read.table("search2D.out", sep="\t", header=TRUE)
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/search2")
+search2D1 = read.table("search2D.out", sep="\t", header=TRUE)
+
+maxgrid=300
+
+par(mfrow=c(1,2))
+plot(search2D1$ASSET[1:maxgrid], search2D1$searchEffortVEUS1[1:maxgrid], type="l", xlim=c(9,9.1), ylim=c(0.3085,0.3092), xlab="asset (in $1000)", ylab="Search intensity", main="")
+par(new=TRUE)
+plot(search2D$ASSET[1:maxgrid], search2D$searchEffortVEUS1[1:maxgrid], type="l",lty=5, xlim=c(9,9.1), ylim=c(0.3085,0.3092), xlab="", ylab="", main="")
+legend("topleft", c("Before the reform", "After the reform"), cex=0.8, lty=c(1,5))
+
+plot(search2D1$ASSET[1:maxgrid], search2D1$searchEffortWWUS1[1:maxgrid], type="l", xlim=c(9,9.1), ylim=c(0.2202,0.222), xlab="asset (in $1000)", ylab="Search intensity", main="")
+par(new=TRUE)
+plot(search2D$ASSET[1:maxgrid], search2D$searchEffortWWUS1[1:maxgrid], type="l", lty=5, xlim=c(9,9.1), ylim=c(0.2202,0.222), xlab="", ylab="", main="")
+
+
+@
+\end{figure}
+
+Table \ref{pool1} reports the change in the pool of entrepreneur after the reform implementation. The increase in entrepreneurship rate is uniform among all education groups. This is consistent with the finding of \textcite{hombert} in France. The average firm size and asset level of the entrepreneurs increase after the reform as compared to before. This suggests that the reform encourages unemployed workers with relatively high level of asset to enter entrepreneurship. 
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Downside risk insurance in a Self-Employment Assistance (SEA) program}
+\label{pool1}
+\vspace{0.3cm}
+\begin{tabular}{@{}lllllll@{}}
+\hline \hline
+ & \multicolumn{3}{l}{benchmark} & \multicolumn{3}{l}{with SEA (tax adj.)}   \\
+ &$\theta_1 $ & $\theta_2 $ & $\theta_3 $ &$\theta_1 $ & $\theta_2 $ & $\theta_3 $\\ \hline
+\% of entrep. & 11.157 & 10.219 & 11.978  & 11.169 & 10.231 & 11.992 \\ 
+Var. (rlv to bench.) & - & - & - & 0.11\% & 0.12\% & 0.12\% \\ \hline
+Avg.firm  & 267.21 & 339.65 & 410.65 & 267.27 & 339.67 & 410.69\\
+Avg.asset & 233.37 & 297.66 & 341.29 & 233.42 & 297.69 & 341.33\\
+
+\end{tabular}
+\end{table}
+
+
+\paragraph{Transition dynamics.} As shown in figure \ref{dynamicspol1}, when the policy is implemented in period 0, unemployment rate falls because some unemployed workers find it interesting to start a business.
+
+First, this induces a rise in tax rate or a rise in debt level. In the two cases, agents dissave a bit so that aggregate capital stock increase inducing a lower wage rate and a higher interest rate. As time goes by, new entrepreneurs accumulate more capital and invest in their firm, capital stock increase, rising the wage level and decreasing the interest rate. 
+
+Because wage level is higher, some unemployed people reduce their effort to search a business idea and increase their effort in searching a job opportunity, this has the effect of increasing the unemployment rate steadily along the transition.
+
+\begin{figure}[H]
+ \caption{Evolution of aggregate quantities}
+\centering
+ \label{dynamicspol1}
+ \centering
+<<optimalpat1h, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=6>>=
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/project_methoddebtwCEV")
+pricepath = read.table("pricepath.out", sep="", header=TRUE)
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/project_methodtaxwCEV")
+pricepath2 = read.table("pricepath.out", sep="", header=TRUE)
+
+pricepath$time = seq(1,200,by=1)
+pricepath2$time = seq(1,200,by=1)
+
+par(mfrow=c(2,3))
+plot(pricepath$time, pricepath$E, type="l", xlim=c(0,175), ylim=c(0.10895, 0.1091), xlab="Time", ylab="% Entrepreneurs")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$E, type="l", lty=5, xlim=c(0,175), ylim=c(0.10895, 0.1091), xlab="Time", ylab="% Entrepreneurs")
+legend("bottomright", c("Tax", "Gov. debt"), cex=0.8, lty=c(5,1))
+
+plot(pricepath$time, pricepath$U, type="l", xlim=c(0,175), ylim=c(0.05312, 0.05317), xlab="Time", ylab="% Unemployed")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$U, type="l",  xlim=c(0,175), ylim=c(0.05312, 0.05317), lty=5,  xlab="Time", ylab="% Unemployed")
+
+plot(pricepath$time, pricepath$R, type="l", xlim=c(0,175), ylim=c(0.0625875, 0.0626), xlab="Time", ylab="Interest rate")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$R, type="l", xlim=c(0,175),ylim=c(0.0625875, 0.0626), lty=5, xlab="Time", ylab="Interest rate")
+# abline(h=4.970232886330286, col="red")
+
+plot(pricepath$time, pricepath$K, type="l", xlim=c(0,175),ylim=c(4.5355, 4.537), xlab="Time", ylab="Capital stock")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$K, type="l", xlim=c(0,175),ylim=c(4.5355, 4.537), lty=5, xlab="Time", ylab="Capital stock")
+# abline(h=4.970232886330286, col="red")
+
+# plot(pricepath$time, pricepath$L, type="l", ylim=c(0.86, 0.87),  xlab="Time", ylab="Labor")
+# par(new=TRUE)
+# plot(pricepath2$time, pricepath2$L, type="l", ylim=c(0.875, 0.879),  lty=5, xlab="Time", ylab="Labor")
+
+plot(pricepath$time, pricepath$W, type="l", xlim=c(0,175),ylim=c(1.173075, 1.173127), xlab="Time", ylab="Wage level")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$W, type="l", xlim=c(0,175),ylim=c(1.173075, 1.173127), lty=5, xlab="Time", ylab="Wage level")
+# abline(h=1.194898697133556, col="red")
+
+plot(pricepath$time, pricepath$T, type="l", ylim=c(0.011299, 0.011306767524860) , xlim=c(0,20),  xlab="Time", ylab="Tax rate")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$T, type="l", ylim=c(0.011299, 0.011306767524860) , xlim=c(0,20), lty=5, xlab="Time", ylab="Tax rate")
+# abline(h=0.013828878930628, col="red")
+
+@
+\end{figure}
+
+
+\paragraph{Welfare analysis of the reform.} Table \ref{welfarepolicy1} shows that the policy is beneficial for all categories at the steady state and this does not depend on the intrument used to adjust the government budget. This is due to at least three reasons. First, with the reform, unemployment rate is lower, which in turn reduce government spendings through UI. It follows a lower tax rate on workers and short-run unemployed workers. Second, the SEA provides additional insurance to short-run unemployed workers so that all workers are better off in case where they are laid off. Lastly, wage is higher after the reform, increasing the return at work whereas the interest rate, so that the cost at which entrepreneurs borrow is lower than before the reform was implemented.
+
+During the transition, workers bear a slight cost due to sudden change in wages. Entrepreneurs are better off, at least the top 50\%, because interest rate tends to fall. Finally, bottom 50\% unemployed workers, who are the most borrowing constrained and therefore those who often prefer to work, face the cost of the workers due to a lower wage level.
+
+Figure \ref{CEVpolicy1} summarize the welfare consequences of the reform for the two instruments and the three occupations. In evaluating welfare, we take into account the costs associated with the transition. As the benefits from the new reform largely offset the cost of the transition, all categories are now better off. The reform provides large welfare gains to poor people as compared to rich one. This is again because poor people are more collateralized and therefore directly benefit from the policy through the complement distributed by the government in the case where the returns to entrepreneurship is lower than the UI when they start a business as unemployed worker. This hold for the two types of instrument used.
+
+
+{\renewcommand{\arraystretch}{1}
+\begin{longtable}{l|ll|ll}
+\caption{Consumption-equivalent cariation with SEA}
+\label{welfarepolicy1}
+\\
+\hline \hline
+ & \multicolumn{2}{l}{CEV (debt adjust.)} & \multicolumn{2}{l}{CEV (tax adjust.)} \\ 
+ & Trans. & SS & Trans. & SS \\ \hline
+Entrep. & 0.002\% & 0.006\% & 0.002\%  & 0.007\% \\ 
+bottom 50\% & -($<$0.001\%) & 0.011\% & -($<$0.001\%) & 0.012\%  \\
+top 50\% & 0.005\% & 0.001\% & 0.004\% & 0.002\% \\ \hline
+Workers & -0.003\% & 0.025\% & -0.003\% & 0.027\% \\ 
+bottom 50\% & -0.005\% & 0.033\% & -0.005\% & 0.035\% \\
+top 50\% & -($<$0.001\%) & 0.017\% & -($<$0.001\%)  & 0.019\%  \\ \hline
+Unemp. Workers & 0.001\% & 0.034\% & 0.001\%  & 0.037\%  \\ 
+bottom 50\% & -0.009\% & 0.058\% & -0.009\%  & 0.061\% \\
+top 50\% & 0.011\% & 0.011\% & 0.0106\% & 0.0128\% \\ \hline
+\end{longtable}
+
+
+
+\begin{figure}[H]
+ \caption{Consumption Equivalent Variation}
+\centering
+ \label{CEVpolicy1}
+ \centering
+<<dd, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=5>>=
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/project_methodtaxwCEV")
+
+CEVVE = read.table("CEVVE.out", sep="", header=TRUE)
+
+ENT1 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 0),]
+ENT2 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 1),]
+ENT3 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 2),]
+ENT11 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 0),]
+ENT22 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 1),]
+ENT33 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2")
+
+ENT = read.table("distasset.out", sep="", header=TRUE)
+
+ENT$distVE = ENT1$distVE + ENT2$distVE + ENT3$distVE + ENT11$distVE + ENT22$distVE + ENT33$distVE
+ENT$TVE = ENT1$TVE + ENT2$TVE + ENT3$TVE + ENT11$TVE + ENT22$TVE + ENT33$TVE
+ENT$SSVE = ENT1$SSVE + ENT2$SSVE + ENT3$SSVE + ENT11$SSVE + ENT22$SSVE + ENT33$SSVE
+
+ENT$Trans = ENT$distVE*ENT$TVE
+ENT$SS = ENT$distVE*ENT$SSVE
+sum(ENT$Trans)/sum(ENT$distVE)
+sum(ENT$SS)/sum(ENT$distVE)
+
+ENT$cumulall = c()
+ENT$cumulall[1] = ENT$distVE[1]
+for(i in 2:nrow(ENT)) {
+  ENT$cumulall[i] = ENT$cumulall[i-1] + ENT$distVE[i]
+}
+
+ENT$cumulall = ENT$cumulall/sum(ENT$distVE)
+
+#table top percentile
+
+bottom50 <- ENT[which(ENT$cumulall < 0.5),]
+bottom50$Trans = bottom50$TVE*bottom50$distVE
+bottom50$SS = bottom50$SSVE*bottom50$distVE
+sum(bottom50$Trans)/sum(bottom50$distVE)
+sum(bottom50$SS)/sum(bottom50$distVE)
+
+top50 <- ENT[which(ENT$cumulall >= 0.5),]
+top50$Trans = top50$TVE*top50$distVE
+top50$SS = top50$SSVE*top50$distVE
+sum(top50$Trans)/sum(top50$distVE)
+sum(top50$SS)/sum(top50$distVE)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/project_methodtaxwCEV")
+
+CEVall = read.table("CEVall.out", sep="", header=TRUE)
+
+all1 = CEVall[which(CEVall$PROD == 0),]
+all2 = CEVall[which(CEVall$PROD == 1),]
+all3 = CEVall[which(CEVall$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2")
+
+WW = read.table("distasset.out", sep="", header=TRUE)
+
+WW$DIST = all1$distWW0 + all1$distWW1 + all2$distWW0 + all2$distWW1  + all3$distWW0 + all3$distWW1 
+
+WW$TCOST = all1$TWW0 + all1$TWW1 +  all2$TWW0 + all2$TWW1  + all3$TWW0 + all3$TWW1 
+
+WW$SSCOST = all1$SSWW0 + all1$SSWW1 +  all2$SSWW0 + all2$SSWW1  + all3$SSWW0 + all3$SSWW1
+
+WW$Trans = WW$DIST*WW$TCOST
+WW$SS = WW$DIST*WW$SSCOST
+sum(WW$Trans)/sum(WW$DIST)
+sum(WW$SS)/sum(WW$DIST)
+
+WW$cumulall = c()
+WW$cumulall[1] = WW$DIST[1]
+for(i in 2:nrow(WW)) {
+  WW$cumulall[i] = WW$cumulall[i-1] + WW$DIST[i]
+}
+
+WW$cumulall = WW$cumulall/sum(WW$DIST)
+
+#table top percentile
+
+bottom50 <- WW[which(WW$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- WW[which(WW$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2")
+
+U = read.table("distasset.out", sep="", header=TRUE)
+
+U$DIST = all1$distUS0 + all1$distUS1 + all2$distUS0 + all2$distUS1  + all3$distUS0 + all3$distUS1 + all1$distUL0 + all1$distUL1 + all2$distUL0 + all2$distUL1  + all3$distUL0 + all3$distUL1 
+
+U$TCOST = all1$TUL0 + all1$TUL1 +  all2$TUL0 + all2$TUL1  + all3$TUL0 + all3$TUL1 + all1$TUS0 + all1$TUS1 +  all2$TUS0 + all2$TUS1  + all3$TUS0 + all3$TUS1 
+
+U$SSCOST = all1$SSUL0 + all1$SSUL1 +  all2$SSUL0 + all2$SSUL1  + all3$SSUL0 + all3$SSUL1 + all1$SSUS0 + all1$SSUS1 +  all2$SSUS0 + all2$SSUS1  + all3$SSUS0 + all3$SSUS1 
+
+U$Trans = U$DIST*U$TCOST
+U$SS = U$DIST*U$SSCOST
+sum(U$Trans)/sum(U$DIST)
+sum(U$SS)/sum(U$DIST)
+
+U$cumulall = c()
+U$cumulall[1] = U$DIST[1]
+for(i in 2:nrow(U)) {
+  U$cumulall[i] = U$cumulall[i-1] + U$DIST[i]
+}
+
+U$cumulall = U$cumulall/sum(U$DIST)
+
+#table top percentile
+
+bottom50 <- U[which(U$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- U[which(U$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+par(mfrow=c(2,3))
+plot(WW$ASSET, (WW$TCOST + WW$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="WW (tax adjust.)")
+abline(h=0, col="red")
+
+plot(U$ASSET, (U$TCOST + U$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="U (tax adjust.)")
+abline(h=0, col="red")
+
+plot(ENT$ASSET, (ENT$TVE + ENT$SSVE)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="Entrep. (tax adjust.)")
+abline(h=0, col="red")
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/project_methoddebtwCEV")
+
+CEVVE = read.table("CEVVE.out", sep="", header=TRUE)
+
+ENT1 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 0),]
+ENT2 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 1),]
+ENT3 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 2),]
+ENT11 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 0),]
+ENT22 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 1),]
+ENT33 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2")
+
+ENT = read.table("distasset.out", sep="", header=TRUE)
+
+ENT$distVE = ENT1$distVE + ENT2$distVE + ENT3$distVE + ENT11$distVE + ENT22$distVE + ENT33$distVE
+ENT$TVE = ENT1$TVE + ENT2$TVE + ENT3$TVE + ENT11$TVE + ENT22$TVE + ENT33$TVE
+ENT$SSVE = ENT1$SSVE + ENT2$SSVE + ENT3$SSVE + ENT11$SSVE + ENT22$SSVE + ENT33$SSVE
+
+ENT$Trans = ENT$distVE*ENT$TVE
+ENT$SS = ENT$distVE*ENT$SSVE
+sum(ENT$Trans)/sum(ENT$distVE)
+sum(ENT$SS)/sum(ENT$distVE)
+
+ENT$cumulall = c()
+ENT$cumulall[1] = ENT$distVE[1]
+for(i in 2:nrow(ENT)) {
+  ENT$cumulall[i] = ENT$cumulall[i-1] + ENT$distVE[i]
+}
+
+ENT$cumulall = ENT$cumulall/sum(ENT$distVE)
+
+#table top percentile
+
+bottom50 <- ENT[which(ENT$cumulall < 0.5),]
+bottom50$Trans = bottom50$TVE*bottom50$distVE
+bottom50$SS = bottom50$SSVE*bottom50$distVE
+sum(bottom50$Trans)/sum(bottom50$distVE)
+sum(bottom50$SS)/sum(bottom50$distVE)
+
+top50 <- ENT[which(ENT$cumulall >= 0.5),]
+top50$Trans = top50$TVE*top50$distVE
+top50$SS = top50$SSVE*top50$distVE
+sum(top50$Trans)/sum(top50$distVE)
+sum(top50$SS)/sum(top50$distVE)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/project_methoddebtwCEV")
+
+CEVall = read.table("CEVall.out", sep="", header=TRUE)
+
+all1 = CEVall[which(CEVall$PROD == 0),]
+all2 = CEVall[which(CEVall$PROD == 1),]
+all3 = CEVall[which(CEVall$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2")
+
+WW = read.table("distasset.out", sep="", header=TRUE)
+
+WW$DIST = all1$distWW0 + all1$distWW1 + all2$distWW0 + all2$distWW1  + all3$distWW0 + all3$distWW1 
+
+WW$TCOST = all1$TWW0 + all1$TWW1 +  all2$TWW0 + all2$TWW1  + all3$TWW0 + all3$TWW1 
+
+WW$SSCOST = all1$SSWW0 + all1$SSWW1 +  all2$SSWW0 + all2$SSWW1  + all3$SSWW0 + all3$SSWW1
+
+WW$Trans = WW$DIST*WW$TCOST
+WW$SS = WW$DIST*WW$SSCOST
+sum(WW$Trans)/sum(WW$DIST)
+sum(WW$SS)/sum(WW$DIST)
+
+WW$cumulall = c()
+WW$cumulall[1] = WW$DIST[1]
+for(i in 2:nrow(WW)) {
+  WW$cumulall[i] = WW$cumulall[i-1] + WW$DIST[i]
+}
+
+WW$cumulall = WW$cumulall/sum(WW$DIST)
+
+#table top percentile
+
+bottom50 <- WW[which(WW$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- WW[which(WW$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2")
+
+U = read.table("distasset.out", sep="", header=TRUE)
+
+U$DIST = all1$distUS0 + all1$distUS1 + all2$distUS0 + all2$distUS1  + all3$distUS0 + all3$distUS1 + all1$distUL0 + all1$distUL1 + all2$distUL0 + all2$distUL1  + all3$distUL0 + all3$distUL1 
+
+U$TCOST = all1$TUL0 + all1$TUL1 +  all2$TUL0 + all2$TUL1  + all3$TUL0 + all3$TUL1 + all1$TUS0 + all1$TUS1 +  all2$TUS0 + all2$TUS1  + all3$TUS0 + all3$TUS1 
+
+U$SSCOST = all1$SSUL0 + all1$SSUL1 +  all2$SSUL0 + all2$SSUL1  + all3$SSUL0 + all3$SSUL1 + all1$SSUS0 + all1$SSUS1 +  all2$SSUS0 + all2$SSUS1  + all3$SSUS0 + all3$SSUS1 
+
+U$Trans = U$DIST*U$TCOST
+U$SS = U$DIST*U$SSCOST
+sum(U$Trans)/sum(U$DIST)
+sum(U$SS)/sum(U$DIST)
+
+U$cumulall = c()
+U$cumulall[1] = U$DIST[1]
+for(i in 2:nrow(U)) {
+  U$cumulall[i] = U$cumulall[i-1] + U$DIST[i]
+}
+
+U$cumulall = U$cumulall/sum(U$DIST)
+
+#table top percentile
+
+bottom50 <- U[which(U$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- U[which(U$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+plot(WW$ASSET, (WW$TCOST + WW$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="WW (debt adjust.)")
+abline(h=0, col="red")
+
+plot(U$ASSET, (U$TCOST + U$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="U (debt adjust.)")
+abline(h=0, col="red")
+
+plot(ENT$ASSET, (ENT$TVE + ENT$SSVE)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="Entrep (debt adjust.)")
+abline(h=0, col="red")
+
+@
+\end{figure}
+
+\subsection{Entrepreneurs' downside risk insurance}
+In this second experiment, we introduce a downside risk insurance to all entrepreneurs who bankrupt. In this sense, we assume that the entrepreneur get an UI proportional to his education level in the case where his firm is destroyed. That is, now, when the entrepreneur fall in unemployment with probability $ \mu $ and does not find any job opportunity, he then falls in a short-run unemployed worker situation.
+
+
+\paragraph{Steady states.} When the downside risk insurance is implemented, the fraction of entrepreneurs in the economy rise by more than 0.1 ($>$1\%) as shown in table \ref{policy2}. Total production and capital in the entrepreneurial sector are higher than before the reform because entrepreneurs are more numerous. 
+
+Unemployment rate increase by a very little amount, suggesting that the increase in unemployment share (due to the disencentive to search for a job) is higher than the increase in new entrepreneurial activities started by unemployed workers. Moreover, unemployed workers tend to be on average poorer than other occupations and are then more borrowing constrained. This could explain why many unemployed workers could not switch to entrepreneurship. Most of the change in the fraction of entrepreneurs comes from individuals in a worker situation who start their business. The latter fact also explain the rise in savings, since now workers save a bit more in order to accumulate in the perspective of starting a business later.
+
+Comparison between an adjustment of the government budget through either a proportional income tax or a rise in debt show that the policy is more effective if it financed by taxes. This is because when government uses debt, it artificially increases the interest rate and then the cost at which entrepreneurs borrow money. 
+
+From a pure utilitarian welfare perspective, on average, all occupations benefit from this insurance since it increases the value of starting a business. The reason why the average welfare of entrepreneurs is lower than before can be explain by the new entries. In fact, new entrepreneurs are on average poorer and reduce the average asset level hold by entrepreneurs as shown in the next table.
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Downside risk insurance (DRI) to all entrepreneurs}
+\label{policy2}
+\vspace{0.3cm}
+\begin{tabular}{@{}l|l|ll|ll@{}}
+\hline \hline
+& & \multicolumn{2}{l}{Tax adjustment} & \multicolumn{2}{l}{Debt adjustment} \\
+ & Benchmark & With DRI & Variation & With DRI & Variation \\ \hline
+Fraction of entrep. (\%) & 10.897 & 11.031 & 1.23\% & 11.024 & 1.165\% \\ 
+Unemployment rate (\%) & 5.316 & 5.318 & $<$ 0.05\% & 5.318 & $<$ 0.05\% \\ 
+Fraction of workers (\%) & 83.787 & 83.651 & -0.162\% & 83.658 & -0.154\%\\
+Avg Welfare (tot.) & -18.025 & -18.010 & 0.083\% & -18.009 & 0.089\% \\ 
+Avg Welfare (Work.) & -18.699 & -18.691 & $<$ 0.05\% & -18.688 & 0.059\%\\ 
+Avg Welfare (Ent.) & -12.38 & -12.39 & -0.08\% & -12.389 & -0.073\%\\
+Avg Welfare (Unemploy.)  & -21.390 &  -21.177 & 1.01\% & -21.174 & 1.01\%\\ 
+Total Production & 2.645 & 2.654 & 0.34\% & 2.653 & 0.302\% \\ 
+Entrep. Production & 1.101 & 1.110 & 0.817\% & 1.109 & 0.727\% \\
+Corp. Capital & 4.536 & 4.544 & 0.176\% & 4.543 & 0.154\% \\
+Entrep. Capital & 3.714 & 3.744 & 0.808\% & 3.741 & 0.727\%\\ \hline
+\end{tabular}
+\end{table}
+
+Table \ref{policy2pool} displays the pool of entrepreneurs after the reform in the case where the policy is financed through taxes or through government debts. Individuals with an higher level of education tend to be more likely to enter after the reform. Again, this is because low-qualified workers are on average poorer and does not have enough collateral to run a beneficial business. In contrast, the policy lower the average firms' size since the new entrepreneurs are on average poorer than the incumbents. Indeed, the asset (or wealth) threshold at which an individual find it interesting to start a business is lower than before the reform. Hence, introducing a downside risk insurance to all entrepreneurs affect the pool of entrepreneur with a larger fraction of middle and high educated entrepreneurs and a decrease in the average firms' size.
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Downside risk insurance to all entrepreneurs}
+\label{policy2pool}
+\vspace{0.3cm}
+\begin{tabular}{@{}l|lll|lll|lll@{}}
+\hline \hline
+ & \multicolumn{3}{l}{benchmark} & \multicolumn{3}{l}{with DRI (tax adj.)} & \multicolumn{3}{l}{with DRI (debt adj.)}  \\
+ &$\theta_1 $ & $\theta_2 $ & $\theta_3 $ &$\theta_1 $ & $\theta_2 $ & $\theta_3 $&$\theta_1 $ & $\theta_2 $ & $\theta_3 $ \\ \hline
+\% of entrep. & 11.15 & 10.22 & 11.99 & 11.27 & 10.35 & 12.14 & 11.27 & 10.35 & 12.13\\ 
+\% change  & - & - & - & 1.08\% & 1.27\% & 1.25\% & 1.08\% & 1.27\% & 1.17\% \\
+(rlv to bench.) & & & & & & & & & \\ \hline
+Avg.firm  & 267.21 & 339.65 & 410.65 & 266.63 & 338.09 & 409.04 & 266.60 & 338.08 & 409.01\\
+Avg.asset & 233.37 & 297.66 & 341.29 & 231.99 & 296.38 & 340.21 & 231.96 & 296.36 & 340.19\\ \hline
+\end{tabular}
+\end{table}
+
+\paragraph{Transition dynamics.}
+We present in figure \ref{dynamics} the evolution of macroeconomic variables along the transition path for the two instruments to close the government budget: a propotional labor income tax and debt issued. 
+
+When the government uses taxes, this immediately rises the expenditures and thus the tax rate and lower the savings in the economy. This rise is due to the fact that now, all entrepreneurs who bankrupt get the right to claim an UI. As time goes by, entrepreneurship becomes more valuable and a rising fraction of workers chooses to start a business. The total capital stock increases in the economy through the entrepreneurial sector and the rise in savings.
+
+When the government uses debt, the amount of capital in the economy rise and this increases the interest rate relative to the case where the governement uses taxes. This affect the cost at which the entrepreneurs finance their investment and lower their fraction.
+
+Finally, as the number of workers decreases in the economy and that the capital level increases, the wage level tends to increase. This improves the value of being a worker and lower the effect of the downside risk insurance to favor entrepreneurship. In total, this general equilibrium effect is too small to counterbalance the effect of the DRI on the rise in the fraction of entrepreneurs in the economy.
+
+\begin{figure}[H]
+ \caption{Evolution of aggregate quantities}
+\centering
+ \label{dynamics}
+ \centering
+<<optimalpath, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=6>>=
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2/project_methoddebttrans")
+pricepath = read.table("pricepath.out", sep="", header=TRUE)
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2/project_methodtaxtrans")
+pricepath2 = read.table("pricepath.out", sep="", header=TRUE)
+pricepath$time = seq(1,200,by=1)
+pricepath2$time = seq(1,200,by=1)
+par(mfrow=c(2,3))
+plot(pricepath$time, pricepath$E, type="l", xlim=c(0,175), ylim=c(0.1089, 0.1105), xlab="Time", ylab="% Entrepreneurs")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$E, type="l", lty=5, xlim=c(0,175), ylim=c(0.1089, 0.1105), xlab="Time", ylab="% Entrepreneurs")
+legend("bottomright", c("Tax", "Gov. debt"), lty=c(5,1))
+plot(pricepath$time, pricepath$L, type="l", xlim=c(0,175), ylim=c(0.841, 0.843), xlab="Time", ylab="Labor supplied")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$L, type="l",  xlim=c(0,175), ylim=c(0.841, 0.843), lty=5,  xlab="Time", ylab="Labor supplied")
+
+plot(pricepath$time, pricepath$R, type="l", xlim=c(0,175), ylim=c(0.0623, 0.06261), xlab="Time", ylab="Interest rate")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$R, type="l", xlim=c(0,175),ylim=c(0.0623, 0.06261), lty=5, xlab="Time", ylab="Interest rate")
+abline(h=4.970232886330286, col="red")
+
+plot(pricepath$time, pricepath$K, type="l", xlim=c(0,175),ylim=c(4.533, 4.544), xlab="Time", ylab="Capital stock")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$K, type="l", xlim=c(0,175),ylim=c(4.533, 4.544), lty=5, xlab="Time", ylab="Capital stock")
+abline(h=4.970232886330286, col="red")
+
+# plot(pricepath$time, pricepath$L, type="l", ylim=c(0.86, 0.87),  xlab="Time", ylab="Labor")
+# par(new=TRUE)
+# plot(pricepath2$time, pricepath2$L, type="l", ylim=c(0.875, 0.879),  lty=5, xlab="Time", ylab="Labor")
+
+plot(pricepath$time, pricepath$W, type="l", xlim=c(0,175),ylim=c(1.173, 1.17455), xlab="Time", ylab="Wage level")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$W, type="l", xlim=c(0,175),ylim=c(1.173, 1.17455), lty=5, xlab="Time", ylab="Wage level")
+abline(h=1.194898697133556, col="red")
+
+plot(pricepath$time, pricepath$T, type="l", ylim=c(0.011306767524860, 0.011822296121589) , xlim=c(0,20),  xlab="Time", ylab="Tax rate")
+par(new=TRUE)
+plot(pricepath2$time, pricepath2$T, type="l", ylim=c(0.011306767524860, 0.011822296121589) , xlim=c(0,20), lty=5, xlab="Time", ylab="Tax rate")
+abline(h=0.013828878930628, col="red")
+
+@
+\end{figure}
+
+
+\paragraph{Welfare consequences of the reform.} We compute the welfare effect through the consumption equivalent variation (CEV) of the reform along the transition and between the two steady states. Table \ref{welfarepolicy2} summarizes the welfare impact of introducing a DRI when it is financed either by government debt or by taxes.
+
+At the steady state, for the two instruments, all agents are better off except wealthy unemployed worker in the case where the tax rate is used to balance the budget. This is because in that case, these individuals suffer from the lower interest rate as well as the higher tax rate. The increased tax rate lower the welfare gains of the workers as compared to a situation where the government use debt. In constrat, when the government uses debt, the effect of taxes does not reduce the welfare and the gain are greater than 1\% consumption-equivalent change for the bottom 50\% unemployed workers.
+
+Along the transition, 
+
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\centering
+\caption{Consumption-equivalent Variation}
+\label{welfarepolicy2}
+\vspace{0.3cm}
+\begin{tabular}{@{}l|ll|ll@{}}
+\hline \hline
+ & \multicolumn{2}{l}{CEV (debt adjust.)} & \multicolumn{2}{l}{CEV (tax adjust.)} \\ 
+ & Trans. & SS & Trans. & SS \\ \hline
+Entrep. & $<$0.05\% & 0.419\% & 0.176\%  & 0.185\%  \\ 
+bottom 50\% & -0.219\% & 0.763\% & $<$0.05\% & 0.454\%  \\
+top 50\% & 0.209\% & 0.079\% & 0.347\% & -0.079\% \\ \hline
+Workers & -0.591\% & 0.752\% & -0.204\% & 0.142\% \\ 
+bottom 50\% & -0.805\% & 0.939\% & -0.369\% & 0.234\% \\
+top 50\% & -0.386\% & 0.573\% & -0.046\% & 0.055\% \\ \hline
+Unemp. Workers & -0.522\% & 0.777\% & 0.087\% & -0.114\% \\ 
+bottom 50\% & -1.339\% & 1.545\% & -0.555\% & 0.32\% \\
+top 50\% & 0.261\% & 0.038\% & 0.702\% & -0.531\% \\ \hline
+\end{tabular}
+\end{table}
+
+Figure \ref{CEVpoli2} displays the welfare gain by education and asset level. As wealth increase, the policy becomes costly for each category since wealthy people rise income through interest on their asset. As the interest rate is now lower, these guys are now worse off. Except for the very poor in the case where the policy is financed through taxes, people with relatively low level of asset are better off. This is because the rise in the entrepreneurial value improves the welfare of all categories.
+
+\begin{figure}[H]
+ \caption{Consumption Equivalent Variation}
+\centering
+ \label{CEVpoli2}
+ \centering
+<<d, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=5>>=
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2/project_methodtaxwCEV")
+
+CEVVE = read.table("CEVVE.out", sep="", header=TRUE)
+
+ENT1 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 0),]
+ENT2 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 1),]
+ENT3 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 2),]
+ENT11 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 0),]
+ENT22 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 1),]
+ENT33 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+
+ENT = read.table("distasset.out", sep="", header=TRUE)
+
+ENT$distVE = ENT1$distVE + ENT2$distVE + ENT3$distVE + ENT11$distVE + ENT22$distVE + ENT33$distVE
+ENT$TVE = ENT1$TVE + ENT2$TVE + ENT3$TVE + ENT11$TVE + ENT22$TVE + ENT33$TVE
+ENT$SSVE = ENT1$SSVE + ENT2$SSVE + ENT3$SSVE + ENT11$SSVE + ENT22$SSVE + ENT33$SSVE
+
+ENT$Trans = ENT$distVE*ENT$TVE
+ENT$SS = ENT$distVE*ENT$SSVE
+sum(ENT$Trans)/sum(ENT$distVE)
+sum(ENT$SS)/sum(ENT$distVE)
+
+ENT$cumulall = c()
+ENT$cumulall[1] = ENT$distVE[1]
+for(i in 2:nrow(ENT)) {
+  ENT$cumulall[i] = ENT$cumulall[i-1] + ENT$distVE[i]
+}
+
+ENT$cumulall = ENT$cumulall/sum(ENT$distVE)
+
+#table top percentile
+
+bottom50 <- ENT[which(ENT$cumulall < 0.5),]
+bottom50$Trans = bottom50$TVE*bottom50$distVE
+bottom50$SS = bottom50$SSVE*bottom50$distVE
+sum(bottom50$Trans)/sum(bottom50$distVE)
+sum(bottom50$SS)/sum(bottom50$distVE)
+
+top50 <- ENT[which(ENT$cumulall >= 0.5),]
+top50$Trans = top50$TVE*top50$distVE
+top50$SS = top50$SSVE*top50$distVE
+sum(top50$Trans)/sum(top50$distVE)
+sum(top50$SS)/sum(top50$distVE)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2/project_methodtaxwCEV")
+
+CEVall = read.table("CEVall.out", sep="", header=TRUE)
+
+all1 = CEVall[which(CEVall$PROD == 0),]
+all2 = CEVall[which(CEVall$PROD == 1),]
+all3 = CEVall[which(CEVall$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+
+WW = read.table("distasset.out", sep="", header=TRUE)
+
+WW$DIST = all1$distWW0 + all1$distWW1 + all2$distWW0 + all2$distWW1  + all3$distWW0 + all3$distWW1 
+
+WW$TCOST = all1$TWW0 + all1$TWW1 +  all2$TWW0 + all2$TWW1  + all3$TWW0 + all3$TWW1 
+
+WW$SSCOST = all1$SSWW0 + all1$SSWW1 +  all2$SSWW0 + all2$SSWW1  + all3$SSWW0 + all3$SSWW1
+
+WW$Trans = WW$DIST*WW$TCOST
+WW$SS = WW$DIST*WW$SSCOST
+sum(WW$Trans)/sum(WW$DIST)
+sum(WW$SS)/sum(WW$DIST)
+
+WW$cumulall = c()
+WW$cumulall[1] = WW$DIST[1]
+for(i in 2:nrow(WW)) {
+  WW$cumulall[i] = WW$cumulall[i-1] + WW$DIST[i]
+}
+
+WW$cumulall = WW$cumulall/sum(WW$DIST)
+
+#table top percentile
+
+bottom50 <- WW[which(WW$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- WW[which(WW$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+
+U = read.table("distasset.out", sep="", header=TRUE)
+
+U$DIST = all1$distUS0 + all1$distUS1 + all2$distUS0 + all2$distUS1  + all3$distUS0 + all3$distUS1 + all1$distUL0 + all1$distUL1 + all2$distUL0 + all2$distUL1  + all3$distUL0 + all3$distUL1 
+
+U$TCOST = all1$TUL0 + all1$TUL1 +  all2$TUL0 + all2$TUL1  + all3$TUL0 + all3$TUL1 + all1$TUS0 + all1$TUS1 +  all2$TUS0 + all2$TUS1  + all3$TUS0 + all3$TUS1 
+
+U$SSCOST = all1$SSUL0 + all1$SSUL1 +  all2$SSUL0 + all2$SSUL1  + all3$SSUL0 + all3$SSUL1 + all1$SSUS0 + all1$SSUS1 +  all2$SSUS0 + all2$SSUS1  + all3$SSUS0 + all3$SSUS1 
+
+U$Trans = U$DIST*U$TCOST
+U$SS = U$DIST*U$SSCOST
+sum(U$Trans)/sum(U$DIST)
+sum(U$SS)/sum(U$DIST)
+
+U$cumulall = c()
+U$cumulall[1] = U$DIST[1]
+for(i in 2:nrow(U)) {
+  U$cumulall[i] = U$cumulall[i-1] + U$DIST[i]
+}
+
+U$cumulall = U$cumulall/sum(U$DIST)
+
+#table top percentile
+
+bottom50 <- U[which(U$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- U[which(U$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+par(mfrow=c(2,3))
+plot(WW$ASSET, (WW$TCOST + WW$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="WW (tax adjust.)")
+abline(h=0, col="red")
+
+plot(U$ASSET, (U$TCOST + U$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="U (tax adjust.)")
+abline(h=0, col="red")
+
+plot(ENT$ASSET, (ENT$TVE + ENT$SSVE)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="Entrep. (tax adjust.)")
+abline(h=0, col="red")
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2/project_methoddebtwCEV")
+
+CEVVE = read.table("CEVVE.out", sep="", header=TRUE)
+
+ENT1 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 0),]
+ENT2 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 1),]
+ENT3 = CEVVE[which(CEVVE$TYPE == 0 & CEVVE$PROD == 2),]
+ENT11 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 0),]
+ENT22 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 1),]
+ENT33 = CEVVE[which(CEVVE$TYPE == 1 & CEVVE$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+
+ENT = read.table("distasset.out", sep="", header=TRUE)
+
+ENT$distVE = ENT1$distVE + ENT2$distVE + ENT3$distVE + ENT11$distVE + ENT22$distVE + ENT33$distVE
+ENT$TVE = ENT1$TVE + ENT2$TVE + ENT3$TVE + ENT11$TVE + ENT22$TVE + ENT33$TVE
+ENT$SSVE = ENT1$SSVE + ENT2$SSVE + ENT3$SSVE + ENT11$SSVE + ENT22$SSVE + ENT33$SSVE
+
+ENT$Trans = ENT$distVE*ENT$TVE
+ENT$SS = ENT$distVE*ENT$SSVE
+sum(ENT$Trans)/sum(ENT$distVE)
+sum(ENT$SS)/sum(ENT$distVE)
+
+ENT$cumulall = c()
+ENT$cumulall[1] = ENT$distVE[1]
+for(i in 2:nrow(ENT)) {
+  ENT$cumulall[i] = ENT$cumulall[i-1] + ENT$distVE[i]
+}
+
+ENT$cumulall = ENT$cumulall/sum(ENT$distVE)
+
+#table top percentile
+
+bottom50 <- ENT[which(ENT$cumulall < 0.5),]
+bottom50$Trans = bottom50$TVE*bottom50$distVE
+bottom50$SS = bottom50$SSVE*bottom50$distVE
+sum(bottom50$Trans)/sum(bottom50$distVE)
+sum(bottom50$SS)/sum(bottom50$distVE)
+
+top50 <- ENT[which(ENT$cumulall >= 0.5),]
+top50$Trans = top50$TVE*top50$distVE
+top50$SS = top50$SSVE*top50$distVE
+sum(top50$Trans)/sum(top50$distVE)
+sum(top50$SS)/sum(top50$distVE)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2/project_methoddebtwCEV")
+
+CEVall = read.table("CEVall.out", sep="", header=TRUE)
+
+all1 = CEVall[which(CEVall$PROD == 0),]
+all2 = CEVall[which(CEVall$PROD == 1),]
+all3 = CEVall[which(CEVall$PROD == 2),]
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+
+WW = read.table("distasset.out", sep="", header=TRUE)
+
+WW$DIST = all1$distWW0 + all1$distWW1 + all2$distWW0 + all2$distWW1  + all3$distWW0 + all3$distWW1 
+
+WW$TCOST = all1$TWW0 + all1$TWW1 +  all2$TWW0 + all2$TWW1  + all3$TWW0 + all3$TWW1 
+
+WW$SSCOST = all1$SSWW0 + all1$SSWW1 +  all2$SSWW0 + all2$SSWW1  + all3$SSWW0 + all3$SSWW1
+
+WW$Trans = WW$DIST*WW$TCOST
+WW$SS = WW$DIST*WW$SSCOST
+sum(WW$Trans)/sum(WW$DIST)
+sum(WW$SS)/sum(WW$DIST)
+
+WW$cumulall = c()
+WW$cumulall[1] = WW$DIST[1]
+for(i in 2:nrow(WW)) {
+  WW$cumulall[i] = WW$cumulall[i-1] + WW$DIST[i]
+}
+
+WW$cumulall = WW$cumulall/sum(WW$DIST)
+
+#table top percentile
+
+bottom50 <- WW[which(WW$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- WW[which(WW$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+
+U = read.table("distasset.out", sep="", header=TRUE)
+
+U$DIST = all1$distUS0 + all1$distUS1 + all2$distUS0 + all2$distUS1  + all3$distUS0 + all3$distUS1 + all1$distUL0 + all1$distUL1 + all2$distUL0 + all2$distUL1  + all3$distUL0 + all3$distUL1 
+
+U$TCOST = all1$TUL0 + all1$TUL1 +  all2$TUL0 + all2$TUL1  + all3$TUL0 + all3$TUL1 + all1$TUS0 + all1$TUS1 +  all2$TUS0 + all2$TUS1  + all3$TUS0 + all3$TUS1 
+
+U$SSCOST = all1$SSUL0 + all1$SSUL1 +  all2$SSUL0 + all2$SSUL1  + all3$SSUL0 + all3$SSUL1 + all1$SSUS0 + all1$SSUS1 +  all2$SSUS0 + all2$SSUS1  + all3$SSUS0 + all3$SSUS1 
+
+U$Trans = U$DIST*U$TCOST
+U$SS = U$DIST*U$SSCOST
+sum(U$Trans)/sum(U$DIST)
+sum(U$SS)/sum(U$DIST)
+
+U$cumulall = c()
+U$cumulall[1] = U$DIST[1]
+for(i in 2:nrow(U)) {
+  U$cumulall[i] = U$cumulall[i-1] + U$DIST[i]
+}
+
+U$cumulall = U$cumulall/sum(U$DIST)
+
+#table top percentile
+
+bottom50 <- U[which(U$cumulall < 0.5),]
+bottom50$Trans = bottom50$TCOST*bottom50$DIST
+bottom50$SS = bottom50$SSCOST*bottom50$DIST
+sum(bottom50$Trans)/sum(bottom50$DIST)
+sum(bottom50$SS)/sum(bottom50$DIST)
+
+top50 <- U[which(U$cumulall >= 0.5),]
+top50$Trans = top50$TCOST*top50$DIST
+top50$SS = top50$SSCOST*top50$DIST
+sum(top50$Trans)/sum(top50$DIST)
+sum(top50$SS)/sum(top50$DIST)
+
+plot(WW$ASSET, (WW$TCOST + WW$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="WW (debt adjust.)")
+abline(h=0, col="red")
+
+plot(U$ASSET, (U$TCOST + U$SSCOST)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="U (debt adjust.)")
+abline(h=0, col="red")
+
+plot(ENT$ASSET, (ENT$TVE + ENT$SSVE)*100, type="l", xlim=c(0,400), ylab="percentage (%)", xlab="asset (1,000$)", main="Entrep (debt adjust.)")
+abline(h=0, col="red")
+
+@
+\end{figure}
+
+\subsection{Discussion}
+The main message is that downside risk insurance affect a little unemployment in our model economy, but we do not take into account spillover effect. Unemployed workers are in average poorer, and are then less likely to open a business.
+
+The main message is that this does not modify the pool of entrepreneurs
+
+The main message is that the rise in the fraction of entrepreneurs is mainly due to worker who wants to start their business.
+
+
+\section{Conclusion}
+
+
+For future research, one should account for a fine bankruptcy framework. Also, it would be interesting to explicitly account for endogenous labor, so that entrepreneurs could hire workers. This could substantially increase the effect of such policies.
+
+
+
+
+\section{Appendix}
+\subsection{Data sources}
+[CPS description here]: to get transition data.
+
+[SCF description here]: to compare wealth distribution.
+
+[SBO description here]: to compare firms' size distribution.
+
+\subsection{Algorithms}
+\paragraph{Steady state.} \label{SSalgo}
+The algorithm is organized as follows. 
+\begin{enumerate}
+\item Initialize a full dimension grid space composed of all different possible asset values ($a$), productivity level ($y$), innate ability ($\theta$) and entrepreneurial state ($j$). The maximum asset level is chosen sufficiently large to get ergodicity of the policy functions, so that the household's saving decision is not binding.
+\item Guess an initial tax parameter $ \tau_w $ in addition to prices ($ w $ and $ r $). 
+\item Given these parameters, solve the value functions using value function iteration following the method in \textcite{stokey}. Appendix \ref{appendixU} show how we solve for the optimal searching effort in the unemployed worker case.
+\item Construct the transition matrix $ \textbf{M} $ generated by $ \Pi_y $, $ \Pi_j$, the saving decision and the search effort intensity decisions. Compute the associated stationary measure of individuals $ \Gamma(\textbf{x}) $, by first guessing an initial mass of one of households with zero asset (for instance, $ \Gamma(yw,y_0,\theta_0, a) = 1 $) and then by iterating on $ \Gamma'(\textbf{x}) = \textbf{M}\Gamma(\textbf{x}) $ until $ | \Gamma'(\textbf{x}) - \Gamma(\textbf{x}) | < \mu $, with $ \mu $ very small.
+\item Compute the resulting total asset level and total labor supplied in the economy and total investment level and total labor hired in the entrepreneurial sector. Total capital invested and in the non-entrepreneurial sector is given as the difference between total savings net of government debt and total capital invested in the entrepreneurial sector. Total labor used in the non-entrepreneurial sector is given by total labor supplied by workers.
+\item Update prices ($ r $, $ w $) using the marginal productivities in the non-entrepreneurial sector and the tax rate ($ \tau_w $) to close the government budget up to a relaxation.
+\end{enumerate}
+
+\paragraph{Transition dynamic.} \label{SSalgo}
+We assume that the economy is in the initial steady state in period 0 and the reform is announced and implemented in period 1. The economy makes a transition to reach the final steady state in period T. We choose T large enough so that the resulting stationary distribution in period T is close enough to the steady state distribution after the reform.
+\begin{enumerate}
+\item Guess a path for the level of capital, labor as well as $ \tau_w $ (or $B$ in case where we close the budget using government debt). Compute the resulting prices $r$ and $w$.
+\item Use the value function of the final steady state after the reform and solve the households' problem backwards starting from T until period 1.
+\item Use the distribution of the initial steady state before the reform and the policy functions computed in step 2 and compute the path of the distribution.
+\item Given these distributions, compute a new path for capital, labor and the tax rate (or government debt), and the resulting prices. Iterate from step 2 until the difference between the initial path is close enough to the final path. 
+\item When converge is achieved, check if the final distribution in period T is close enough to what should be the steady state in period T after the reform up to a criterion. If the two distributions are similar, then stop, else, increase the number of periods T.
+\end{enumerate}
+\subsection{Estimation of the transitions between occupations} \label{econometricanalysis}
+% 
+% Unemployment rate, and more generally the economic situation in the US is found to have an important effect on the decision of starting a business as shown by \textcite{sorgner}. They also find that someone in unemployment situation is more likely to enter entrepreneurship. Finally, unemployment duration tends to increase the probability of starting his own business as highlighted by \textcite{millan}. All these facts are supported econometrically using probit and OLS.
+
+
+<<data,  echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE>>=
+# wd = "/Volumes/PLONK/DATA/SEBASIC/"
+# load(file=paste0(wd, "CPS_data_couples_yeargood_9415.RData"))
+# 
+# b <- final_data
+# 
+# 
+# b = b[order(b$year_id),]
+# b = b[order(b$unique_id),]
+# 
+# 
+# b$empstat[as.numeric(b$peio1cow) %in% c(1:8)] <- "Worker"
+# #def 1:
+# #b$empstat[as.numeric(b$peio1cow) %in% c(6:7)] <- "Entrepreneur"
+# #def 2:
+# b$empstat[as.numeric(b$peio1cow) %in% c(6:7) & as.numeric(b$hubus) == 1] <- "Entrepreneur"
+# b$empstat = ifelse(b$prempnot == " 2"| b$prempnot == "Unemployed", "Unemployed", b$empstat)
+# 
+# lfsta_emp = b$empstat
+# # lfsta_emp = b$edulvl
+# table(lfsta_emp)
+# 
+# # remove first row and last row (logic)
+# lfsta_emp1 = lfsta_emp[2:length(lfsta_emp)]
+# lfsta_emp = lfsta_emp[1:(length(lfsta_emp) - 1)]
+# 
+# corresp_id = b$unique_id[1:(nrow(b) - 1)]
+# corresp_id = corresp_id[seq(1, length(corresp_id), by = 2)]
+# 
+# lfsta_emp = lfsta_emp[seq(1, length(lfsta_emp), by=2)]
+# lfsta_emp1 = lfsta_emp1[seq(1, length(lfsta_emp1), by=2)] # do not select the relations from 1 guy to another, this way only have transitions of the same guy
+# # Remark: if selected more years (like 3), then do: by = 3, etc.
+# lfsta_emp = cbind(lfsta_emp, lfsta_emp1)
+# trans = as.data.frame.matrix(table(lfsta_emp[,1], lfsta_emp[,2]))
+# 
+# # a) Raw transition matrix
+# trans
+# 
+# 
+# # b) Transition matrix with NA
+# TRANS1 = trans
+# rowsums = rowSums(TRANS1)
+# for(i in 1:length(rowsums)) TRANS1[i, ] = TRANS1[i, ]/rowsums[i]
+# TRANS1
+# 
+# b$educ22[b$peeduca %in% c(31,32,33,34)] <- "1"
+# b$educ22[b$peeduca %in% c(35,36,37,38)] <- "2"
+# b$educ22[b$peeduca %in% c(39,40)] <- "3"
+# b$educ22[b$peeduca %in% c(41,42)] <- "4"
+# b$educ22[b$peeduca %in% c(43)] <- "5"
+# b$educ22[b$peeduca %in% c(44, 45,46)] <- "6"
+# 
+# # c <- as.numeric(b$educ22[complete.cases(b$educ22)])
+# # length(c[c == 1])/(length(c))
+# # length(c[c == 2])/(length(c))
+# # length(c[c == 3])/(length(c))
+# # length(c[c == 4])/(length(c))
+# # length(c[c == 5])/(length(c))
+# 
+# b$pesex <- ifelse(as.numeric(b$pesex) == 1, 1, 0)
+# b$wagelvl<-cut(as.numeric(b$prernwa), c(0, 5000, 7000,25000,35000, 45000, 65000, 75000, 100000, 125000, 160000,200000, 300000), right=FALSE)
+# 
+#   b$aggu[b$year == "1994"] <- 6.1
+#   b$aggu[b$year == "1995"] <- 5.6
+#   b$aggu[b$year == "1996"] <- 5.4
+#   b$aggu[b$year == "1997"] <- 4.9
+#   b$aggu[b$year == "1998"] <- 4.5
+#   b$aggu[b$year == "1999"] <- 4.2
+#   b$aggu[b$year == "2000"] <- 4.0
+#   b$aggu[b$year == "2001"] <- 4.7
+#   b$aggu[b$year == "2002"] <- 5.8
+#   b$aggu[b$year == "2003"] <- 6.0
+#   b$aggu[b$year == "2004"] <- 5.5
+#   b$aggu[b$year == "2005"] <- 5.1
+#   b$aggu[b$year == "2006"] <- 4.6
+#   b$aggu[b$year == "2007"] <- 4.6
+#   b$aggu[b$year == "2008"] <- 5.8
+#   b$aggu[b$year == "2009"] <- 9.3
+#   b$aggu[b$year == "2010"] <- 9.6
+#   b$aggu[b$year == "2011"] <- 8.9
+#   b$aggu[b$year == "2012"] <- 8.1
+#   b$aggu[b$year == "2013"] <- 7.4
+#   b$aggu[b$year == "2014"] <- 6.2
+#   b$aggu[b$year == "2015"] <- 5.3
+# 
+# b$hufaminc[b$hufaminc == "Less Than $5,000"] <- " 1"
+# b$hufaminc[b$hufaminc == "5,000 To 7,499"] <- " 2"
+# b$hufaminc[b$hufaminc == "7,500 To 9,999"] <- " 3"
+# b$hufaminc[b$hufaminc == "10,000 To 12,499"] <- " 4"
+# b$hufaminc[b$hufaminc == "12,500 To 14,999"] <- " 5"
+# b$hufaminc[b$hufaminc == "15,000 To 19,999"] <- " 6"
+# b$hufaminc[b$hufaminc == "20,000 To 24,999"] <- " 7"
+# b$hufaminc[b$hufaminc == "25,000 To 29,999"] <- " 8"
+# b$hufaminc[b$hufaminc == "30,000 To 34,999"] <- " 9"
+# b$hufaminc[b$hufaminc == "35,000 To 39,999"] <- "10"
+# b$hufaminc[b$hufaminc == "40,000 To 49,999"] <- "11"
+# b$hufaminc[b$hufaminc == "50,000 To 59,999"] <- "12"
+# b$hufaminc[b$hufaminc == "60,000 To 74,999"] <- "13"
+# b$hufaminc[b$hufaminc == "75,000 Or More"] <- "14"
+# b$hufaminc[b$hufaminc == "15" | b$hufaminc == "16"] <- "14"
+# b$hufaminc[b$hufaminc == "-1" | b$hufaminc == "-2" | b$hufaminc == "-3" | b$hufaminc == "Blank" | b$hufaminc == "Don't Know" | b$hufaminc == "Refused" ] <- "0"
+# b$hefaminc <- b$hufaminc
+# b$hefaminc <- ifelse(as.numeric(b$hufaminc) > 0, b$hufaminc, "")
+
+
+# corresp_id = b$unique_id[1:(nrow(b) - 1)]
+# corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+# 
+# selected_id = corresp_id[which(lfsta_emp[,1] == "Entrepreneur" & lfsta_emp[,2] == "Worker")]
+# b$EtoWW = ifelse(b$unique_id %in% selected_id & b$empstat == "Entrepreneur" , 1, 0)
+# selected_id2 = corresp_id[which(lfsta_emp[,1] == "Entrepreneur")]
+# EE = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Entrepreneur" & b$year_id == 1),]
+# EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca)))
+# # model10 <- lm(EtoWW ~   as.numeric(peeduca2) + I(as.numeric(peeduca2)^2) + I(as.numeric(peeduca2)^3) , data=EE,weights=as.numeric(hwhhwgt))
+# # plot(as.numeric(EE$peeduca), model10$fitted.value)
+# modelEWWlm <- lm(EtoWW ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + peeduca2 + I(as.numeric(peeduca2)^2) + I(as.numeric(peeduca2)^3),data=EE, weights=as.numeric(hwhhwgt))
+# modelEWWprobit <- glm(EtoWW ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(peeduca2) + I(as.numeric(peeduca2)^2) + I(as.numeric(peeduca2)^3), family=binomial(link="probit"),data=EE)
+# 
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 2),]
+# tab1 = table(D1$educ22)
+# tab2 = table(EE$educ22)
+# x5 = tab1/tab2
+# 
+# 
+# # TRANSITION BETWEEN UNEMPLOYED / ENTREPRENEURS
+# corresp_id = b$unique_id[1:(nrow(b) - 1)]
+# corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+# 
+# selected_id = corresp_id[which(lfsta_emp[,1] == "Unemployed" & lfsta_emp[,2] == "Entrepreneur")]
+# b$UtoE = ifelse(b$unique_id %in% selected_id & b$empstat == "Unemployed" , 1, 0)
+# selected_id2 = corresp_id[which(lfsta_emp[,1] == "Unemployed")]
+# UU = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Unemployed" & b$year_id == 1),]
+# UU$peeduca2 <- (as.numeric(UU$peeduca) - mean(as.numeric(UU$peeduca)))
+# # EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca)))
+# modelUElm <- lm(UtoE ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(peeduca2) + as.numeric(prunedur) + as.numeric(aggu),data=UU,weights=as.numeric(hwhhwgt))
+# modelUEprobit <- glm(UtoE ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(peeduca2) + as.numeric(prunedur) + as.numeric(aggu), family=binomial(link="probit"),data=UU)
+# # summary(nls(UtoE ~ c*as.numeric(educ22) + I((as.numeric(educ22) + cst)^2), start=list( c = 0.8, cst = 0.05),  data = UU, trace = TRUE))
+# 
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 1 & D$empstat == "Unemployed"),]
+# tab1 = table(D1$educ22)
+# UNEMP = b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(UNEMP$educ22)
+# x2 = tab1/tab2
+# 
+# 
+# # Transition U to WW
+# corresp_id = b$unique_id[1:(nrow(b) - 1)]
+# corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+# 
+# selected_id = corresp_id[which(lfsta_emp[,1] == "Unemployed" & lfsta_emp[,2] == "Worker")]
+# b$UtoWW = ifelse(b$unique_id %in% selected_id & b$empstat == "Unemployed" , 1, 0)
+# selected_id2 = corresp_id[which(lfsta_emp[,1] == "Unemployed")]
+# UU = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Unemployed" & b$year_id == 1),]
+# UU$peeduca2 <- (as.numeric(UU$peeduca) - mean(as.numeric(UU$peeduca)))
+# # EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca)))
+# modelUWWlm <- lm(UtoWW ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(peeduca2) + as.numeric(prunedur) + as.numeric(aggu),data=UU,weights=as.numeric(hwhhwgt))
+# modelUWWprobit <- glm(UtoWW ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc)  + as.numeric(peeduca2) + as.numeric(prunedur) + as.numeric(aggu), family=binomial(link="probit"),data=UU)
+# # Obtain proba pour un chomeur de passer ? self employed, sachant son niveau d education
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 1 & D$empstat == "Unemployed"),]
+# tab1 = table(D1$educ22)
+# UNEMP = b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(UNEMP$educ22)
+# x4 = tab1/tab2
+# 
+# 
+# # TRANSITION W to U
+# corresp_id = b$unique_id[1:(nrow(b) - 1)]
+# corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+# selected_id = corresp_id[which(lfsta_emp[,1] == "Worker" & lfsta_emp[,2] == "Unemployed")]
+# b$WWtoU = ifelse(b$unique_id %in% selected_id & b$empstat == "Worker" , 1, 0)
+# selected_id2 = corresp_id[which(lfsta_emp[,1] == "Worker")]
+# WW = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Worker" & b$year_id == 1),]
+# WW$prernwa <- ifelse(WW$prernwa == "-1", "", as.numeric(WW$prernwa)/10000)
+# 
+# # EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca)))
+# modelWWUlm <- lm(WWtoU ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(prernwa) , data=WW,weights=as.numeric(hwhhwgt))
+# modelWWUprobit <- glm(WWtoU ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc)  + as.numeric(prernwa) , family=binomial(link="probit"),data=WW)
+# #Obtain proba pour un WW de passer ?
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+# tab1 = table(D1$wagelvl)
+# WWUN = b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(WWUN$wagelvl)
+# x3 = tab1/tab2
+# #Obtain proba pour un WW de passer ?
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+# tab1 = table(D1$educ22)
+# WWUN = b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(WWUN$educ22)
+# x33 = tab1/tab2
+# 
+# 
+# # TRANSITION W to E
+# selected_id = corresp_id[which(lfsta_emp[,1] == "Worker" & lfsta_emp[,2] == "Entrepreneur")]
+# b$WWtoE = ifelse(b$unique_id %in% selected_id & b$empstat == "Worker" , 1, 0)
+# selected_id2 = corresp_id[which(lfsta_emp[,1] == "Worker")]
+# WW = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Worker" & b$year_id == 1),]
+# WW$prernwa <- ifelse(WW$prernwa == "-1", "", as.numeric(WW$prernwa)/10000)
+# # EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca)))
+# model1 <- lm(WWtoE ~   as.numeric(prernwa) + I(as.numeric(prernwa)^2) + I(as.numeric(prernwa)^3) , data=WW,weights=as.numeric(hwhhwgt))
+# modelWWElm <- lm(WWtoE ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc)  + as.numeric(prernwa) + I(as.numeric(prernwa)^2) + I(as.numeric(prernwa)^3) , data=WW,weights=as.numeric(hwhhwgt))
+# modelWWEprobit <- glm(WWtoE ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc)  + as.numeric(prernwa) + I(as.numeric(prernwa)^2) + I(as.numeric(prernwa)^3) , family=binomial(link="probit"),data=WW)
+# #Obtain proba pour un WW de passer ?
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+# tab1 = table(D1$wagelvl)
+# WWE= b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(WWE$wagelvl)
+# x1 = tab1/tab2
+# #Obtain proba pour un WW de passer ?
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+# tab1 = table(D1$educ22)
+# WWE= b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(WWE$educ22)
+# x11 = tab1/tab2
+# 
+# 
+# 
+# # TRANSITIONE to U
+# selected_id = corresp_id[which(lfsta_emp[,1] == "Entrepreneur" & lfsta_emp[,2] == "Unemployed")]
+# b$EtoU = ifelse(b$unique_id %in% selected_id & b$empstat == "Entrepreneur" , 1, 0)
+# selected_id2 = corresp_id[which(lfsta_emp[,1] == "Entrepreneur")]
+# EE = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Entrepreneur" & b$year_id == 1),]
+# EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca)))
+# # EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca)))
+# modelEUlm <- lm(EtoU ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(peeduca2), data=EE,weights=as.numeric(hwhhwgt))
+# modelEUprobit <- glm(EtoU ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(peeduca2), family=binomial(link="probit"),data=EE)
+# 
+# D = b[which(b$unique_id %in% selected_id),]
+# D1 = D[which(D$year_id == 2),]
+# tab1 = table(D1$educ22)
+# EU= b[which(b$unique_id %in% selected_id2),]
+# tab2 = table(EU$educ22)
+# x6 = tab1/tab2
+
+@
+
+Wage level is a better proxy for working skills, we use it when available (when the individual is currently in employment). Otherwise, we use the family income. These are CPS basic data. 
+% \begin{figure}[H]
+%  \caption{Transition probability by educational attainment or wage level}
+% \centering
+%  \label{firm}
+%  \centering
+% <<CD, out.width='0.48\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE>>=
+%
+% setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Code/")
+% # POLICY OLD
+% flowCD= read.table("flow.out")
+% labelseduc = c("VL","LHS","HS","LC","C","HC")
+% names(x6) <- labelseduc
+% names(x4) <- labelseduc
+% names(x5) <- labelseduc
+% names(x2) <- labelseduc
+%
+% plot(x1, type="o", ylim=c(0.007, 0.03), main="WW to E")
+% par(new=TRUE)
+% plot(seq(1,5, by=1),flowCD[5,], ylim=c(0.007, 0.03), type="l", lty=5, col="red", yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+% legend("topleft", cex=1.3, bty="n", c("CD model (2006)", "Data US"), lty=c(5,1), col=c("red","black"))
+% fit <- glm(x3 ~ seq(1,12,by=1))
+% co <- coef(fit)
+% plot(x3, type="o", col="black", ylim=c(0.006,0.034), main="WW to U")
+% abline(fit, col="black", lwd=1, lty=2)
+% legend("topright", cex=1.3, bty="n", c("Data US", "Trend"), lty=c(1,2), col=c("black","black"))
+% fit <- glm(x2 ~ seq(1,6,by=1))
+% co <- coef(fit)
+% plot(x2, type="o", col="black", ylim=c(0.003,0.025), main="U to E", frame.plot =FALSE)
+% abline(fit, col="black", lwd=1, lty=2)
+% legend("topleft", cex=1.3, bty="n", c("Data US", "Trend"), lty=c(1,2), col=c("black","black"))
+% fit <- glm(x4 ~ seq(1,6,by=1))
+% co <- coef(fit)
+% plot(x4, type="o", col="black", ylim=c(0.20,0.265), main="U to WW", frame.plot =FALSE)
+% abline(fit, col="black", lwd=1, lty=2)
+% legend("topleft", cex=1.3, bty="n", c("Data US", "Trend"), lty=c(1,2), col=c("black","black"))
+% fit <- glm(x5 ~ seq(1,6,by=1))
+% co <- coef(fit)
+% plot(x5, type="o", col="black", ylim=c(0.18, 0.30), main="E to WW", frame.plot =FALSE)
+% abline(fit, col="black", lwd=1, lty=2)
+% par(new=TRUE)
+% plot(seq(1,5, by=1),flowCD[6,], type="l", lty=5, col="red", ylim=c(0.18, 0.30), yaxt="n", xaxt='n', ann=FALSE, frame.plot =FALSE)
+% legend("topleft", cex=1.3, bty="n", c("CD model (2006)", "Data US", "Trend"), lty=c(5,1,2), col=c("red","black", "black"))
+% fit <- glm(x6 ~ seq(1,6,by=1))
+% co <- coef(fit)
+% plot(x6, type="o", col="black", ylim=c(0.0015, 0.014), main="E to U", frame.plot =FALSE)
+% abline(fit, col="black", lwd=1, lty=2)
+% legend("topleft", cex=1.3, bty="n", c("Data US", "Trend"), lty=c(1,2), col=c("black","black"))
+% @
+% \end{figure}
+
+Below are reported discrete choice model results (OLS and Probit) between the probability to switch and various explanatory variables. 
+
+[ADD NON-PARAMETRIC ANALYSIS]
+% <<star1, echo = FALSE, results = 'asis'>>=
+% stargazer(modelEWWlm, modelEUlm, modelWWElm, modelWWUlm, modelUElm, modelUWWlm,digits = 3, title="OLS regression on the probability to switch from a given state to another", digits.extra = 3, keep.stat="n", notes = c("Source: estimation using CPS data from 1994 to 2015.","(*) dummy variables"), dep.var.caption = "", model.numbers  = FALSE, dep.var.labels  = c("E - WW","E - U","WW - E","WW - U","U - E","U - WW"), covariate.labels=c("Sexe*","Age", "Family inc.", "Educ", "$Educ^2$", "$Educ^3$", "Wage", "$Wage^2$", "$Wage^3$", "Unemp. dur.", "Agg. Unemp."), initial.zero = FALSE, header=FALSE)
+% @
+%
+% <<star2, echo = FALSE, results = 'asis'>>=
+% stargazer(modelEWWprobit, modelEUprobit, modelWWEprobit, modelWWUprobit, modelUEprobit, modelUWWprobit,digits = 3, title="Probit regression on the probability to switch from a given state to another", digits.extra = 3, keep.stat="n", notes = c("Source: estimation using CPS data from 1994 to 2015.","(*) dummy variables"), dep.var.caption = "", model.numbers  = FALSE, dep.var.labels  = c("E - WW","E - U","WW - E","WW - U","U - E","U - WW"), covariate.labels=c("Sexe*","Age", "Family inc.", "Educ", "$Educ^2$", "$Educ^3$", "Wage", "$Wage^2$", "$Wage^3$", "Unemp. dur.", "Agg. Unemp."), initial.zero = FALSE, header=FALSE)
+% @
+%
+
+
+<<data33, echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE>>=
+wd = "/Volumes/PLONK/DATA/SEBASIC/"
+load(file=paste0(wd, "CPS_data_couples_yeargood_9415.RData"))
+
+b <- final_data
+
+rm(final_data)
+
+b = b[order(b$year_id),]
+b = b[order(b$unique_id),]
+
+
+b$empstat[as.numeric(b$peio1cow) %in% c(1:8)] <- "Worker"
+#def 1:
+#b$empstat[as.numeric(b$peio1cow) %in% c(6:7)] <- "Entrepreneur"
+#def 2:
+b$empstat[as.numeric(b$peio1cow) %in% c(6:7) & as.numeric(b$hubus) == 1] <- "Entrepreneur"
+b$empstat = ifelse(b$prempnot == " 2"| b$prempnot == "Unemployed", "Unemployed", b$empstat)
+
+lfsta_emp = b$empstat
+# lfsta_emp = b$edulvl
+table(lfsta_emp)
+
+# remove first row and last row (logic)
+lfsta_emp1 = lfsta_emp[2:length(lfsta_emp)]
+lfsta_emp = lfsta_emp[1:(length(lfsta_emp) - 1)]
+
+corresp_id = b$unique_id[1:(nrow(b) - 1)]
+corresp_id = corresp_id[seq(1, length(corresp_id), by = 2)]
+
+lfsta_emp = lfsta_emp[seq(1, length(lfsta_emp), by=2)]
+lfsta_emp1 = lfsta_emp1[seq(1, length(lfsta_emp1), by=2)] # do not select the relations from 1 guy to another, this way only have transitions of the same guy
+# Remark: if selected more years (like 3), then do: by = 3, etc.
+lfsta_emp = cbind(lfsta_emp, lfsta_emp1)
+trans = as.data.frame.matrix(table(lfsta_emp[,1], lfsta_emp[,2]))
+
+# a) Raw transition matrix
+trans
+
+
+# b) Transition matrix with NA
+TRANS1 = trans
+rowsums = rowSums(TRANS1)
+for(i in 1:length(rowsums)) TRANS1[i, ] = TRANS1[i, ]/rowsums[i]
+TRANS1
+
+
+
+b$educ22[b$peeduca %in% c(31,32,33,34)] <- "1"
+b$educ22[b$peeduca %in% c(35,36,37,38)] <- "2"
+b$educ22[b$peeduca %in% c(39,40)] <- "3"
+b$educ22[b$peeduca %in% c(41,42)] <- "4"
+b$educ22[b$peeduca %in% c(43)] <- "5"
+b$educ22[b$peeduca %in% c(44, 45,46)] <- "6"
+
+# c <- as.numeric(b$educ22[complete.cases(b$educ22)])
+# length(c[c == 1])/(length(c))
+# length(c[c == 2])/(length(c))
+# length(c[c == 3])/(length(c))
+# length(c[c == 4])/(length(c))
+# length(c[c == 5])/(length(c))
+
+b$pesex <- ifelse(as.numeric(b$pesex) == 1, 1, 0)
+b$wagelvl<-cut(as.numeric(b$prernwa), c(0, 5000, 7000,25000,35000, 45000, 65000, 75000, 100000, 125000, 160000,200000, 300000), right=FALSE)
+
+  b$aggu[b$year == "1994"] <- 6.1
+  b$aggu[b$year == "1995"] <- 5.6
+  b$aggu[b$year == "1996"] <- 5.4
+  b$aggu[b$year == "1997"] <- 4.9
+  b$aggu[b$year == "1998"] <- 4.5
+  b$aggu[b$year == "1999"] <- 4.2
+  b$aggu[b$year == "2000"] <- 4.0
+  b$aggu[b$year == "2001"] <- 4.7
+  b$aggu[b$year == "2002"] <- 5.8
+  b$aggu[b$year == "2003"] <- 6.0
+  b$aggu[b$year == "2004"] <- 5.5
+  b$aggu[b$year == "2005"] <- 5.1
+  b$aggu[b$year == "2006"] <- 4.6
+  b$aggu[b$year == "2007"] <- 4.6
+  b$aggu[b$year == "2008"] <- 5.8
+  b$aggu[b$year == "2009"] <- 9.3
+  b$aggu[b$year == "2010"] <- 9.6
+  b$aggu[b$year == "2011"] <- 8.9
+  b$aggu[b$year == "2012"] <- 8.1
+  b$aggu[b$year == "2013"] <- 7.4
+  b$aggu[b$year == "2014"] <- 6.2
+  b$aggu[b$year == "2015"] <- 5.3
+
+b$hufaminc[b$hufaminc == "Less Than $5,000"] <- " 1"
+b$hufaminc[b$hufaminc == "5,000 To 7,499"] <- " 2"
+b$hufaminc[b$hufaminc == "7,500 To 9,999"] <- " 3"
+b$hufaminc[b$hufaminc == "10,000 To 12,499"] <- " 4"
+b$hufaminc[b$hufaminc == "12,500 To 14,999"] <- " 5"
+b$hufaminc[b$hufaminc == "15,000 To 19,999"] <- " 6"
+b$hufaminc[b$hufaminc == "20,000 To 24,999"] <- " 7"
+b$hufaminc[b$hufaminc == "25,000 To 29,999"] <- " 8"
+b$hufaminc[b$hufaminc == "30,000 To 34,999"] <- " 9"
+b$hufaminc[b$hufaminc == "35,000 To 39,999"] <- "10"
+b$hufaminc[b$hufaminc == "40,000 To 49,999"] <- "11"
+b$hufaminc[b$hufaminc == "50,000 To 59,999"] <- "12"
+b$hufaminc[b$hufaminc == "60,000 To 74,999"] <- "13"
+b$hufaminc[b$hufaminc == "75,000 Or More"] <- "14"
+b$hufaminc[b$hufaminc == "15" | b$hufaminc == "16"] <- "14"
+b$hufaminc[b$hufaminc == "-1" | b$hufaminc == "-2" | b$hufaminc == "-3" | b$hufaminc == "Blank" | b$hufaminc == "Don't Know" | b$hufaminc == "Refused" ] <- "0"
+b$hefaminc <- b$hufaminc
+b$hefaminc <- ifelse(as.numeric(b$hufaminc) > 0, b$hufaminc, "")
+@
+
+<<data333, echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE>>=
+## ESTIMATION ##
+# TRANSITION ENTREPRENEUR TO WORKER
+
+corresp_id = b$unique_id[1:(nrow(b) - 1)]
+corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Entrepreneur" & lfsta_emp[,2] == "Worker")]
+b$EtoWW = ifelse(b$unique_id %in% selected_id & b$empstat == "Entrepreneur" , 1, 0)
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Entrepreneur")]
+EE = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Entrepreneur" & b$year_id == 1),]
+EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca))) 
+# model10 <- lm(EtoWW ~   as.numeric(peeduca2) + I(as.numeric(peeduca2)^2) + I(as.numeric(peeduca2)^3) , data=EE,weights=as.numeric(hwhhwgt))
+# plot(as.numeric(EE$peeduca), model10$fitted.value)
+modelEWWlm <- lm(EtoWW ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + I(as.numeric(hefaminc)^2) + I(as.numeric(hefaminc)^3),data=EE, weights=as.numeric(hwhhwgt))
+modelEWWprobit <- glm(EtoWW ~ as.numeric(pesex) + as.numeric(peage) +as.numeric(hefaminc) + I(as.numeric(hefaminc)^2) + I(as.numeric(hefaminc)^3), family=binomial(link="probit"),data=EE)
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 2),]
+tab1 = table(D1$educ22)
+tab2 = table(EE$educ22)
+x5 = tab1/tab2
+
+
+# TRANSITION BETWEEN UNEMPLOYED / ENTREPRENEURS
+corresp_id = b$unique_id[1:(nrow(b) - 1)]
+corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Unemployed" & lfsta_emp[,2] == "Entrepreneur")]
+b$UtoE = ifelse(b$unique_id %in% selected_id & b$empstat == "Unemployed" , 1, 0)
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Unemployed")]
+UU = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Unemployed" & b$year_id == 1),]
+UU$peeduca2 <- (as.numeric(UU$peeduca) - mean(as.numeric(UU$peeduca))) 
+# EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca))) 
+modelUElm <- lm(UtoE ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(prunedur) + as.numeric(aggu),data=UU,weights=as.numeric(hwhhwgt))
+modelUEprobit <- glm(UtoE ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(prunedur) + as.numeric(aggu), family=binomial(link="probit"),data=UU)
+# summary(nls(UtoE ~ c*as.numeric(educ22) + I((as.numeric(educ22) + cst)^2), start=list( c = 0.8, cst = 0.05),  data = UU, trace = TRUE))
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1 & D$empstat == "Unemployed"),]
+tab1 = table(D1$educ22)
+UNEMP = b[which(b$unique_id %in% selected_id2),]
+tab2 = table(UNEMP$educ22)
+x2 = tab1/tab2
+
+
+# Transition U to WW
+corresp_id = b$unique_id[1:(nrow(b) - 1)]
+corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+
+selected_id = corresp_id[which(lfsta_emp[,1] == "Unemployed" & lfsta_emp[,2] == "Worker")]
+b$UtoWW = ifelse(b$unique_id %in% selected_id & b$empstat == "Unemployed" , 1, 0)
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Unemployed")]
+UU = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Unemployed" & b$year_id == 1),]
+UU$peeduca2 <- (as.numeric(UU$peeduca) - mean(as.numeric(UU$peeduca))) 
+# EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca))) 
+modelUWWlm <- lm(UtoWW ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(prunedur) + as.numeric(aggu),data=UU,weights=as.numeric(hwhhwgt))
+modelUWWprobit <- glm(UtoWW ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc) + as.numeric(prunedur) + as.numeric(aggu), family=binomial(link="probit"),data=UU)
+# Obtain proba pour un chomeur de passer ? self employed, sachant son niveau d education
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1 & D$empstat == "Unemployed"),]
+tab1 = table(D1$educ22)
+UNEMP = b[which(b$unique_id %in% selected_id2),]
+tab2 = table(UNEMP$educ22)
+x4 = tab1/tab2
+
+
+# TRANSITION W to U
+corresp_id = b$unique_id[1:(nrow(b) - 1)]
+corresp_id = corresp_id[seq(1, length(corresp_id), by=2)]
+selected_id = corresp_id[which(lfsta_emp[,1] == "Worker" & lfsta_emp[,2] == "Unemployed")]
+b$WWtoU = ifelse(b$unique_id %in% selected_id & b$empstat == "Worker" , 1, 0)
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Worker")]
+WW = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Worker" & b$year_id == 1),]
+WW$prernwa <- ifelse(WW$prernwa == "-1", "", as.numeric(WW$prernwa)/10000)
+
+# EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca))) 
+modelWWUlm <- lm(WWtoU ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(prernwa) , data=WW,weights=as.numeric(hwhhwgt))
+modelWWUprobit <- glm(WWtoU ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(prernwa) , family=binomial(link="probit"),data=WW)
+#Obtain proba pour un WW de passer ? 
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+tab1 = table(D1$wagelvl)
+WWUN = b[which(b$unique_id %in% selected_id2),]
+tab2 = table(WWUN$wagelvl)
+x3 = tab1/tab2
+#Obtain proba pour un WW de passer ? 
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+tab1 = table(D1$educ22)
+WWUN = b[which(b$unique_id %in% selected_id2),]
+tab2 = table(WWUN$educ22)
+x33 = tab1/tab2
+
+
+# TRANSITION W to E
+selected_id = corresp_id[which(lfsta_emp[,1] == "Worker" & lfsta_emp[,2] == "Entrepreneur")]
+b$WWtoE = ifelse(b$unique_id %in% selected_id & b$empstat == "Worker" , 1, 0)
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Worker")]
+WW = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Worker" & b$year_id == 1),]
+WW$prernwa <- ifelse(WW$prernwa == "-1", "", as.numeric(WW$prernwa)/10000)
+# EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca))) 
+model1 <- lm(WWtoE ~   as.numeric(prernwa) + I(as.numeric(prernwa)^2) + I(as.numeric(prernwa)^3) , data=WW,weights=as.numeric(hwhhwgt))
+modelWWElm <- lm(WWtoE ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(prernwa) + I(as.numeric(prernwa)^2) + I(as.numeric(prernwa)^3) , data=WW,weights=as.numeric(hwhhwgt))
+modelWWEprobit <- glm(WWtoE ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(prernwa) + I(as.numeric(prernwa)^2) + I(as.numeric(prernwa)^3) , family=binomial(link="probit"),data=WW)
+#Obtain proba pour un WW de passer ? 
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+tab1 = table(D1$wagelvl)
+WWE= b[which(b$unique_id %in% selected_id2),]
+tab2 = table(WWE$wagelvl)
+x1 = tab1/tab2
+#Obtain proba pour un WW de passer ? 
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 1 & D$empstat == "Worker"),]
+tab1 = table(D1$educ22)
+WWE= b[which(b$unique_id %in% selected_id2),]
+tab2 = table(WWE$educ22)
+x11 = tab1/tab2
+
+
+
+# TRANSITIONE to U
+selected_id = corresp_id[which(lfsta_emp[,1] == "Entrepreneur" & lfsta_emp[,2] == "Unemployed")]
+b$EtoU = ifelse(b$unique_id %in% selected_id & b$empstat == "Entrepreneur" , 1, 0)
+selected_id2 = corresp_id[which(lfsta_emp[,1] == "Entrepreneur")]
+EE = b[which(b$unique_id %in% selected_id2 & b$peeduca > 0 & b$empstat == "Entrepreneur" & b$year_id == 1),]
+EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca))) 
+# EE$peeduca2 <- (as.numeric(EE$peeduca) - mean(as.numeric(EE$peeduca))) 
+modelEUlm <- lm(EtoU ~  as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc), data=EE,weights=as.numeric(hwhhwgt))
+modelEUprobit <- glm(EtoU ~ as.numeric(pesex) + as.numeric(peage) + as.numeric(hefaminc), family=binomial(link="probit"),data=EE)
+
+D = b[which(b$unique_id %in% selected_id),]
+D1 = D[which(D$year_id == 2),]
+tab1 = table(D1$educ22)
+EU= b[which(b$unique_id %in% selected_id2),]
+tab2 = table(EU$educ22)
+x6 = tab1/tab2
+@
+
+<<star2, echo = FALSE, results = 'asis'>>=
+stargazer(modelEWWlm, modelEUlm, modelWWElm, modelWWUlm, modelUElm, modelUWWlm,digits = 3, title="OLS regression on the probability to switch from a given state to another", digits.extra = 3, keep.stat="n", notes = c("Source: estimation using CPS data from 1994 to 2015.","(*) dummy variables"), dep.var.caption = "", model.numbers  = FALSE, dep.var.labels  = c("E - WW","E - U","WW - E","WW - U","U - E","U - WW"), covariate.labels=c("Sexe*","Age", "Family inc.", "Family inc$.^2$", "Family inc$.^3$", "Wage", "$Wage^2$", "$Wage^3$", "Unemp. dur.", "Agg. Unemp."), initial.zero = FALSE, header=FALSE, no.space=TRUE)
+
+
+stargazer(modelEWWprobit, modelEUprobit, modelWWEprobit, modelWWUprobit, modelUEprobit, modelUWWprobit,digits = 3, title="Probit regression on the probability to switch from a given state to another", digits.extra = 3, keep.stat="n", notes = c("Source: estimation using CPS data from 1994 to 2015.","(*) dummy variables"), dep.var.caption = "", model.numbers  = FALSE, dep.var.labels  = c("E - WW","E - U","WW - E","WW - U","U - E","U - WW"), covariate.labels=c("Sexe*","Age", "Family inc.", "Family inc$.^2$", "Family inc$.^3$", "Wage", "$Wage^2$", "$Wage^3$", "Unemp. dur.", "Agg. Unemp."), initial.zero = FALSE, header=FALSE, no.space=TRUE)
+@
+
+
+
+\subsection{Optimal searching effort: unemployed worker case}\label{appendixU}
+The derivative of the unemployed individual program with respect to the searching effort types are given by these two equations
+\begin{align}
+\frac{\partial V^u_\epsilon(y,a,1)}{\partial s_w} =& -\psi_w (s_w)^{\psi_w} + \beta \kappa_w e^{-\kappa_w s_w} \Big[ (1 - \zeta) \big[ (1 - \pi_e(s_e)) (EV_w(1) - EV_u(1)) \\
+&+ \pi_e(s_e) (EV_{w,e}(1) - EV_{e,u}(1)) \big] + \zeta (EV_w(0) - EV_u(0)) \Big] = 0 \nonumber
+\end{align}
+\begin{align}
+\frac{\partial V^u_\epsilon(y,a,1)}{\partial s_e} =& -\psi_e (s_e)^{\psi_e} + \beta \kappa_e e^{-\kappa_e s_e}  (1 - \zeta) \Big[ (\pi_w(s_w) (EV_{w,e}(1) - EV_w(1)) \\
+& + (1- \pi_w(s_w)) (EV_{e,u}(1) - EV_u(1)) \Big] = 0 \nonumber 
+\end{align}
+Using the notation $ \mathcal{P}(s_w) = \pi(s_w) (EV_{w,e}(1) - EV_w(1)) + (1 - \pi(s_w)) (EV_{e,u}(1) - EV_u(1)) $ then we have for fixed $ s_w $ 
+\begin{align}
+1 - \frac{\psi_e (s_e^*)^{\psi_e}}{\beta \kappa_e (1 - \zeta) \mathcal{P}(s_w)} = \pi_e(s_e^*) 
+\end{align}
+Several cases can be study to analyse the effect of increasing $ s_w $ on the optimal searching effort $ s_e^* $. 
+\begin{itemize}
+\item The case where the unemployed individual is too poor that he always find optimal to not invest to start a business (i.e $ EV_w(1) > EV_u(1) > EV_e(1) $), we have $ \mathcal{P}(s_w) = 0 \quad \forall s_w $. In that case $ \pi(s_e^*) = 0 $ and $ s_e^* = 0 $. 
+
+Given that the individual receive an idea, he never find it optimal to search for opening the business. The idea is completely loss.
+
+\item When the unemployed individual is in the necessity share, so that $ EV_w(1) > EV_e(1) > EV_u(1) $, then we obtain $ \mathcal{P}(s_w) = (1 -\pi(s_w)) (EV_e(1) - EV_u(1)) > 0 \quad \forall s_w \geq 0 $. 
+
+In that case, $ \mathcal{P}(s_w) $ is decreasing with $ s_w $ so that when $ s_w $ increases then $ \pi_e(s_e^*) $ decreases. There is a tradeoff between searching a job and searching to get the opportunity to open the business.
+
+\item When the unemployed individual is in the opportunity share, so that $ EV_e(1) > EV_w(1) > EV_u(1) $, then we obtain $ \mathcal{P}(s_w) = \pi(s_w) [ EV_u(1) - EV_w(1) ] + EV_e(1) - EV_u(1) > 0 \quad \forall s_w \geq 0 $. 
+
+Moreover, $ \mathcal{P}(s_w) $ is decreasing with $ s_w $ and thus $ \pi_e(s_e^*) $ is decreasing with an increase of $ s_w $. There is again a tradeoff between searching a job and searching for opening a business.
+\end{itemize}
+The figure below report the three cases depending on the case considered above. \\
+
+\begin{figure}[H]
+ \caption{Optimal searching effort for getting the opportunity to open a business.}
+\centering
+ \label{firm}
+ \centering
+<<C22D, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4, cache=TRUE>>=
+EVw = -2
+EVe = -3
+EVu = -5
+
+psie =5
+beta = 0.93
+kappae = 1.5
+zeta = 0.05
+sw = 1.0
+kappaw = 3.0
+f <- function(x){1 - (psie*x^(psie-1)) / (beta*kappae*(1-zeta)*(1 - (1 - exp(-kappaw*sw)))*(EVe - EVu))}
+g <- function(x){1 - exp(-kappae*x)}
+curve(f, xlim=c(0.0,1.0), ylim=c(0.0,1.0), ylab="LHS and RHS", xlab="Se", col="red")
+par(new=TRUE)
+curve(g, xlim=c(0.0,1.0), ylim=c(0.0,1.0), ylab="", xlab="", axes=FALSE)
+legend("bottomright", c("LHS", "RHS"), col=c("red","black"), lty=c(1,1))
+
+# # when the individual is oppotunity
+# EVw = -3
+# EVe = -2
+# EVu = -5
+# 
+# psie =5
+# beta = 0.93
+# kappae = 1.5
+# zeta = 0.05
+# sw = 1.0
+# kappaw = 3.0
+# p <- (1 - exp(-kappaw*sw))*(EVu - EVw) + (EVe - EVu)
+# f <- function(x){1 - (psie*x^psie) / (beta*kappae*(1-zeta)*p)}
+# g <- function(x){1 - exp(-kappae*x)}
+# curve(f, xlim=c(0.0,1.0), ylim=c(0.0,1.0), ylab="LHS and RHS", xlab="Se", col="red")
+# par(new=TRUE)
+# curve(g, xlim=c(0.0,1.0), ylim=c(0.0,1.0), ylab="", xlab="", axes=FALSE)
+# legend("bottomright", c("LHS", "RHS"), col=c("red","black"), lty=c(1,1))
+@
+\end{figure}
+
+
+To resolve the problem of the unemployed individual, we then use sequential 1D solver. That is, for any value $ s_w $ we compute the associated optimal level $ s_e^* $ determined by equation (3). 
+
+Figure \ref{optisearching} below reports the solutions of the algorithm.
+
+\begin{figure}[H]
+ \caption{Optimal searching effort: unemployed workers}
+\centering
+ \label{optisearching}
+ \vspace{-1cm}
+<<optiSE, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4, cache=TRUE>>=
+
+setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2")
+search2D = read.table("search2D.out", sep="\t", header=TRUE)
+
+par(mfrow=c(1,2))
+plot(search2D$ASSET[1:maxgrid], search2D$searchEffortVEUS1[1:maxgrid], xlim=c(0,200), ylim=c(0,0.35), type="l", xlab="assets ($ 1,000)", ylab="Searching for Entrepreneurial activity", cex=0.8)
+par(new=TRUE)
+plot(search2D$ASSET[(maxgrid+1):(maxgrid*2)], search2D$searchEffortVEUS1[(maxgrid+1):(maxgrid*2)], xlim=c(0,200), ylim=c(0,0.35), type="l", col="black", lty=5, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+par(new=TRUE)
+plot(search2D$ASSET[(maxgrid*2+1):(maxgrid*3)], search2D$searchEffortVEUS1[(maxgrid*2+1):(maxgrid*3)], xlim=c(0,200), ylim=c(0,0.35), type="l", col="black",lty=6, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# par(new=TRUE)
+# plot(search2D$ASSET[1:maxgrid], search2D$searchEffortVEUL1[1:maxgrid], xlim=c(0,200), ylim=c(0,0.35), col="red", type="l", xlab="Wealth ($ 1,000)", ylab="Searching for Entrepreneurial activity")
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid*2+1):(maxgrid*3)], search2D$searchEffortVEUL1[(maxgrid*2+1):(maxgrid*3)], xlim=c(0,200), ylim=c(0,0.35), type="l", col="red",lty=6, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid*2+1):(maxgrid*3)], search2D$searchEffortVEUL1[(maxgrid*2+1):(maxgrid*3)], xlim=c(0,200), ylim=c(0,0.35), type="l", col="red",lty=6, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+legend("bottomright", c("high-ability", "middle-ability", "low-ability"), lty=c(6,5,1), cex= 0.8)
+
+plot(search2D$ASSET[1:maxgrid], search2D$searchEffortWWUS1[1:maxgrid], xlim=c(0,200), ylim=c(0,1.0), type="l", xlab="assets ($ 1,000)", ylab="Searching for a Job", cex=0.5)
+par(new=TRUE)
+plot(search2D$ASSET[(maxgrid+1):(maxgrid*2)], search2D$searchEffortWWUS1[(maxgrid+1):(maxgrid*2)], xlim=c(0,200), ylim=c(0,1.0), type="l", col="black", lty=5, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+par(new=TRUE)
+plot(search2D$ASSET[(maxgrid*2+1):(maxgrid*3)], search2D$searchEffortWWUS1[(maxgrid*2+1):(maxgrid*3)], xlim=c(0,200),ylim=c(0,1.0), type="l", col="black",lty=6, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# par(new=TRUE)
+# plot(search2D$ASSET[1:maxgrid], search2D$searchEffortWWUL1[1:maxgrid], xlim=c(0,200), col="red", ylim=c(0,1.0), type="l", xlab="Wealth (in thousand dollars)", ylab="Searching for a Job")
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid+1):(maxgrid*2)], search2D$searchEffortWWUL1[(maxgrid+1):(maxgrid*2)], col="red", xlim=c(0,200), ylim=c(0,1.0), type="l", lty=5, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid*2+1):(maxgrid*3)], search2D$searchEffortWWUL1[(maxgrid*2+1):(maxgrid*3)], col="red", xlim=c(0,200),ylim=c(0,1.0), type="l",lty=6, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+legend("topright", c("high-ability", "middle-ability", "low-ability"), lty=c(6,5,1), cex=0.8)
+
+# par(mfrow=c(1,1))
+# plot(search2D$ASSET[1:maxgrid], search2D$searchEffortVEUS1[1:maxgrid], xlim=c(0,200), ylim=c(0,1.0), type="l", xlab="Wealth (in thousand dollars)", ylab="Searching for Entrepreneurial activity")
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid+1):(maxgrid*2)], search2D$searchEffortVEUS1[(maxgrid+1):(maxgrid*2)], xlim=c(0,200), ylim=c(0,1.0), type="l", col="black", lty=5, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid*2+1):(maxgrid*3)], search2D$searchEffortVEUS1[(maxgrid*2+1):(maxgrid*3)], xlim=c(0,200), ylim=c(0,1.0), type="l", col="black",lty=6, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# par(new=TRUE)
+# plot(search2D$ASSET[1:maxgrid], search2D$searchEffortWWUS1[1:maxgrid], xlim=c(0,200), ylim=c(0,1.0), type="l", xlab="Wealth (in thousand dollars)", ylab="Searching for a Job", col="grey")
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid+1):(maxgrid*2)], search2D$searchEffortWWUS1[(maxgrid+1):(maxgrid*2)], xlim=c(0,200), ylim=c(0,1.0), type="l", col="grey", lty=5, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# par(new=TRUE)
+# plot(search2D$ASSET[(maxgrid*2+1):(maxgrid*3)], search2D$searchEffortWWUS1[(maxgrid*2+1):(maxgrid*3)], xlim=c(0,200), ylim=c(0,1.0), type="l", col="grey",lty=6, main="",yaxt="n", xaxt='n', ann=FALSE, frame.plot = FALSE)
+# legend("topright", c("high-ability", "middle-ability", "low-ability"), lty=c(6,5,1), cex=0.8)
+
+@
+\end{figure}
+
+
+\subsection{Earning profil}
+
+\begin{figure}[H]
+ \caption{Earning profil between educational attainment}
+ \label{earningprofil}
+ \vspace{-1cm}
+ <<earningprofilt, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=5 >>=
+
+lo <- loess(avgwage1~seq(1,38,by=1))
+plot(seq(1,38,by=1),avgwage1, xaxt = "n", xlab="age", col="grey", ylab="Earning", ylim=c(2.1, 3.5))
+axis(1, at=1:38, labels=seq(23,60,by=1))
+lines(predict(lo), col='red', lwd=1, lty = 1)
+par(new=TRUE)
+lo <- loess(avgwage2~seq(1,38,by=1))
+plot(seq(1,38,by=1),avgwage2, xaxt = "n", xlab="", ylab="", col="grey", frame.plot=FALSE, yaxt="n", ylim=c(2.1, 3.4))
+lines(predict(lo), col='blue', lwd=1, lty = 1)
+par(new=TRUE)
+lo <- loess(avgwage3~seq(1,38,by=1))
+plot(seq(1,38,by=1),avgwage3, xaxt = "n", xlab="", ylab="", col="grey", frame.plot=FALSE, yaxt="n", ylim=c(2.1, 3.4))
+lines(predict(lo), col='green', lwd=1, lty = 1)
+par(new=TRUE)
+lo <- loess(avgwage4~seq(1,38,by=1))
+plot(seq(1,38,by=1),avgwage4, xaxt = "n", xlab="", ylab="", col="grey", frame.plot=FALSE, yaxt="n", ylim=c(2.1, 3.4))
+lines(predict(lo), col='black', lwd=1, lty = 1)
+par(new=TRUE)
+lo <- loess(avgwage5~seq(1,38,by=1))
+plot(seq(1,38,by=1),avgwage5, xaxt = "n", xlab="", ylab="", col="grey", frame.plot=FALSE, yaxt="n", ylim=c(2.1, 3.4))
+lines(predict(lo), col='orange', lwd=1, lty = 1)
+par(new=TRUE)
+lo <- loess(avgwage6~seq(1,38,by=1))
+plot(seq(1,38,by=1),avgwage6, xaxt = "n", xlab="", ylab="", col="grey", frame.plot=FALSE, yaxt="n", ylim=c(2.1, 3.4))
+lines(predict(lo), col='purple', lwd=1, lty = 1)
+
+legend("topleft", c("<HS","HS","<C","Bach.","Mast.",">C"), cex=0.8, col=c("red","blue","green","black","orange","purple"), horiz=TRUE, lty=c(1,1,1,1,1,1))
+
+mean(varwage)
+mean(varwithin)
+@
+\end{figure}
+
+
+
+
+% \begin{figure}[H]
+%  \caption{Necessity share as \% of unemployed people}
+% \centering
+%  \label{optisearching}
+%  \centering
+% <<necessity, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4, cache=TRUE>>=
+% 
+% setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+% necessity = read.table("distnecessity.out", sep="\t", header=TRUE)
+% 
+% neccesity = necessity[1:maxgrid,] + necessity[(maxgrid+1):(maxgrid*2),] + necessity[(maxgrid*2+1):(maxgrid*3),]
+% 
+% par(mfrow=c(1,1))
+% plot(neccesity$ASSET, neccesity$US + neccesity$UL, type="l", xlim=c(0,25), xlab="wealth", ylab="Necessity share")
+% 
+% @
+% \end{figure}
+% 
+% 
+% \begin{figure}[H]
+%  \caption{Transition Worker to Entrepreneur}
+% \centering
+%  \label{TWWtoEE}
+%  \centering
+% <<WWtoVE, out.width='1\\textwidth', echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.height=4, cache=TRUE>>=
+% setwd("/Users/alexandregaillard/Documents/Thesis/EntrepreneurshipUnemployment/Self-EmploymentUnemploymentEmployment/Codefinal/modelwbothprobwstochasticdiffkappainnovnot2/aSEA2")
+% transWWtoVE = read.table("disttransitionWWtoVE.out", sep="\t", header=TRUE)
+% 
+% distWW = read.table("dist.out", sep="\t", header=TRUE)
+% abilWW1 = sum(distWW$WW1[1:maxgrid] + distWW$WW0[1:maxgrid])
+% abilWW3 = sum(distWW$WW1[(maxgrid*2+1):(maxgrid*3)] + distWW$WW0[(maxgrid*2+1):(maxgrid*3)])
+% abilWW2 = sum(distWW$WW1[(maxgrid+1):(maxgrid*2)] + distWW$WW0[(maxgrid+1):(maxgrid*2)])
+% 
+% 
+% 
+% distVE= read.table("distVE.out", sep="\t", header=TRUE)
+% 
+% abilVE1 = sum(distVE$VE[1:maxgrid*2])
+% abilVE3 = sum(distVE$VE[(maxgrid*4+1):(maxgrid*6)])
+% abilVE2 = sum(distVE$VE[(maxgrid*2+1):(maxgrid*4)])
+% 
+% mass1VE = abilVE1/(abilVE1 + abilWW1)
+% mass2VE = abilVE2/(abilVE2 + abilWW2)
+% mass3VE = abilVE3/(abilVE3 + abilWW3)
+% 
+% transWWtoVE = read.table("disttransitionWWtoVE.out", sep="\t", header=TRUE)
+% plot(transWWtoVE$WWtoVE[1:(maxgrid*1)]/abilWW1, type="l", ylim=c(0,0.0007), xlim=c(0,170), xlab="wealth", ylab="Transition", main="")
+% par(new=TRUE)
+% plot(transWWtoVE$WWtoVE[(maxgrid+1):(maxgrid*2)]/abilWW2, type="l", ylim=c(0,0.0007), xlim=c(0,170), xlab="", ylab="", col="red")
+% par(new=TRUE)
+% plot(transWWtoVE$WWtoVE[(maxgrid*2+1):(maxgrid*3)]/abilWW3, type="l", ylim=c(0,0.0007), xlim=c(0,170), xlab="", ylab="", col="blue")
+% legend("topright", c("College", "High School", "< HS"), col=c("blue", "red","black"), lty=c(1,1,1))
+% 
+% @
+% \end{figure}
+
+\clearpage
+
+
+\printbibliography
+ 
+\end{document}

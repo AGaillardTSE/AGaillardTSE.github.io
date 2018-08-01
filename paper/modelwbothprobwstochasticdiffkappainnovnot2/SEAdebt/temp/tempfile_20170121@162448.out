@@ -1,0 +1,115 @@
+===================Program Starting: Sat Jan 21 16:24:48 2017
+
+------ Estimated Model parameters------
+             betapar		   0.890976562500000
+              Etapar		   0.034000000000000	   0.027000000000000	   0.024000000000000
+               Kappa		   2.596875000000000	   2.646875000000000	   2.696875000000000
+                PROD		   0.250000000000000	   1.000000000000000	   1.750000000000000
+              GTRANS		   0.574218750000000	   0.577343750000000	   0.740234375000000
+             phiparW		   1.613281250000000
+             phiparE		   2.569531250000000
+             costpar		   0.000000000000000
+               nupar		   0.888281250000000
+                fpar		   0.892968750000000
+               mupar		   0.100000000000000
+               xipar		   1.000000000000000
+
+------ Fixed Model parameters------
+             maxgrid		                 250
+             Gridmin		   0.000000000000000
+             Gridmax		5000.000000000000000
+             corptax		   0.000000000000000
+            alphapar		   0.360000000000000
+            deltapar		   0.060000000000000
+             rhostar		   0.540000000000000
+            sigmapar		   1.390000000000000
+              TFPpar		   1.000000000000000
+              pLTpar		   1.000000000000000
+          EffortMaxU		 100.000000000000000
+          EffortMaxE		 100.000000000000000
+
+------ Convergence criterions------
+        epsilonValue		   0.000001000000000
+        epsilonendoK		   0.000001000000000
+           maxiterVF		   0.000001000000000
+        maxiterendoK		   0.000001000000000
+         epsilonDist		   0.000000010000000
+        epsilonprice		   0.000010000000000
+       epsilonparams		   0.000001000000000
+          relaxendoK		   0.300000000000000
+              relaxK		   0.050000000000000
+            relaxTax		   0.200000000000000
+----------------------------
+R:    0.070000000000000,	 W:    1.135029096946556,	 K:    4.380284646201778	, L:    0.891900000000000, 	 TAX:    0.141700000000000
+
+-------EQUILIBRIUM PRICES AND AGGREGATE--------
+r    0.070000000000000 
+w    1.135029096946556 
+u    0.586656873449745 
+-------MOMENTS GENERATED & STATISTICS--------
+Ratio KY [3.04]    8.730637097561580
+Ratio mworthVE/mworthWW [8]    4.925102045240640
+Fraction E [7.55]    0.408442529252499
+(UL:    0.586557664696387, US:    0.000099208753357) Unemploy. rate [4- 6]    0.586656873449745
+Fraction of nonE>E (rlv to whole pop) [0.39]    0.112556151741321
+Fraction of U>E (rlv to new entrant) [20]    0.988911571612162
+Worker exit rate (rlv to workers) [3-6.5]    0.274921504397182
+Nshare (US)    0.000000000007739, 	 Nshare(UL):    0.000000000014563, 	 Nshare [0.1]:    0.000000000022302
+(U>E/pop>E) [0.2]    0.988911571612162
+Wealth Gini [0.84]    0.399355063131798
+Earning Gini [0.36]    0.996334446997310
+Top 1 [41.8]    0.036640455590940
+Zero wealth fraction [7- 13]    0.000000000021181
+Fraction U>nonU (rlv to unemployed) [40- 65]    0.191070034780863
+
+-------TRANSITION Worker to entrepreneur / ABILITY--------
+very low	 middle 	 very high
+   0.268583457195284	   0.250806199728719	   0.252482595105352	
+-------TRANSITION Entrepreneur to Worker / ABILITY--------
+very low 	 middle 	 very high
+   0.000943928311409	   0.001495881837017	   0.001904689910776	
+--------- TRANSITION MATRIX BTW CLASSES ------
+  	  U     	 W     	 E 
+U 	 0.8089 	 0.0013 	 0.1897 
+W 	 0.0202 	 0.7251 	 0.2547 
+E 	 0.2741 	 0.0015 	 0.7244 
+---------------
+--------- WEALTH DISTRIBUTION STATISTICS ------
+Top 0.1 [22]    0.026009261395462
+Top 1 [41.8]    0.036640455590940
+Top 5 [?]    0.168865543262186
+Top 10 [77.2]    0.280886988571739
+Top 20 [?]    0.461759192013287
+Bot 20 [?]    0.046845239951581
+Bot 40 [?]    0.143126042448391
+Bot 60 [?]    0.303882183739558
+Bot 80 [?]    0.538240807986713
+mworthVE 1093.290823301035061
+mworthWW  221.983384965096121
+mworthUS  217.365473118189470
+mworthUL 1063.896535692108046
+---------------
+--------- PRODUCTION & CAPITAL -----
+CapitalVE  645.388733810801000
+ProductionVE  158.646174261332447
+Totalcapital 1388.390382289548597
+Totallabor    0.005327797567597
+Corproduction    0.378919414513793
+Corcapital  743.001648478747597
+Totalproduction  159.025093675846250
+CapitalVE/Totalcapital    0.464846733342039
+---------------
+--------- TAXATION -----
+Corporate revenu    0.000000000000000
+Expenditure    0.002994599187177
+Revenue Basis    0.006047205261864
+Optimal tax    0.495203826809429
+-------MASS--------
+WW    0.004900597297785 
+U    0.586656873449745 
+VE    0.408442529252499 
+
+ GMM :: 1600084701.693530
+
+===================Program ended: Sat Jan 21 16:25:37 2017
+ in 49.000000 seconds
