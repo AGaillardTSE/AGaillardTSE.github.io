@@ -1,5 +1,6 @@
 ---
 layout: page
+redirect_from: "/download/note_housing/"
 ---
 
 # Research files
