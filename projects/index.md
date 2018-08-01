@@ -1,34 +1,13 @@
 ---
-layout: indexing
+layout: page
+permalink: pretty
 ---
 
-# This is a test for index
+# Index files
 
-<!--multiple is set to allow multiple files to be selected-->
+| Files       |  Last update |
+|:-------------|:------------------|
+| [ELMM](./ELMM/)           | 01/08/2018 |
+| [Housing](./HOUSING_notes/) | 01/08/2018 |
 
-<input id="myfiles" multiple type="file">
-
-<script>
-
-var pullfiles=function(){ 
-    // love the query selector
-    var fileInput = document.querySelector("#myfiles");
-    var files = fileInput.files;
-    // cache files.length 
-    var fl = files.length;
-    var i = 0;
-
-    while ( i < fl) {
-        // localize file var in the loop
-        var file = files[i];
-        alert(file.name);
-        i++;
-    }    
-}
-
-// set the input element onchange to call pullfiles
-document.querySelector("#myfiles").onchange=pullfiles;
-
-//a.t
-</script>
 
