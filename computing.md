@@ -20,11 +20,11 @@ MatLab % (for continuous time)
 ```
 * Solve Aiyagari in 0.13 seconds with Envelope Condition Method (ECM), many codes available here: [HATC project](http://www.princeton.edu/%7Emoll/HACTproject.htm).
 * Aiyagari in Continous Time with Jump-Drift Process. Code is available here: aiyagari.m, note: <a href="http://agaillard.eu/resources/aiyagari2.pdf" target="_blank">here</a>.
-* Heterogenous Agent New Keynesian (HANK) model and the code available here: (not yet available), note: <a href="http://agaillard.eu/resources/HANK.pdf" target="_blank">here</a>.
+* Heterogenous Agent New Keynesian (HANK) ([Kaplan et al. (2018)](https://www.princeton.edu/~moll/HANK.pdf)) model and the code available here: (not yet available), note: <a href="http://agaillard.eu/resources/HANK.pdf" target="_blank">here</a>.
 
  
 ### Computational speed - comparison between EGM, DC-EGM and VFI
-Comparison of performance and accuracy of EGM, DC-EGM and VFI methods on occupational choice and entrepreneurship models à la Cagetti & De Nardi (2006). The presence of discrete choice (occupational choice) makes EGM inaccurate. DC-EGM encompasses generated kinks very well, while being substantially faster than standard VFI.
+Comparison of performance and accuracy of EGM, DC-EGM and VFI methods on occupational choice and entrepreneurship models à la [Cagetti & De Nardi (2006)](http://users.nber.org/~denardim/research/caciocristina.pdf). The presence of discrete choice (occupational choice) makes EGM inaccurate. DC-EGM encompasses generated kinks very well, while being substantially faster than standard VFI.
 
 | Method        | Speed (in s)         | % Entrepreneurs | K/Y |
 |:-------------|:------------------|:------|:------|
