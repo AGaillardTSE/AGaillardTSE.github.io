@@ -1,5 +1,5 @@
 ---
-title: Alexandre Gaillard - Toulouse School of Economics
+title: Toulouse School of Economics
 layout: default
 ---
 
