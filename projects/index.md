@@ -2,7 +2,7 @@
 layout: page
 ---
 
-# Index files
+# Research files
 
 | Files       |  Last update |
 |:-------------|:------------------|
