@@ -23,7 +23,7 @@ char hello_world;
 
 ### Working Papers
 
-*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/?dir=ELMM), 2018, with Sumudu Kankanamge.
+*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/), 2018, with Sumudu Kankanamge.
 
 * * *
 
