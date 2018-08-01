@@ -18,9 +18,9 @@ int C++ // (for discrete time)
 ```matlab
 MatLab % (for continuous time)
 ```
-* Solve Aiyagari in 0.13 seconds with Envelope Condition Method (ECM), many codes available here: [HATC project](http://www.princeton.edu/%7Emoll/HACTproject.htm)
-* Aiyagari in Continous Time with Jump-Drift Process. Code is available here: aiyagari.m, notes: <a href="http://agaillard.eu/resources/aiyagari2.pdf" target="_blank">here</a>
-* Heterogenous Agent New Keynesian (HANK) model and the code available here: (not yet available), notes: <a href="http://agaillard.eu/resources/HANK.pdf" target="_blank">here</a>
+* Solve Aiyagari in 0.13 seconds with Envelope Condition Method (ECM), many codes available here: [HATC project](http://www.princeton.edu/%7Emoll/HACTproject.htm).
+* Aiyagari in Continous Time with Jump-Drift Process. Code is available here: aiyagari.m, note: <a href="http://agaillard.eu/resources/aiyagari2.pdf" target="_blank">here</a>.
+* Heterogenous Agent New Keynesian (HANK) model and the code available here: (not yet available), note: <a href="http://agaillard.eu/resources/HANK.pdf" target="_blank">here</a>.
 
  
 ### Computational speed - comparison between EGM, DC-EGM and VFI
