@@ -9,7 +9,7 @@ layout: default
 My current research covers topics related to insurance design, entrepreneurship and housing market._
 
 ```c++
-char hello_world;  
+const char *h = "hello world";  
 ```
 
 * * *
