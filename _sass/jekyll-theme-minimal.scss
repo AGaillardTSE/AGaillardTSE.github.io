@@ -70,17 +70,19 @@ a:hover small {
   color:#fff;
 }
 
-a.menunavbar {
-  padding-top:20px;
+.menunavbar a {
+  padding-top:35px;
   padding-bottom:15px;
   padding-left:10px;
   padding-right:10px;
   color:#efefef;
+  font-weight: normal;
 }
 
-a.menunavbar:hover {
+.menunavbar a:hover {
   background-color:#444444;
   color:#fff;
+  font-weight: normal;
 }
 
 blockquote {
