@@ -3,11 +3,10 @@
 
 body {
   background-color: #fff;
-  padding:50px;
-  padding-top:10px;
   font: 14px/1.5 "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color:#727272;
+  color:#626262;
   font-weight:400;
+  margin:0px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -106,7 +105,7 @@ img {
 }
 
 header {
-  width:25%;
+  width:20%;
   float:left;
   -webkit-font-smoothing:subpixel-antialiased;
 }
