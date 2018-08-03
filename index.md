@@ -1,5 +1,5 @@
 ---
-title: Toulouse School of Economics
+title: 
 layout: default
 ---
 
