@@ -63,13 +63,25 @@ a:hover small {
 
 .menunavbar {
   border-bottom:2px solid #e0e0e0;
+  padding-top:20px;
   margin-bottom:40px;
   height:45px;
   background-color:#242424;
   color:#fff;
 }
 
+a.menunavbar {
+  padding-top:20px;
+  padding-bottom:15px;
+  padding-left:10px;
+  padding-right:10px;
+  color:#efefef;
+}
 
+a.menunavbar:hover {
+  background-color:#444444;
+  color:#fff;
+}
 
 blockquote {
   border-left:1px solid #e5e5e5;
