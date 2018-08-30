@@ -15,6 +15,7 @@ ul.navbar {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    float: right;
 }
 
 li.navbar {
@@ -25,13 +26,10 @@ li.navbar a, .dropbtn {
     display: inline-block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 0px 16px;
     text-decoration: none;
 }
 
-li.navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
-}
 
 li.dropdown {
     display: inline-block;
