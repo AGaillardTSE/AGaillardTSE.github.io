@@ -38,5 +38,5 @@ structural macroeconomics and associated computational techniques.
 ### Technical Notes
 
 *   Solving high dimensional occupational-choice problems using modified DC-EGM
-*   Create a cluster of servers using free-cloud accounts
+*   Create a cluster of servers using free cloud accounts
 *   Parallelizing in C++
