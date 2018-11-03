@@ -32,3 +32,9 @@ structural macroeconomics and associated computational techniques.
 
 *   Housing-market Matching, Employment and Regional Mobility, joint work with Christophe Bruneel.
 *   Entrepreneurship, Life-cycle and Retirement (joint work with Sumudu Kankanamge)
+
+***
+
+### Technical Notes
+
+*   Solving high dimensional occupational-choice problems using modified DC-EGM
