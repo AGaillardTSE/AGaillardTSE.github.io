@@ -225,26 +225,62 @@ footer {
 
 @media print, screen and (max-width: 960px) {
 
+  .menunavbar {
+    border-bottom: 2px solid #e0e0e0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* margin-bottom: 43px; */
+    /* height: 90px; */
+    background-color: #242424;
+    color: #fff;
+  }
+  
+  
+  .menunavbar img {
+    display:none;
+  }
+  
+  .menunavbar a {
+    /* padding-top: 35px; */
+    /* padding-bottom: 15px; */
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #efefef;
+    font-weight: normal;
+  }
+  
+  .menunavbar a {
+    /* padding-top: 35px; */
+    /* padding-bottom: 15px; */
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #efefef;
+    font-weight: normal;
+  }
+  
   div.wrapper {
-    width:80%;
+    width:100%;
     margin:0;
+    padding:5px;
   }
 
   header, section, footer {
-    float:none;
-    position:static;
-    width:auto;
+    /*float:none;
+    position:static;*/
+    width:100%;
   }
 
   header {
-    padding-right:320px;
+    padding:10px;
+    padding-bottom:20px;
+    float:none;
   }
 
   section {
-    border:1px solid #e5e5e5;
+    /*border:1px solid #e5e5e5;*/
     border-width:1px 0;
-    padding:20px 0;
-    margin:0 0 20px;
+    /*padding:20px 0;
+    margin:0 0 20px;*/
   }
 
   header a small {
@@ -264,11 +300,13 @@ footer {
   }
 
   header {
-    padding:0;
+    padding:10px;
+    padding-bottom:20px;
+    float:none;
   }
 
   header ul, header p.view {
-    position:static;
+    /*position:static;*/
   }
 
   pre, code {
@@ -278,7 +316,7 @@ footer {
 
 @media print, screen and (max-width: 480px) {
   body {
-    padding:15px;
+    padding:0px;
   }
 
   .downloads {
