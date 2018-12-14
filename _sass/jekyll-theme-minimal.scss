@@ -11,7 +11,7 @@ body {
 
 .title_alex {
   /*margin-top: 10px;*/
-  padding-left: 10px;
+  padding-left: 20px;
   float:left;
 }
 
@@ -250,7 +250,7 @@ footer {
   div.wrapper {
     width:100%;
     margin:0;
-    padding:5px;
+    padding:0px;
   }
 
   header, section, footer {
@@ -269,7 +269,11 @@ footer {
     /*border:1px solid #e5e5e5;*/
     border-width:1px 0;
     /*padding:20px 0;
-    margin:0 0 20px;*/
+    margin:0 0 20px;
+        width: 75%;*/
+    float: none;
+    padding-bottom: 20px;
+    padding: 5px;
   }
 
   header a small {
