@@ -10,14 +10,14 @@ body {
 }
 
 .title_alex {
-  /*margin-top: 10px;
-  padding-left: 10px;*/
+  /*margin-top: 10px;*/
+  padding-left: 10px;
   float:left;
 }
 
 .nav_alex {
-  /*margin-top: 10px;
-  padding-left: 10px;*/
+  /*margin-top: 10px;*/
+  padding-left: 10px;
   float:right;
 }
 
@@ -254,12 +254,13 @@ footer {
   }
   
   .menunavbar a {
-    /* padding-top: 35px; */
-    /* padding-bottom: 15px; */
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #efefef;
-    font-weight: normal;
+    border-bottom: 2px solid #e0e0e0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #242424;
+    color: #fff;
+    height: 100%;
+    margin-bottom: 0px;
   }
   
   .menunavbar a {
