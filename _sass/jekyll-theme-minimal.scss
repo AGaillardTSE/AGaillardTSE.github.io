@@ -9,6 +9,19 @@ body {
   margin:0px;
 }
 
+.title_alex {
+  /*margin-top: 10px;
+  padding-left: 10px;*/
+  float:left;
+}
+
+.nav_alex {
+  /*margin-top: 10px;
+  padding-left: 10px;*/
+  float:right;
+}
+
+
 h1, h2, h3, h4, h5, h6 {
   color:#222;
   margin:0 0 20px;
@@ -236,7 +249,7 @@ footer {
   }
   
   
-  .menunavbar img {
+  header img {
     display:none;
   }
   
@@ -298,6 +311,18 @@ footer {
   body {
     word-wrap:break-word;
   }
+
+  .title_alex {
+  margin-top: 10px;
+  padding-left: 10px;
+  float:none;
+  }
+
+.nav_alex {
+  margin-top: 10px;
+  padding-left: 10px;
+  float:none;
+}
 
   header {
     padding:10px;
