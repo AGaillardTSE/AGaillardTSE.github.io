@@ -16,7 +16,7 @@ body {
 }
 
 .nav_alex {
-  /*margin-top: 10px;*/
+  margin-top: 10px;
   padding-left: 10px;
   float:right;
 }
@@ -76,7 +76,7 @@ a:hover small {
 .menunavbar {
   border-bottom:2px solid #e0e0e0;
   padding-top:10px;
-  margin-bottom:43px;
+  margin-bottom:30px;
   height:45px;
   background-color:#242424;
   color:#fff;
@@ -238,38 +238,13 @@ footer {
 
 @media print, screen and (max-width: 960px) {
 
-  .menunavbar {
-    border-bottom: 2px solid #e0e0e0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    /* margin-bottom: 43px; */
-    /* height: 90px; */
-    background-color: #242424;
-    color: #fff;
-  }
-  
   
   header img {
     display:none;
   }
   
-  .menunavbar a {
-    border-bottom: 2px solid #e0e0e0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #242424;
-    color: #fff;
-    height: 100%;
+  .menunavbar {
     margin-bottom: 0px;
-  }
-  
-  .menunavbar a {
-    /* padding-top: 35px; */
-    /* padding-bottom: 15px; */
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #efefef;
-    font-weight: normal;
   }
   
   div.wrapper {
@@ -325,15 +300,28 @@ footer {
   float:none;
 }
   
+
   .menunavbar {
     border-bottom: 2px solid #e0e0e0;
     padding-top: 10px;
     padding-bottom: 10px;
-    /* margin-bottom: 43px; */
+    /*margin-bottom: 0px; */
     height: 100%; 
     background-color: #242424;
     color: #fff;
   }
+  
+    .menunavbar a {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #efefef;
+    font-weight: normal;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-bottom: 0px solid #e0e0e0;
+  }
+  
+  
 
   header {
     padding:10px;
