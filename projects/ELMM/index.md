@@ -10,7 +10,7 @@ redirect_from:
 
 | Files       |  Last update |
 |:-------------|:------------------|
-| [GK_ELMM_online_appendix.pdf](./GK_ELMM_online_appendix.pdf)           | 01/08/2018 |
-| [GK_ELMM_paper.pdf](./GK_ELMM_paper.pdf) | 01/08/2018 |
+| <a href="./GK_ELMM_online_appendix.pdf" target="_blank">GK_ELMM_online_appendix.pdf</a>           | 30/01/2019 |
+| <a href="./GK_ELMM_paper.pdf" target="_blank">GK_ELMM_paper.pdf</a> | 30/01/2019 |
 
 
