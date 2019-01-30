@@ -24,7 +24,7 @@ structural macroeconomics and associated computational techniques.
 
 ### Working Papers
 
-*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/), 2018, with Sumudu Kankanamge.
+*   New version: [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/), 2018, with Sumudu Kankanamge.
 
 * * *
 
