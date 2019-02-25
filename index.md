@@ -30,8 +30,9 @@ structural macroeconomics and associated computational techniques.
 
 ### Work in Progress
 
-*   Housing-market Matching, Employment and Regional Mobility, joint work with Christophe Bruneel.
+*   Housing-market Matching, Employment and Regional Mobility (joint work with Christophe Bruneel).
 *   Entrepreneurship, Inter-Generational Business Transmission and Aging (joint work with Sumudu Kankanamge)
+*   Value Added and Productivity Linkages Across Countries (joint work with François de Soyres)
 
 ***
 
