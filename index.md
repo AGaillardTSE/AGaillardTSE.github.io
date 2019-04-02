@@ -34,10 +34,3 @@ structural macroeconomics and associated computational techniques.
 *   Entrepreneurship, Inter-Generational Business Transmission and Aging (joint work with Sumudu Kankanamge)
 *   Value Added and Productivity Linkages Across Countries (joint work with François de Soyres)
 
-***
-
-### Technical Notes
-
-*   Solving high dimensional occupational-choice problems using modified DC-EGM
-*   Create a cluster of servers using free cloud accounts
-*   Parallelizing in C++
