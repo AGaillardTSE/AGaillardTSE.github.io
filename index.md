@@ -24,7 +24,7 @@ structural macroeconomics and associated computational techniques.
 
 ### Working Papers
 
-*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with Sumudu Kankanamge).
+*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)).
 
 *   New: [Value Added and Productivity Linkages Across Countries](https://drive.google.com/open?id=1SmIQt6PKIBBBny2W8U9WKOfWFfXurHI) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research))
 
@@ -33,5 +33,5 @@ structural macroeconomics and associated computational techniques.
 ### Work in Progress
 
 *   Housing-market Matching, Employment and Regional Mobility (joint work with Christophe Bruneel).
-*   Entrepreneurship, Business Transfers and Aging (joint work with Sumudu Kankanamge)
+*   Entrepreneurship, Business Transfers and Aging (joint work with [Sumudu Kankanamge](http://kankanamge.free.fr/))
 
