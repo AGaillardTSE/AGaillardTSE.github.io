@@ -16,7 +16,7 @@ Welcome to my website! I’m currently a PhD candidate at Toulouse School of Eco
 
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)).
 
-*   [Value Added and Productivity Linkages Across Countries](https://drive.google.com/open?id=1SmIQt6PKIBBBny2W8U9WKOfWFfXurHI) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)) -- **R&R, JPE** -- New version 2019
+*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)) -- New version July 2019
 
 * * *
 
