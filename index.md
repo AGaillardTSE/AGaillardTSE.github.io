@@ -3,12 +3,12 @@ title:
 layout: default
 ---
 
-# Welcome!
-
 ```c++
 const char *h = "hello world";
 ```
-Welcome to my website! I’m currently a PhD candidate at Toulouse School of Economics. My research interests focus on Macroeconomics, Entrepreneurship, Housing and Trade.
+Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Economics*. 
+
+**Field of interest:** Macroeconomics, Entrepreneurship, Housing and Trade.
 
 * * *
 
