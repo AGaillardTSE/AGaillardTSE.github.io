@@ -28,7 +28,7 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 ### Position (current / past)
 
-*   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), _Undergraduate Microeconomics and Macroeconomics_ (Michel-Benoit Bouissou, Sumudu Kankanamge), Toulouse School of Economics.
+*   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), Toulouse School of Economics.
 
 *   **Research Assistant:** [Tim Lee](http://www.syleetim.net), on problematics related to human capital, inequality and career choice, (2017), Toulouse School of Economics
 
