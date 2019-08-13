@@ -6,7 +6,7 @@ layout: default
 ```c++
 const char *h = "hello world";
 ```
-Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Economics*. 
+Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Economics (TSE)*. 
 
 **Field of interest:** Macroeconomics, Entrepreneurship, Housing and Trade.
 
@@ -14,9 +14,9 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 ### Working Papers
 
-*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)).
+*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
 
-*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)) -- New version July 2019
+*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), July 2019
 
 * * *
 
@@ -28,8 +28,8 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 ### Position (current / past)
 
-*   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), Toulouse School of Economics.
+*   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), TSE.
 
-*   **Research Assistant:** [Tim Lee](http://www.syleetim.net), on problematics related to human capital, inequality and career choice, (2017), Toulouse School of Economics
+*   **Research Assistant:** [Tim Lee](http://www.syleetim.net), on human capital, inequality and career choice, (2017), TSE
 
 * * * 
