@@ -14,9 +14,9 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 ### Working Papers
 
-*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
+*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New July 2019
 
-*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), July 2019
+*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
 
 * * *
 
@@ -32,4 +32,3 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 *   **Research Assistant:** [Tim Lee](http://www.syleetim.net), on human capital, inequality and career choice, (2017), TSE
 
-* * * 
