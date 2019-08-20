@@ -31,6 +31,6 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 *   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), TSE.
 
 *   **Research Assistant:** 
-    - *World Bank*, estimate the role of trade linkages on GDP comovement for 150 countries over 50 years, (2019)
+    - *World Bank*, on the role of trade on GDP comovement for 150 countries over 50 years, (2019)
     - [Tim Lee](http://www.syleetim.net), on human capital, inequality and career choice, (2017), TSE
 
