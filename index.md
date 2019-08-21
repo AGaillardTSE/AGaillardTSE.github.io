@@ -23,7 +23,7 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 ### Work in Progress
 
 *   Housing-market Matching, Employment and Regional Mobility (joint work with Christophe Bruneel).
-*   Entrepreneurship, Business Transfers and Aging (joint work with [Sumudu Kankanamge](http://kankanamge.free.fr/))
+*   Private Business Transfers in an Aging Economy (joint work with [Sumudu Kankanamge](http://kankanamge.free.fr/))
 
 
 ### Position (current / past)
