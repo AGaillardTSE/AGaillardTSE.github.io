@@ -5,13 +5,14 @@ layout: page
 
 # Computing
 
-##### Useful papers & technics:
+#### Useful papers & technics:
 * Endogenous Grid Method (EGM) ([Caroll (2006)](http://pages.stern.nyu.edu/~dbackus/Computation/Carroll%20endog%20grid%20EL%2006.pdf))
 * DC-EGM algorithm to solve discrete-continuous choice models using EGM ([Iskhakov et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE643)).
 * Computing expectations of value functions using polynomials: [Judd et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE329) 
 * Multi-dimensional DC-EGM algorithm: [Druedhal and Jørgensen (2017)](https://www.sciencedirect.com/science/article/pii/S0165188916301920)
 
-Below I report some of my codes and replications of recent and former models in macroeconomics, relative to inequality, housing and occupational choice. 
+
+#### Replications
 
 ```c++
 int C++ // (for discrete time)
