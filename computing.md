@@ -12,7 +12,7 @@ layout: page
 * Multi-dimensional DC-EGM algorithm: [Druedhal and Jørgensen (2017)](https://www.sciencedirect.com/science/article/pii/S0165188916301920)
 
 
-#### Replications
+#### Some Replications
 
 ```c++
 int C++ // (for discrete time)
