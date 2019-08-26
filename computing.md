@@ -30,7 +30,7 @@ MatLab % (for continuous time)
 * Heterogenous Agent New Keynesian (HANK) ([Kaplan et al. (2018)](https://www.princeton.edu/~moll/HANK.pdf)) model and the code available here: (not yet available), note: <a href="http://agaillard.eu/resources/HANK.pdf" target="_blank">here</a>.
 
  
-### Computational speed - comparison between EGM, DC-EGM and VFI
+#### Computational speed - comparison between EGM, DC-EGM and VFI
 Comparison of performance and accuracy of EGM, DC-EGM and VFI methods on occupational choice and entrepreneurship models à la [Cagetti & De Nardi (2006)](http://users.nber.org/~denardim/research/caciocristina.pdf). The presence of discrete choice (occupational choice) makes EGM inaccurate. DC-EGM encompasses generated kinks very well, while being substantially faster than standard VFI.
 
 | Method        | Speed (in s)         | % Entrepreneurs | K/Y |
@@ -42,7 +42,7 @@ Comparison of performance and accuracy of EGM, DC-EGM and VFI methods on occupat
 
 
 
-## Useful Links ##
+#### Useful Links 
 * [Jean-Pierre's Moreau Homepage](http://jean-pierre.moreau.pagesperso-orange.fr/links.html): useful codes and routines in C++ and Fortran.
 * [John Starchulski and Tom Sargent's QuantEcon](http://quant-econ.net): useful codes in Julia / Python.
 
