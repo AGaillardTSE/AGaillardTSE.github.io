@@ -14,7 +14,7 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 ### Working Papers
 
-*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New July 2019
+*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New July 2019.
 
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
 
@@ -25,6 +25,8 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 *   Housing-market Matching, Employment and Regional Mobility (joint work with Christophe Bruneel).
 *   Private Business Transfers in an Aging Economy (joint work with [Sumudu Kankanamge](http://kankanamge.free.fr/))
 
+### Policy Work
+*   Trade, Global Value Chains and GDP Comovemement: An Empirical Investigation, (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), June 2019.
 
 ### Position (current / past)
 
