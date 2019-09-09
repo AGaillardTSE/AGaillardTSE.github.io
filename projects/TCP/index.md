@@ -47,8 +47,8 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Whole Sample</td>
-<td style="text-align: left;">0.053<span class="math inline">\(^{**}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.030</td>
+<td style="text-align: left;">0.053<span class="math inline">**</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.030</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">40 | 2,900</td>
 <td style="text-align: center;">1970-2009</td>
@@ -58,8 +58,8 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20 years TW</td>
-<td style="text-align: left;">0.074<span class="math inline">\(^{**}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.054</td>
+<td style="text-align: left;">0.074<span class="math inline">**</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.054</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">40 | 1,450</td>
 <td style="text-align: center;">1970-2009</td>
@@ -69,7 +69,7 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Excluding EU CP</td>
-<td style="text-align: left;">0.056<span class="math inline">\(^{**}\)</span></td>
+<td style="text-align: left;">0.056<span class="math inline">**</span></td>
 <td style="text-align: left;">0.005</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">40 | 2,280</td>
@@ -80,8 +80,8 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Excluding USSR</td>
-<td style="text-align: left;">0.064<span class="math inline">\(^{**}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.006</td>
+<td style="text-align: left;">0.064<span class="math inline">**</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.006</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">34 | 2,244</td>
 <td style="text-align: center;">1970-2009</td>
@@ -91,7 +91,7 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Alternative TW</td>
-<td style="text-align: left;">0.081<span class="math inline">\(^{***}\)</span></td>
+<td style="text-align: left;">0.081<span class="math inline">***</span></td>
 <td style="text-align: left;">0.014</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">34 | 2,244</td>
@@ -113,8 +113,8 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4Digits SITC</td>
-<td style="text-align: left;">0.058<span class="math inline">\(^{**}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.045<span class="math inline">\(^{*}\)</span></td>
+<td style="text-align: left;">0.058<span class="math inline">**</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.045<span class="math inline">*</span></td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">36 | 2,520</td>
 <td style="text-align: center;">1970-2009</td>
@@ -124,8 +124,8 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ISIC classification</td>
-<td style="text-align: left;">0.059<span class="math inline">\(^{**}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.045<span class="math inline">\(^{*}\)</span></td>
+<td style="text-align: left;">0.059<span class="math inline">**</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.045<span class="math inline">*</span></td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">36 | 2,520</td>
 <td style="text-align: center;">1970-2009</td>
@@ -136,7 +136,7 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 <tr class="even">
 <td style="text-align: left;">1Digit Agg. sectors</td>
 <td style="text-align: left;">0.088</td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.044</td>
+<td style="text-align: left;"><span class="math inline">-</span>0.044</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">38 | 1,291</td>
 <td style="text-align: center;">1970-2009</td>
@@ -156,9 +156,9 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(level(trade)^{ a}\)</span></td>
-<td style="text-align: left;">33,96<span class="math inline">\(^{*}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>34.92</td>
+<td style="text-align: left;"><span class="math inline">level(trade)</span></td>
+<td style="text-align: left;">33,96<span class="math inline">*</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>34.92</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">40 | 2,900</td>
 <td style="text-align: center;">1970-2009</td>
@@ -167,9 +167,9 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\log(mean(trade))\)</span></td>
-<td style="text-align: left;">0.044<span class="math inline">\(^{*}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.027</td>
+<td style="text-align: left;"><span class="math inline">log(mean(trade))</span></td>
+<td style="text-align: left;">0.044<span class="math inline">*</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.027</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">40 | 2,900</td>
 <td style="text-align: center;">1970-2009</td>
@@ -178,9 +178,9 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(\max \Big( \frac{T_{i\leftrightarrow j}}{GDP_i}, \frac{T_{i\leftrightarrow j}}{GDP_j} \Big)\)</span></td>
-<td style="text-align: left;">0.052<span class="math inline">\(^{**}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.032</td>
+<td style="text-align: left;"><span class="math inline">max{T/GDP_1,T/GDP_2}</span></td>
+<td style="text-align: left;">0.052<span class="math inline">**</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.032</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">40 | 2,900</td>
 <td style="text-align: center;">1970-2009</td>
@@ -190,46 +190,13 @@ label="sensitive_TC_slope">\[sensitive\_TC\_slope\]</span>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STAN data</td>
-<td style="text-align: left;">0.209<span class="math inline">\(^{**}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(-\)</span>0.107</td>
+<td style="text-align: left;">0.209<span class="math inline">**</span></td>
+<td style="text-align: left;"><span class="math inline">-</span>0.107</td>
 <td style="text-align: left;">HP</td>
 <td style="text-align: left;">20 | 760</td>
 <td style="text-align: center;">1995-2014</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
 </tbody>
