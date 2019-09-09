@@ -39,7 +39,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Whole Sample</td>
@@ -100,7 +99,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4Digits SITC</td>
@@ -138,7 +136,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
