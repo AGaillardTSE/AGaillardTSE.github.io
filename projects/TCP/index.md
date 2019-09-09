@@ -20,8 +20,8 @@ What is the relationship between international trade and business cycle synchron
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
-<th style="text-align: left;">Coefficient on trade in inputs</th>
-<th style="text-align: left;">Coefficient on trade in final goods</th>
+<th style="text-align: left;">Coeff - trade in inputs</th>
+<th style="text-align: left;">Coeff - trade in final goods</th>
 <th style="text-align: left;">GDP Filter</th>
 <th style="text-align: left;">Countries | Obs.</th>
 <th style="text-align: center;">Period</th>
