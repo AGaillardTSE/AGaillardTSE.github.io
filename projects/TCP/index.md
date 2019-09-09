@@ -27,7 +27,6 @@ What is the relationship between international trade and business cycle synchron
 <th style="text-align: center;">Period</th>
 <th style="text-align: center;">TW</th>
 <th style="text-align: center;">CP</th>
-<th style="text-align: center;"></th>
 </tr>
 </thead>
 <tbody>
@@ -51,7 +50,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20 years TW</td>
@@ -62,7 +60,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Excluding EU CP</td>
@@ -73,7 +70,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Excluding USSR</td>
@@ -84,7 +80,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Alternative TW</td>
@@ -95,7 +90,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-1999</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -117,7 +111,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ISIC classification</td>
@@ -128,7 +121,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1Digit Agg. sectors</td>
@@ -139,7 +131,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -161,7 +152,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">log(mean(trade))</span></td>
@@ -172,7 +162,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">max{T/GDP_1,T/GDP_2}</span></td>
@@ -183,7 +172,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1970-2009</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STAN data</td>
@@ -194,7 +182,6 @@ What is the relationship between international trade and business cycle synchron
 <td style="text-align: center;">1995-2014</td>
 <td style="text-align: center;">Yes</td>
 <td style="text-align: center;">Yes</td>
-<td style="text-align: center;"></td>
 </tr>
 </tbody>
 </table>
