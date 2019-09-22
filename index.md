@@ -16,7 +16,7 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 *   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research))
     - New version July 2019
-    - VoxEU Column: [Increasing business cycle synchronisation: The role of global value chains, market power and extensive margin adjustments](https://voxeu.org/article/explaining-business-cycle-synchronisation-using-profits-and-extensive-margin){:target="_blank"}
+    - VoxEU Column: <a href="https://voxeu.org/article/explaining-business-cycle-synchronisation-using-profits-and-extensive-margin" target="_blank">Increasing business cycle synchronisation: The role of global value chains, market power and extensive margin adjustments</a>
 
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
 
