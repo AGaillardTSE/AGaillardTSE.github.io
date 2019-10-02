@@ -1,5 +1,5 @@
 ---
-title: PhD Candidate, Toulouse School of Economics
+title: Alexandre Gaillard, PhD Candidate, Toulouse School of Economics
 layout: default
 ---
 
