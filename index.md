@@ -1,5 +1,5 @@
 ---
-title: 
+title: PhD Candidate, Toulouse School of Economics
 layout: default
 ---
 
