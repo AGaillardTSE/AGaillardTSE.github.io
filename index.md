@@ -14,18 +14,18 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 ### Working Papers
 
-*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (joint with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research))
-    - New version July 2019
+*   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New version July 2019
+    - **R&R**
     - VoxEU Column: <a href="https://voxeu.org/article/explaining-business-cycle-synchronisation-using-profits-and-extensive-margin" target="_blank">Increasing business cycle synchronisation: The role of global value chains, market power and extensive margin adjustments</a>
 
-*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (joint with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
+*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
 
 * * *
 
 ### Work in Progress
 
-*   Housing-market Matching, Employment and Regional Mobility (joint work with Christophe Bruneel).
-*   Private Business Transfers in an Aging Economy (joint work with [Sumudu Kankanamge](http://kankanamge.free.fr/))
+*   Housing-market Matching, Employment and Regional Mobility (with Christophe Bruneel).
+*   Private Business Transfers in an Aging Economy (with [Sumudu Kankanamge](http://kankanamge.free.fr/))
 
 ### Policy Work
 *   [World Development Report 2020](https://www.worldbank.org/en/publication/wdr2020) Background Papers (available upon request)
