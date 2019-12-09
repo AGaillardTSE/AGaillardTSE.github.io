@@ -20,6 +20,7 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
     - <a href="https://www.federalreserve.gov/econres/ifdp/files/ifdp1266.pdf" target="_blank">FRB International Finance Discussion Papers 1266.</a>
 
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
+    - *Reject & Resubmit AEJ:macro*
 
 * * *
 
