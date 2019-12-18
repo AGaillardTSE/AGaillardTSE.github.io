@@ -32,7 +32,7 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 
 ### Policy Work
 *   [World Development Report 2020](https://www.worldbank.org/en/publication/wdr2020) Background Papers (available upon request)
-    - [Trade, Global Value Chains and GDP Comovement: An Empirical Investigation](https://drive.google.com/file/d/1RMd-Gdf-RLOjir4GzOS591W-dXoxPfWD/view) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research))
+    - [Trade, Global Value Chains and GDP Comovement: An Empirical Investigation](http://documents.worldbank.org/curated/en/291361576685759900/Trade-Global-Value-Chains-and-GDP-Comovemement-An-Empirical-Investigation) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research))
 
 ### Position (current / past)
 
