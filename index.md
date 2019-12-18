@@ -31,8 +31,8 @@ Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Ec
 *   Private Business Transfers in an Aging Economy (with [Sumudu Kankanamge](http://kankanamge.free.fr/))
 
 ### Policy Work
-*   [World Development Report 2020](https://www.worldbank.org/en/publication/wdr2020) Background Papers (available upon request)
-    - [Trade, Global Value Chains and GDP Comovement: An Empirical Investigation](http://documents.worldbank.org/curated/en/291361576685759900/Trade-Global-Value-Chains-and-GDP-Comovemement-An-Empirical-Investigation) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research))
+*  [World Development Report 2020](https://www.worldbank.org/en/publication/wdr2020) Background Papers (available upon request)
+* [Trade, Global Value Chains and GDP Comovement: An Empirical Investigation](http://documents.worldbank.org/curated/en/291361576685759900/Trade-Global-Value-Chains-and-GDP-Comovemement-An-Empirical-Investigation), World Bank WP, (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research))
 
 ### Position (current / past)
 
