@@ -75,16 +75,16 @@ a:hover small {
 
 .menunavbar {
   /*border-bottom:2px solid #e0e0e0;*/
-  padding-top:10px;
+  padding-top:24px;
   margin-bottom:30px;
   height:65px;
-  background-color:#646785;
+  background-color:#4E615A;
   color:#fff;
 }
 
 .menunavbar a {
   padding-top:35px;
-  padding-bottom:15px;
+  padding-bottom:25px;
   padding-left:10px;
   padding-right:10px;
   color:#efefef;
@@ -92,7 +92,7 @@ a:hover small {
 }
 
 .menunavbar a:hover {
-  background-color:#444444;
+  background-color: rgba(0, 0, 0, 0.2);
   color:#fff;
   font-weight: normal;
 }
