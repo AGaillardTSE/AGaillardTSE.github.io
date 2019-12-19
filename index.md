@@ -8,7 +8,7 @@ const char *h = "hello world";
 ```
 Welcome to my website! I’m currently a PhD candidate at *Toulouse School of Economics (TSE)*. 
 
-**Field of interest:** Macroeconomics, Entrepreneurship, Housing and Trade.
+**Research Topics:** Macroeconomics, Entrepreneurship, Housing and Trade.
 
 * * *
 
