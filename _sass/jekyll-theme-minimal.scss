@@ -97,6 +97,22 @@ a:hover small {
   font-weight: normal;
 }
 
+.href_title a {
+  padding-top:0px;
+  padding-bottom:0px;
+  padding-left:0px;
+  padding-right:0px;
+  color:#efefef;
+  font-weight: normal;
+}
+
+.href_title a:hover {
+  background-color: rgba(0, 0, 0, 0);
+  color:#fff;
+  font-weight: normal;
+}
+
+
 blockquote {
   border-left:1px solid #e5e5e5;
   margin:0;
