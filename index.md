@@ -22,7 +22,7 @@ const char *h = "hello world";
     - *Reject & Resubmit AEJ:macro*
     - <a href="https://www.tse-fr.eu/sites/default/files/TSE/documents/doc/wp/2018/wp_tse_929.pdf" target="_blank">TSE Working paper</a>. <a href="http://kankanamge.free.fr/docs/ELMMREI_online_appendix.pdf" target="_blank">Online appendix</a>.
 
-*   [Global Trade and GDP Co-movement](https://drive.google.com/open?id=1g5GmWcsKtfLnl72oHk43Gv-wYeeFSkch) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New version
+*   [Global Trade and GDP Co-movement](https://drive.google.com/open?id=1g5GmWcsKtfLnl72oHk43Gv-wYeeFSkch) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), January 2020, New version
 
 * * *
 
