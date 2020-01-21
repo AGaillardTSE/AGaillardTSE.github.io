@@ -13,13 +13,13 @@ const char *h = "hello world";
 
 ### Working Papers
 
-##### Entrepreneurship
+##### *Entrepreneurship*
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
     - *Reject & Resubmit AEJ:macro*
     - <a href="https://www.tse-fr.eu/sites/default/files/TSE/documents/doc/wp/2018/wp_tse_929.pdf" target="_blank">TSE Working paper</a>. <a href="http://kankanamge.free.fr/docs/ELMMREI_online_appendix.pdf" target="_blank">Online appendix</a>.
 
 
-##### Trade
+##### *Trade and International Macroeconomics*
 *   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New version July 2019
     - **R&R**, resubmitted
     - VoxEU Column: <a href="https://voxeu.org/article/explaining-business-cycle-synchronisation-using-profits-and-extensive-margin" target="_blank">Increasing business cycle synchronisation: The role of global value chains, market power and extensive margin adjustments</a>
