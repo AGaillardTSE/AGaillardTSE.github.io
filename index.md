@@ -13,16 +13,20 @@ const char *h = "hello world";
 
 ### Working Papers
 
+##### Entrepreneurship
+*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
+    - *Reject & Resubmit AEJ:macro*
+    - <a href="https://www.tse-fr.eu/sites/default/files/TSE/documents/doc/wp/2018/wp_tse_929.pdf" target="_blank">TSE Working paper</a>. <a href="http://kankanamge.free.fr/docs/ELMMREI_online_appendix.pdf" target="_blank">Online appendix</a>.
+
+
+##### Trade
 *   [Value Added and Productivity Linkages Across Countries](http://agaillard.eu/projects/TCP/) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New version July 2019
     - **R&R**, resubmitted
     - VoxEU Column: <a href="https://voxeu.org/article/explaining-business-cycle-synchronisation-using-profits-and-extensive-margin" target="_blank">Increasing business cycle synchronisation: The role of global value chains, market power and extensive margin adjustments</a>
     - <a href="https://www.federalreserve.gov/econres/ifdp/files/ifdp1266.pdf" target="_blank">FRB International Finance Discussion Papers 1266.</a>, <a href="https://www.federalreserve.gov/econres/notes/feds-notes/increasing-business-cycles-synchronization-20191213.htm" target="_blank">FEDS Note</a>
 
-*   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
-    - *Reject & Resubmit AEJ:macro*
-    - <a href="https://www.tse-fr.eu/sites/default/files/TSE/documents/doc/wp/2018/wp_tse_929.pdf" target="_blank">TSE Working paper</a>. <a href="http://kankanamge.free.fr/docs/ELMMREI_online_appendix.pdf" target="_blank">Online appendix</a>.
-
 *   [Global Trade and GDP Co-movement](https://drive.google.com/open?id=1g5GmWcsKtfLnl72oHk43Gv-wYeeFSkch) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), January 2020, New version
+
 
 * * *
 
