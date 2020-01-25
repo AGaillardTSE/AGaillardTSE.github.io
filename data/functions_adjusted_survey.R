@@ -1,12 +1,12 @@
 
 compute_share <- function(qw,asset,surweight){
-  asset_Q = wtd.quantile(asset, qw, na.rm = T, weight=surweight)
+  asset_Q = wtd.quantile(asset, probs=qw, na.rm = TRUE, weights=surweight)
   return(sum(surweight*asset*(asset>=asset_Q),na.rm=T)/sum(surweight*asset,na.rm=T))
 }
 
 
 compute_total <- function(qw,asset,surweight){
-  asset_Q = wtd.quantile(asset, qw, na.rm = T, weight=surweight)
+  asset_Q = wtd.quantile(asset, probs=qw, na.rm = TRUE, weights=surweight)
   return(sum(surweight*asset*(asset>=asset_Q),na.rm=T))
 }
 
@@ -24,10 +24,11 @@ get_quantile_wealth <- function(sum_top,networth,surweight,surweight_tail,min_th
   yy = (qw - (1-sum_top))/sum_top
   
   if(yy <= 0){
-    wealth_q = wtd.quantile(networth, q=qw, na.rm = TRUE, weight=surweight)
+    wealth_q = wtd.quantile(networth, probs=qw, na.rm = TRUE, weights=surweight)
   }else{
     wealth_q = qpareto(yy,min_threshold,pareto_shape) 
   }
+  
   
   ## total survey wealth
   tot_surv_w = sum(networth*surweight, na.rm = TRUE)
