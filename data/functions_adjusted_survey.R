@@ -59,11 +59,9 @@ wtd.Ecdf <- function(x, weights=NULL,
     options(digits=7)
     on.exit(options(oldopt))
     cumu <- table(x)    ## R does not give names for cumsum
-    isdate <- testDateTime(x)  ## 31aug02
     ax <- attributes(x)
     ax$names <- NULL
     x <- as.numeric(names(cumu))
-    if(isdate) attributes(x) <- c(attributes(x),ax)
     cumu <- cumsum(cumu)
     cdf <- (cumu + a)/(cumu[length(cumu)] + b)
     if(cdf[1]>0) {
@@ -88,7 +86,6 @@ wtd.table <- function(x, weights=NULL, type=c('list','table'),
   if(! length(weights))
     weights <- rep(1, length(x))
 
-  isdate <- testDateTime(x)  ## 31aug02 + next 2
   ax <- attributes(x)
   ax$names <- NULL
   
@@ -130,16 +127,12 @@ wtd.table <- function(x, weights=NULL, type=c('list','table'),
       return(weights)
 
     x <- all.is.numeric(names(weights), 'vector')
-    if(isdate)
-      attributes(x) <- c(attributes(x),ax)
 
     names(weights) <- NULL
     return(list(x=x, sum.of.weights=weights))
   }
 
   xx <- x
-  if(isdate)
-    attributes(xx) <- c(attributes(xx),ax)
 
   if(type=='list')
     list(x=if(length(lev))lev[x]
