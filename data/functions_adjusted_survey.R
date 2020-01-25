@@ -126,7 +126,6 @@ wtd.table <- function(x, weights=NULL, type=c('list','table'),
     if(type=='table')
       return(weights)
 
-    x <- all.is.numeric(names(weights), 'vector')
 
     names(weights) <- NULL
     return(list(x=x, sum.of.weights=weights))
