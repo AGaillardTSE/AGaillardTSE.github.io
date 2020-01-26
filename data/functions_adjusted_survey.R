@@ -1,3 +1,24 @@
+
+### function wtd.quantile
+wtd.quantile <- function(x,probs,na.rm=T,weights){
+  cum = 0
+  i = 0
+  
+  x = ifelse(is.na(x),0,x)
+  weights = ifelse(is.na(weights),0,weights)
+  
+  ww = weights[order(x)]
+  x = x[order(x)]
+  total_w = sum(ww)
+  while(cum < probs){
+    i = i+1
+    cum = cum + ww[i]/total_w
+  }
+  
+  return(x[i])
+}
+
+
 compute_share <- function(qw,asset,surweight){
   asset_Q = wtd.quantile(asset, probs=qw, na.rm = TRUE, weights=surweight)
   return(sum(surweight*asset*(asset>=asset_Q),na.rm=T)/sum(surweight*asset,na.rm=T))
