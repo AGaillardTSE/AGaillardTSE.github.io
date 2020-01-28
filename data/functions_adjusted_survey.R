@@ -112,37 +112,36 @@ pareto_discretize_fun <- function(pareto_shape,wmin){
 # year_selected = 2014
 pareto_estimate <- function(country_name,min_threshold,year_selected,networth,surweight,exchange_rate_US,nb_rich_list){
   
-  HFCS_all = as.data.frame(cbind(surweight,networth))
-  HFCS_temp = HFCS_all[which(HFCS_all$networth >= min_threshold),]
   
-  # table(HFCS_temp$sa0100 )
-  # table(HFCS_temp$ra0010 )
-  # table(HFCS_temp$sa0010, HFCS_temp$ra0300)
-  # HFCS_temp = HFCS_temp[,c("surweight","networth")]
-  # HFCS_temp_networth = aggregate(networth ~ sa0010,data=HFCS_temp,FUN=mean)
-  # HFCS_temp_surweight = aggregate(surweight ~ sa0010,data=HFCS_temp,FUN=sum)
-  # HFCS_temp = merge(HFCS_temp_networth,HFCS_temp_surweight,by="sa0010")
-  # HFCS_temp = HFCS_temp[,-1]
-  HFCS_temp = HFCS_temp[order(HFCS_temp$networth),]
+  DATA_all = as.data.frame(cbind(surweight,networth))
+  DATA_all$surweight = ifelse(is.na(DATA_all$surweight),0,DATA_all$surweight)
+  DATA_all$networth = ifelse(is.na(DATA_all$networth),0,DATA_all$networth)
+  
+  ## select the top
+  DATA_temp = DATA_all[which(DATA_all$networth >= min_threshold),]
+  
+  ## order the top
+  DATA_temp = DATA_temp[order(DATA_temp$networth),]
+
+  
+  ## take the rich list individuals (forbes list)
   rlist = bill_data[which(bill_data$isocode == country_name & bill_data$year == as.numeric(year_selected)),]
-  
-  ## computing empirical ccdf
-  HFCS_temp$cumul_weight = (HFCS_temp$surweight)[length(HFCS_temp$surweight)]
-  for(i in (nrow(HFCS_temp)-1):1){
-    HFCS_temp$cumul_weight[i] = HFCS_temp$surweight[i] + HFCS_temp$cumul_weight[i+1]
+
+  ## computing empirical CCDF
+  DATA_temp$cumul_weight = (DATA_temp$surweight)[length(DATA_temp$surweight)]
+  for(i in (nrow(DATA_temp)-1):1){
+    DATA_temp$cumul_weight[i] = DATA_temp$surweight[i] + DATA_temp$cumul_weight[i+1]
   }
-  total_weight = (HFCS_temp$cumul_weight)[1] + nrow(rlist)
-  (HFCS_temp$surweight)[length(HFCS_temp$cumul_weight)]
-  HFCS_temp$cumul_weight = HFCS_temp$cumul_weight/total_weight
-  range(HFCS_temp$cumul_weight)
-  # plot(HFCS_temp$networth,HFCS_temp$cumul_weight,log="yx")
-  
+  total_weight = (DATA_temp$cumul_weight)[1] + nrow(rlist)
+  (DATA_temp$surweight)[length(DATA_temp$cumul_weight)]
+  DATA_temp$cumul_weight = DATA_temp$cumul_weight/total_weight
+  range(DATA_temp$cumul_weight)
   
   
   ## Forbes observations
   if(nb_rich_list > 1){
-  if(country_name == "FR"){rlist[rlist == "7,668.00"] <- 7.668}
-  
+    if(country_name == "FR"){rlist[rlist == "7,668.00"] <- 7.668}
+    
     rich = as.numeric(as.character(rlist$networth))*1000000000*exchange_rate_US
     rich = sort(rich)
     rich = as.data.frame(rich)
@@ -153,18 +152,12 @@ pareto_estimate <- function(country_name,min_threshold,year_selected,networth,su
     }
     rich$cumul_weight = rich$cumul_weight/total_weight
     colnames(rich) <- c("networth","surweight","cumul_weight")
-  
-    tot_list = rbind(HFCS_temp,rich)
+    
+    tot_list = rbind(DATA_temp,rich)
     tot_list$cumul_weight = tot_list$cumul_weight + 0.00000001 
     range(tot_list$networth)
     range(tot_list$cumul_weight)
   }
-  
-  
-  # par(mar=c(4,4,2,2))
-  # plot(HFCS_temp$networth/wmin,HFCS_temp$cumul_weight,log="yx", col="darkblue", frame.plot=FALSE, ylim=c(0.0000000001,200),xlim=c(1,10000), xlab="wealth (in million euros)", ylab="Empirical CCDF")
-  # par(new=TRUE)
-  # plot(rich$networth/wmin,rich$cumul_weight,log="yx", col="darkred", frame.plot=FALSE, pch="+", xlab="", ylab="", axes=FALSE, ylim=c(0.0000000001,200),xlim=c(1,10000))
   
   
   ###### ESTIMATION OF THE POWER LAW using the data.
@@ -173,21 +166,20 @@ pareto_estimate <- function(country_name,min_threshold,year_selected,networth,su
   
   ## regression for France:
   if(nb_rich_list > 1){model_for = (lm(log(cumul_weight) ~ log(networth/wmin) - 1, data= tot_list))}
-  model_nofor = (lm(log(cumul_weight) ~ log(networth/wmin) - 1, data= HFCS_temp))
+  model_nofor = (lm(log(cumul_weight) ~ log(networth/wmin) - 1, data= DATA_temp))
   
-  # ## mle regressio
+  # ## mle regressio (for later)
   # model_mle = dpareto.ll(tot_list$networth*tot_list$cumul_weight,theta=0.5)
   # model_mle = epareto(tot_list$networth*tot_list$cumul_weight)
   # model_mle = pareto2_estimate_mle(tot_list$networth*tot_list$cumul_weight,s = min_threshold, smin=0.0001,smax=3)
   # model_mle = fgpd(tot_list$networth*tot_list$cumul_weight,pvector=c(sigmau= 1000000,1.5))
-  
-  
+
   # reg_wealth = seq(wmin,10000000000, by=wmin)
   # reg_freq = (reg_wealth/wmin)^(model_nofor$coefficients)
   # reg_freq_for = (reg_wealth/wmin)^(model_for$coefficients)
   
   # par(mar=c(4,4,2,2))
-  # plot(HFCS_temp$networth/wmin,HFCS_temp$cumul_weight,log="yx", col="darkblue", frame.plot=FALSE, ylim=c(0.0000001,20),xlim=c(1,10000), xlab="wealth (in million euros)", ylab="Empirical CCDF")
+  # plot(DATA_temp$networth/wmin,DATA_temp$cumul_weight,log="yx", col="darkblue", frame.plot=FALSE, ylim=c(0.0000001,20),xlim=c(1,10000), xlab="wealth (in million euros)", ylab="Empirical CCDF")
   # par(new=TRUE)
   # plot(rich$networth/wmin,rich$cumul_weight,log="yx", col="darkred", frame.plot=FALSE, pch="+", xlab="", ylab="", axes=FALSE, ylim=c(0.0000001,20),xlim=c(1,10000))
   # par(new=TRUE)
@@ -199,17 +191,18 @@ pareto_estimate <- function(country_name,min_threshold,year_selected,networth,su
   }else{estimated_pareto = c(summary(model_nofor)$coef[1],summary(model_nofor)$coef[1],summary(model_nofor)$coef[2],summary(model_nofor)$coef[2])}
   
   
-  ## get the total weight in the pareto tails:
-  sum_top = sum(HFCS_temp$surweight)/sum(HFCS_all$surweight)
-  surweight_tail = (HFCS_temp$surweight)
-
-  if(nb_rich_list > 1){
-    frac_99 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_for)$coef[1],0.99)
-    frac_95 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_for)$coef[1],0.95)
-  }else{
-    frac_99 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_nofor)$coef[1],0.99)
-    frac_95 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_nofor)$coef[1],0.95)    
-  }
+  # ## get the total weight in the pareto tails:
+  # sum_top = sum(DATA_temp$surweight)/sum(DATA_all$surweight)
+  # surweight_tail = (DATA_temp$surweight)
+  # 
+  # if(nb_rich_list > 1){
+  #   frac_99 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_for)$coef[1],0.99)
+  #   frac_95 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_for)$coef[1],0.95)
+  # }else{
+  #   frac_99 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_nofor)$coef[1],0.99)
+  #   frac_95 = get_quantile_wealth(sum_top,networth,surweight,surweight_tail,min_threshold,-summary(model_nofor)$coef[1],0.95)    
+  # }
   
-  return(c(estimated_pareto,frac_99,frac_95))
+  # return(c(estimated_pareto,frac_99,frac_95))
+  return(c(estimated_pareto))
 }
