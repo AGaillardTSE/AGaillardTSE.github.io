@@ -10,4 +10,4 @@ Layout: default
 - **Global Inequality Database**: use most recent estimates of income and wealth inequality worldwide. Available here: 
 
 
-<iframe src="https://inequality.shinyapps.io/inequality_paper/" width="100%" height="700px", style="border:0px;"></iframe>
+<iframe src="https://inequality.shinyapps.io/inequality_paper/" width="100%" height="500" frameBorder="0"></iframe>
