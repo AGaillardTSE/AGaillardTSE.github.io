@@ -13,6 +13,7 @@ layout: page
  - Nested Engodenous Grid Method :: [Hintermaier and Koeniger (2012)](https://hal.archives-ouvertes.fr/hal-00732758/document), [Druedhal (2019)](http://web.econ.ku.dk/druedahl/papers/2019_NEGM.pdf)
  
  ##### Other technics
+ 
 * Computing expectations of value functions using polynomials: [Judd et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE329) 
 * Non-stochastic simulation routine: [Young (2010)](http://people.virginia.edu/~ey2d/young_2010.pdf)
 * Collocation Method: [Collocation](https://en.wikipedia.org/wiki/Collocation_method)
