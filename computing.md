@@ -6,12 +6,16 @@ layout: page
 # Computing
 
 #### Useful papers & technics:
-* Endogenous Grid Method (EGM): [Caroll (2006)](http://pages.stern.nyu.edu/~dbackus/Computation/Carroll%20endog%20grid%20EL%2006.pdf)
-* DC-EGM algorithm to solve discrete-continuous choice models using EGM: [Iskhakov et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE643).
+##### Endogenous Grid Method (EGM)
+ - Endogenous Grid Method (EGM): [Caroll (2006)](http://pages.stern.nyu.edu/~dbackus/Computation/Carroll%20endog%20grid%20EL%2006.pdf)
+ - DC-EGM algorithm to solve discrete-continuous choice models using EGM: [Iskhakov et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE643).
+ - Multi-dimensional DC-EGM algorithm: [Druedhal and Jørgensen (2017)](https://www.sciencedirect.com/science/article/pii/S0165188916301920)
+ - Nested Engodenous Grid Method :: [Hintermaier and Koeniger (2012)](https://hal.archives-ouvertes.fr/hal-00732758/document) [Druedhal (2019)](http://web.econ.ku.dk/druedahl/papers/2019_NEGM.pdf)
+ ##### Other technics
 * Computing expectations of value functions using polynomials: [Judd et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE329) 
-* Multi-dimensional DC-EGM algorithm: [Druedhal and Jørgensen (2017)](https://www.sciencedirect.com/science/article/pii/S0165188916301920)
 * Non-stochastic simulation routine: [Young (2010)](http://people.virginia.edu/~ey2d/young_2010.pdf)
-
+* Collocation Method: [Collocation](https://en.wikipedia.org/wiki/Collocation_method)
+* Envelop Condition Method (ECM): [Maliar (2013)](https://stanford.edu/~maliarl/Files/EL2013.pdf)
 
 #### Some Replications
 
