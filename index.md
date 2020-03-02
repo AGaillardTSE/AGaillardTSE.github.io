@@ -28,7 +28,7 @@ const char *h = "hello world";
     - VoxEU Column: <a href="https://voxeu.org/article/explaining-business-cycle-synchronisation-using-profits-and-extensive-margin" target="_blank">Increasing business cycle synchronisation: The role of global value chains, market power and extensive margin adjustments</a>
     - <a href="https://www.federalreserve.gov/econres/ifdp/files/ifdp1266.pdf" target="_blank">FRB International Finance Discussion Papers 1266.</a>, <a href="https://www.federalreserve.gov/econres/notes/feds-notes/increasing-business-cycles-synchronization-20191213.htm" target="_blank">FEDS Note</a>
 
-*   [Global Trade and GDP Co-movement](https://drive.google.com/open?id=1g5GmWcsKtfLnl72oHk43Gv-wYeeFSkch) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), January 2020, New version
+*   [Global Trade and GDP Co-movement](https://drive.google.com/open?id=1g5GmWcsKtfLnl72oHk43Gv-wYeeFSkch) (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)), New version January 2020.
 
 
 * * *
