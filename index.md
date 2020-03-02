@@ -36,7 +36,6 @@ const char *h = "hello world";
 ### Work in Progress
 
 *   Housing-market Matching, Employment and Regional Mobility (with Christophe Bruneel).
-*   Private Business Transfers in an Aging Economy (with [Sumudu Kankanamge](http://kankanamge.free.fr/))
 
 ### Policy Work
 *  [World Development Report 2020](https://www.worldbank.org/en/publication/wdr2020) Background Papers (available upon request)
