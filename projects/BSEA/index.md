@@ -7,7 +7,7 @@ layout: page
 | Files       |  Last update |
 |:-------------|:------------------|
 | *Supplementary Appendix*           | - |
-| <a href="" target="_blank">Last Version Paper</a> | 30/02/2020 |
+| <a href="https://drive.google.com/file/d/16QCuj8d9GM85zygxh8u1Br8-ROxpGQ9G/view" target="_blank">Last Version Paper</a> | 30/02/2020 |
 | <a href="https://www.tse-fr.eu/fr/publications/buying-and-selling-entrepreneurial-assets" target="_blank">Working Paper - TSE</a> | 30/02/2020 |
 
 
