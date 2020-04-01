@@ -1,12 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl">
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://agaillard.eu/teaching/</loc>
-    <lastmod>2018-04-20T11:55:15+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>http://www.agaillard.eu/</loc>
+  <lastmod>2020-04-01T07:13:08+00:00</lastmod>
+</url>
   <url>
     <loc>http://agaillard.eu/computing/</loc>
     <lastmod>2018-07-11T16:36:18+00:00</lastmod>
@@ -19,10 +23,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>http://agaillard.eu/</loc>
-    <lastmod>2018-07-12T18:25:41+00:00</lastmod>
+    <url>
+    <loc>http://agaillard.eu/teaching/</loc>
+    <lastmod>2018-04-20T11:55:15+00:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>1</priority>
+    <priority>0.8</priority>
   </url>
+  
 </urlset>
+
+
