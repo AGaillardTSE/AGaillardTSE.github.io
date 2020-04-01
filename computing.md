@@ -19,7 +19,7 @@ layout: page
 * **[COLOCATION]** Collocation Method: [Collocation](https://en.wikipedia.org/wiki/Collocation_method)
 * **[ECM]** Envelop Condition Method (ECM): [Maliar (2013)](https://stanford.edu/~maliarl/Files/EL2013.pdf)
 * **[SMM]** Estimating HA models :: [Sobol sequence](https://en.wikipedia.org/wiki/Sobol_sequence) 
-* **[VAR, AR(1)]** Discretizing VAR and bivariate AR(1): [Farmer et Toda (2013)](https://www.econstor.eu/bitstream/10419/195551/1/1015515150.pdf)  
+* **[VAR, AR(1)]** Discretizing VAR: [Farmer et Toda (2013)](https://www.econstor.eu/bitstream/10419/195551/1/1015515150.pdf)  
 
 #### Replications
 
