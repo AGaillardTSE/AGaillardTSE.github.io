@@ -3,14 +3,12 @@ layout: page
 ---
 
 
-# Computing
+# Computing HA models
 
 #### Useful papers & technics:
 ##### Endogenous Grid Method (EGM)
  - **[EGM]** Endogenous Grid Method: [Caroll (2006)](http://pages.stern.nyu.edu/~dbackus/Computation/Carroll%20endog%20grid%20EL%2006.pdf)
- - **[DC-EGM]** algorithm to solve discrete-continuous choice models using EGM: [Iskhakov et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE643). 
- - **[G2-EGM]** Multi-dimensional DC-EGM algorithm: [Druedhal and Jørgensen (2017)](https://www.sciencedirect.com/science/article/pii/S0165188916301920). 
- - **[N-EGM]** Nested Engodenous Grid Method :: [Hintermaier and Koeniger (2012)](https://hal.archives-ouvertes.fr/hal-00732758/document), [Druedhal (2019)](http://web.econ.ku.dk/druedahl/papers/2019_NEGM.pdf)
+ - **[DC-EGM]** algorithm to solve discrete-continuous choice models using EGM: [Iskhakov et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE643). *[G2-EGM]* Multi-dimensional DC-EGM algorithm: [Druedhal and Jørgensen (2017)](https://www.sciencedirect.com/science/article/pii/S0165188916301920). *[N-EGM]* Nested Engodenous Grid Method :: [Hintermaier and Koeniger (2012)](https://hal.archives-ouvertes.fr/hal-00732758/document), [Druedhal (2019)](http://web.econ.ku.dk/druedahl/papers/2019_NEGM.pdf)
  
 ##### Other technics
  
