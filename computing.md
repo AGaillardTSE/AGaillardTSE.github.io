@@ -53,7 +53,7 @@ Comparison of performance and accuracy of EGM, DC-EGM and VFI methods on occupat
 * [Jean-Pierre's Moreau Homepage](http://jean-pierre.moreau.pagesperso-orange.fr/links.html): useful codes and routines in C++ and Fortran.
 * [John Starchulski and Tom Sargent's QuantEcon](http://quant-econ.net): useful codes in Julia / Python.
 * [Paul Bourke](http://paulbourke.org/miscellaneous/interpolation/): useful tool for interpolations.
-
-
+* [John Burkardt](https://people.sc.fsu.edu/~jburkardt/): useful tool for many languages.
+* [Maliar et Maliar's Book](https://web.stanford.edu/~maliarl/Files/Chapter7HandbookCE2014.pdf): all.
 
 
