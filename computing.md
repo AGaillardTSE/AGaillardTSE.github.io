@@ -12,7 +12,8 @@ layout: page
  
 ##### Other technics
  
-* **[EXPECTATION]** Computing expectations of value functions using polynomials: [Judd et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE329) 
+* **[EXPECTATION 1]** Useful tool to approximate expectations over normally distributed shocks: Gauss-Hermite + Monomial Rule.
+* **[EXPECTATION 2]** Computing expectations of value functions using polynomials: [Judd et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.3982/QE329)  
 * **[SIMULATION]** Non-stochastic simulation routine: [Young (2010)](http://people.virginia.edu/~ey2d/young_2010.pdf)
 * **[COLOCATION]** Collocation Method: [Collocation](https://en.wikipedia.org/wiki/Collocation_method)
 * **[ECM]** Envelop Condition Method (ECM): [Maliar (2013)](https://stanford.edu/~maliarl/Files/EL2013.pdf)
