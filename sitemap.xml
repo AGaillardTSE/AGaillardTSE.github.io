@@ -12,21 +12,18 @@
   <lastmod>2020-04-01T07:13:08+00:00</lastmod>
 </url>
   <url>
-    <loc>http://agaillard.eu/computing/</loc>
-    <lastmod>2018-07-11T16:36:18+00:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>http://agaillard.eu/quant_econ/</loc>
+    <lastmod>2020-09-04T16:36:18+00:00</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://agaillard.eu/research/</loc>
     <lastmod>2018-06-18T18:40:45+00:00</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
     <url>
-    <loc>http://agaillard.eu/teaching/</loc>
-    <lastmod>2018-04-20T11:55:15+00:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>http://agaillard.eu/teaching_graduate/</loc>
+    <lastmod>2020-09-04T11:55:15+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   
