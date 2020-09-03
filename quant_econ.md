@@ -1,6 +1,6 @@
 ---
 title: Quantitative Economics
-layout: default
+Layout: default
 ---
 
 
