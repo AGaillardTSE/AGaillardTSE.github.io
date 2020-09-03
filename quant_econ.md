@@ -1,5 +1,6 @@
 ---
-layout: page
+title: Quantitative Economics
+layout: default
 ---
 
 
