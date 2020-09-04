@@ -16,7 +16,7 @@ const char *h = "hello world";
 ##### *Entrepreneurship*
 *   [Buying and Selling Entrepreneurial Assets](http://agaillard.eu/projects/BSEA/) (with [Sumudu Kankanamge](http://kankanamge.free.fr/)), New version February 2020.
     - <a href="https://www.tse-fr.eu/fr/publications/buying-and-selling-entrepreneurial-assets" target="_blank">TSE Working paper</a>.
-    - Previous version, with application on aging: <a href="https://ideas.repec.org/p/red/sed019/1503.html" target="_blank">SED 2019 Meeting</a>.
+    - Previous version, with application on aging: <a href="https://editorialexpress.com/cgi-bin/conference/download.cgi?db_name=SED2019&paper_id=1503" target="_blank">SED 2019 Meeting</a>.
 
 *   [Entrepreneurship, Labor Market Mobility and the Role of Entrepreneurial Insurance](http://agaillard.eu/projects/ELMM/) (with [Sumudu Kankanamge](http://kankanamge.free.fr/)), January 2019.
     - *Reject & Resubmit AEJ:macro*
