@@ -38,15 +38,15 @@ const char *h = "hello world";
 *   Housing-market Matching, Employment and Regional Mobility (with Christophe Bruneel).
 *   Private Business Transfers in an Aging Economy (with Sumudu Kankanamge)
 
+<!--
 ### Policy Work
 *  [World Development Report 2020](https://www.worldbank.org/en/publication/wdr2020) Background Papers (available upon request)
     * <a href="http://documents.worldbank.org/curated/en/291361576685759900/Trade-Global-Value-Chains-and-GDP-Comovemement-An-Empirical-Investigation" target="_blank">Trade, Global Value Chains and GDP Comovement: An Empirical Investigation</a>. World Bank WP, (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)).
-
+<!--
 ### Position (current / past)
-
+<!--
 *   **Teaching Assistant:** _Graduate Macroeconomics_ (Fabrice Collard, Christian Hellwig), TSE.
-
+<!--
 *   **Research Assistant:** 
     - *World Bank*, on the role of trade on GDP comovement for 150 countries over 50 years, (2019)
     - [Tim Lee](http://www.syleetim.net), on human capital, inequality and career choice, (2017), TSE
-
