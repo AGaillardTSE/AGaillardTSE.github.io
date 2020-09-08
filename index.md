@@ -41,13 +41,3 @@ My main field of interest is Macroeconomics. My secondary fields are Entrepreneu
 *   Housing-market Matching, Employment and Regional Mobility (with Christophe Bruneel).
 *   Private Business Transfers in an Aging Economy (with Sumudu Kankanamge)
 
-
-### Other 
-<details>
-<summary>Show other works and past position </summary>
-<br>
-    
-### Policy Work
-*  [World Development Report 2020](https://www.worldbank.org/en/publication/wdr2020) Background Papers (available upon request)
-    * <a href="http://documents.worldbank.org/curated/en/291361576685759900/Trade-Global-Value-Chains-and-GDP-Comovemement-An-Empirical-Investigation" target="_blank">Trade, Global Value Chains and GDP Comovement: An Empirical Investigation</a>. World Bank WP, (with [François de Soyres](https://sites.google.com/site/francoisdesoyres/research)).
-
