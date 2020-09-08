@@ -5,7 +5,6 @@ layout: default
 
 ```c++
 const char *h = "hello world";
-
 ```
 
 I am a Ph.D. candidate at the Toulouse School of Economics. 
