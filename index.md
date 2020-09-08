@@ -6,11 +6,11 @@ layout: default
 ```c++
 const char *h = "hello world";
 
-I am a Ph.D. candidate at the Toulouse School of Economics. My main field of interest is Macroeconomics. My secondary fields are Entrepreneurship, Inequality and Trade.
-
 ```
 
-**Research Topics:** Macroeconomics,.
+I am a Ph.D. candidate at the Toulouse School of Economics. 
+
+My main field of interest is Macroeconomics. My secondary fields are Entrepreneurship, Inequality and Trade.
 
 * * *
 
