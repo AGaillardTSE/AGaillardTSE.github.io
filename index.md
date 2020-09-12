@@ -3,13 +3,6 @@ title: Alexandre Gaillard, PhD Candidate, Toulouse School of Economics
 layout: default
 ---
 
-
-<?php
-header("HTTP/1.1 301 Moved Permanently");
-header("Location: http://www.a-gaillard.com");
-header("Connection: close");
-?>
-
 ```c++
 const char *h = "hello world";
 ```
